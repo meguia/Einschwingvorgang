@@ -10,7 +10,7 @@
  \usepackage{graphicx}
  \usepackage{titling}
 
-\title{How to turn on an oscillation}
+\title{{\em Einschwingvorgänge} or How to turn on an oscillation}
 \author{Manuel Eguia}
 \date{October 2024}
 
@@ -144,7 +144,7 @@ And the waveform is asymmetric because the point moves faster in one part of the
 
 \begin{figure}[h]
     \resizebox*{6cm}{!}{\includegraphics{figure3.eps}}
-    \caption{} 
+    \caption{The magnitude to be converted into sound (the cosine of the angle as a function of time) for the Adler's equation (3) with $\mu=1.5$} 
     \label{adler2}
 \end{figure}
 
@@ -175,7 +175,8 @@ On the other hand, the closer to zero this function gets, the slower the time ev
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure4.eps}}
-    \caption{} 
+    \caption{A more general oscillator with an arbitrary periodic positive function $f(\theta)$ displayed in panel b. Panel a and c display the 
+    phase space and the time evolution of the cosine of the angle respectively} 
     \label{fig_adler3}
 \end{figure}
 
@@ -193,13 +194,13 @@ As expected, this produces a flatter part of the waveform even than in the previ
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure5.eps}}
-    \caption{} 
+    \caption{dler oscillator given by Equation (3) with $\mu=0.9$: a) phase space, b) time derivative, and c) the cosine of the angle as a function of time} 
     \label{fig_adler4}
 \end{figure}
 
 The next step then is to ask what happens if the function $f(\theta)$ reaches the value zero or crosses the horizontal axis. That is, if we eliminate the requirement that we had put before that this function must be positive for all $\theta$ values. 
 
-Let us return to the original system of the Adler equation but now with a value $mu=0.9$. This is shown in Figure 5.b. 
+Let us return to the original system of the Adler equation but now with a value $\mu=0.9$. This is shown in Figure 5.b. 
 
 Notice that now $f(\theta)$ varies between 1.9 and -0.1 which means that there is a short interval around $\pi$ in which the function is negative. 
 This means that in that interval the rate of change of the variable is negative so the point in phase space should go in the opposite direction as indicated by the arrow in Figure 5. 
@@ -213,23 +214,54 @@ In the neighborhood of the fixed point indicated as N the arrows converge to it 
 While in the other fixed point the arrows diverge from it and it is an unstable fixed point. The S stand for Saddle point and the meaning of this term will make sense when we go to a higher dimensional phase space.
 
 What will happen then in the dynamics of this system? 
-That any trajectory that starts at an angle where the function is positive will rotate counterclockwise and will approach the node. 
+Any trajectory that starts at an angle where the function is positive will rotate counterclockwise and will approach the node. 
 Technically it will never reach it because the flow will become slower and slower around it (it can be shown mathematically that the function of the variable with respect to time corresponds to an exponential decay towards the value of the variable at the node). 
+And no matter where we start from we will always tend to the Node, either from the clockwise direction (if we start whitin the shortest arc between N and S) or from the counterclockwise (if we start from any other point). 
+This means that there is no more oscillation and we have a decay to a stable fixed point.
+This is displayed in Figure 5.c
 
-\section{Two Dimensional Phase Space}
+Let us review then what happened. 
+As long as we had a positive function $f(\theta)$ the variable $\theta$ is always growing, with different rates of change, and we have an oscillatory behavior with a waveform with flatter parts in the slower regions and peaks in the faster regions. 
+But as soon as the function crosses zero the oscillation disappears. 
+So we have not shown how to turn on an oscillation but how to turn it off. 
 
-\subsection{The simplest physical oscillator (harmonic)}
+And this change goes along with the appearance of two fixed points a node and a saddle where before there was a region of very slow flow. 
+Later we will see that this qualitative change corresponds to what is known as a {\em bifurcation} of the dynamical system and in particular this is a Saddle-Node Bifurcation on the Circle. 
 
-\subsection{Turning on the oscillation (negative friction)}
+In the particular case of the Adler equation this bifurcation occurs for $\mu=1$. 
+This is because for $\mu$ values greater than one we have an oscillation and when $\mu$ becomes less than one the oscillation disappears. 
+Here we see a relevant meaning of the notion of parameter of a system. 
+During the time evolution the parameter is fixed, but knowing the value of the parameter one can know the qualitative behavior of the system, i.e. whether there will be an oscillation or not.
 
-\subsection{The meaning of a saddle}
+It is interesting that this process can happen the other way around. 
+That is, the value of $\mu$ can have a positive value less than one and in that case there is no oscillation. But if for some reason the system changes and $\mu$ exceeds one, an oscillation starts. 
+This means that the Saddle Node Bifurcation on the Circle is one of the ways (perhaps the simplest) in which an oscillation can be turned on. 
 
-\section{Bifurcations giving rise to oscillations}
+\subsubsection{Questionnaire}
+\begin{enumerate}
+    \item In Figure 1.c the time evolution for a initial state $\theta=0$ is portrayed. How could the ensemble of all possible initial conditions between 0 and $2\pi$ be represented in this graph?
+    \item Is it possible to have an evolution in which the point moves clockwise on the circle? How would the graph of $f(\theta)$ in Figure 1 and the differential equation (1) change?
+    \item Why it is necessary to take the cosine of the variable $\theta$ in order to have a magnitude that can be converted into sound?
+    \item Make a qualitative diagram of how Figure 2 would change if the differential equation had $\cos(2\theta)$ instead of $\cos(\theta)$. Draw a qualitative sketch of the waveform.
+    \item What happens to the system given by the Adler's equation when the parameter $\mu$ is exactly equal to 1. Are there fixed points? How does the flux in phase space and the waveform change?
+    \item In the text it says that the oscillations disappear for $\mu$ less than 1. Is this strictly true? What happens for negative $\mu$ values?
+    \item What happens if the system is at node N and we add a small perturbation in the variable? And how does it change if we add the perturbation when the system is in the saddle S? 
+    \item Suppose we are at a value very close to the bifurcation with the value of $\mu$ slightly below 1. This implies that the node and the saddle are very close. What happens if the system is decaying to the node and we add a perturbation? Distinguish whether the perturbation is positive or negative.
+\end{enumerate}
+%\section{Two Dimensional Phase Space}
 
-\subsection{Saddle-Node on Limit Cycle}
+%\subsection{The simplest physical oscillator (harmonic)}
 
-\subsection{Hopf}
+%\subsection{Turning on the oscillation (negative friction)}
 
-\subsection{Homoclinic}
+%\subsection{The meaning of a saddle}
+
+%\section{Bifurcations giving rise to oscillations}
+
+%\subsection{Saddle-Node on Limit Cycle}
+
+%\subsection{Hopf}
+
+%\subsection{Homoclinic}
 
 \end{document}
