@@ -208,7 +208,9 @@ begin
 	annotate!(p6a,0.65,-0.2,"N")
 	annotate!(p6a,1.93,-0.2,"S",size=(600,450))
 	p6 = plot(p6a,layout=(1,3),thickness_scaling = 1.4)
-	savefig(p6, "figure6.svg")
+	if savefigures
+		savefig(p6, "figure6.svg")
+	end	
 	p6
 end	
 
@@ -265,7 +267,9 @@ begin
 	plot!(4*exp.(-(0:0.01:tmax)/25).*cos.(0:0.01:tmax),4*exp.(-(0:0.01:tmax)/25).*sin.(0:0.01:tmax),c=RGBA(0,0,1.0,0.5))
 	p7b = plot(0:0.01:tmax,4*exp.(-(0:0.01:tmax)/25).*cos.(0:0.01:tmax),xlabel="t",ylabel="x(t)",c=1,lw=2,size=(400,500),legend=false)
 	p7 = plot(p7a,p7b,layout = grid(1,2, widths=[0.7 ,0.3]),size=(1200,500),left_margin=5mm,bottom_margin=5mm,thickness_scaling = 1.4)
-	savefig(p7, "figure7.svg")
+	if savefigures
+		savefig(p7, "figure7.svg")
+	end	
 	p7
 end	
 
@@ -278,12 +282,55 @@ function self_oscillator!(du,u,p,t)
 	du[2] = (p[1]-u[2]^2)*u[2]-p[2]*u[1]
 end
 
+# ╔═╡ e926e9db-9c09-4f94-b147-4b7067030241
+begin
+	sol81 = solve(ODEProblem(self_oscillator!, [1.0,0.0], (0.0,150), [-0.05, 0.2]));
+	sol82 = solve(ODEProblem(self_oscillator!, [1.0,0.0], (0.0,150), [0.1, 0.2]));
+	sol82b = solve(ODEProblem(self_oscillator!, [0.1,0.0], (0.0,150), [0.1, 0.2]));
+	sol83 = solve(ODEProblem(self_oscillator!, [0.0,2.0], (0.0,150), [1.5, 0.2]));
+	sol83b = solve(ODEProblem(self_oscillator!, [0.0,0.1], (0.0,150), [1.5, 0.2]));
+	p81 = plot(sol81,idxs=(0,2),ylabel="y(t)",title="γ=-0.05 k=0.2",legend=false)
+	p81b = plot(sol81,idxs=(1,2),xlabel="x",ylabel="y",legend=false)
+	p82 = plot(sol82b,idxs=(0,2),ylabel="y(t)",title="γ=0.1 k=0.2",legend=false)
+	p82b = plot(sol82b,idxs=(1,2),xlabel="x",ylabel="y",legend=false)
+	plot!(sol82,idxs=(1,2))
+	p83 = plot(sol83b,idxs=(0,2),ylabel="y(t)",title="γ=1.5 k=0.2",legend=false)
+	p83b = plot(sol83b,idxs=(1,2),xlabel="x",ylabel="y",legend=false)
+	plot!(sol83,idxs=(1,2))
+	p8 = plot(p81,p82,p83,p81b,p82b,p83b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	savefig(p8, "figure8.svg")
+	p8
+end	
+
 # ╔═╡ 8317a5d7-788d-45c0-a44d-3167697c904b
 function selftune_oscillator!(du,u,p,t)
 	(μ,k,σ) = p
     du[1] = u[2] 
 	du[2] = u[2]*(μ-u[2]^2)-k*u[1]*(1.0+σ*sqrt(k)*u[1]^2)
 end
+
+# ╔═╡ 1f4cd54d-2334-440d-a2c4-b012cd09a3db
+begin
+	sol91 = solve(ODEProblem(self_oscillator!, [0.0,0.1], (0.0,150), [0.2, 0.2]));
+	sol92 = solve(ODEProblem(self_oscillator!, [0.0,0.1], (0.0,150), [1.5, 0.2]));
+	sol93 = solve(ODEProblem(self_oscillator!, [0.0,0.1], (0.0,150), [0.2, 1.0]));
+	sol94 = solve(ODEProblem(self_oscillator!, [0.0,0.1], (0.0,150), [1.5, 1.0]));
+	sol91b = solve(ODEProblem(selftune_oscillator!, [0.0,0.1], (0.0,150), [0.2, 0.2,0.17]));
+	sol92b = solve(ODEProblem(selftune_oscillator!, [0.0,0.1], (0.0,150), [1.5, 0.2,0.17]));
+	sol93b = solve(ODEProblem(selftune_oscillator!, [0.0,0.1], (0.0,150), [0.2, 1.0,0.17]));
+	sol94b = solve(ODEProblem(selftune_oscillator!, [0.0,0.1], (0.0,150), [1.5, 1.0,0.17]));
+	p91 = plot(sol91,idxs=(0,2),ylabel="y(t)",title="self-oscillator",legend=false)
+	plot!(sol92,idxs=(0,2),ylabel="y(t)",legend=false)
+	p92 = plot(sol91b,idxs=(0,2),ylabel="y(t)",title="self-tuned oscillator",legend=false)
+	plot!(sol92b,idxs=(0,2),ylabel="y(t)",legend=false)
+	p93 = plot(sol93,idxs=(0,2),ylabel="y(t)",legend=false)
+	plot!(sol94,idxs=(0,2),ylabel="y(t)",legend=false)
+	p94 = plot(sol93b,idxs=(0,2),ylabel="y(t)",legend=false)
+	plot!(sol94b,idxs=(0,2),ylabel="y(t)",legend=false)
+	p9 = plot(p91,p92,p93,p94,layout=(2,2),size=(1200,400),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	savefig(p9, "figure9.svg")
+	p9
+end	
 
 # ╔═╡ aacd48cb-77c3-4458-aece-09def7b28a9d
 html"""
@@ -337,11 +384,6 @@ begin
 	p22 = plot(sol5,idxs=(1,2))
 	plot(p21,p22,layout=(1,2),size=(1000,400))
 end	
-
-# ╔═╡ 75eadd50-decf-48e4-a48b-78b678276861
-md"""
-$\dot\theta = \omega - \lambda\rho\cos(\theta)$
-"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2928,11 +2970,12 @@ version = "1.4.1+1"
 # ╠═35f0cf24-0415-4ca7-9b3e-0e685800d02f
 # ╠═f7ccd2ae-a128-473f-b8b0-189ef8ea5b2c
 # ╠═d8fb9a89-4092-427f-b3d8-98a500237bbb
+# ╠═e926e9db-9c09-4f94-b147-4b7067030241
 # ╠═8317a5d7-788d-45c0-a44d-3167697c904b
 # ╟─f5a0d1a8-0b24-4a6a-ae0c-59c6b67d68b3
 # ╠═1e89d3da-961e-40f8-b1b4-0fef94a16b4b
+# ╠═1f4cd54d-2334-440d-a2c4-b012cd09a3db
 # ╟─aacd48cb-77c3-4458-aece-09def7b28a9d
 # ╟─5de836bc-d3aa-4e5f-bb50-8862099e895f
-# ╠═75eadd50-decf-48e4-a48b-78b678276861
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

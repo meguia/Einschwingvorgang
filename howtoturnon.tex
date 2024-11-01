@@ -322,7 +322,7 @@ To write the differential equations that give the evolution of this system we ca
 
 \begin{eqnarray}
     \dot{x} & = & v \\
-    \dot{v} & = & -kx -\gamma y
+    \dot{v} & = & -\gamma y -kx 
 \end{eqnarray}
 
 The first equation links the velocity with the derivative of the position in time. 
@@ -345,7 +345,33 @@ This can be done by replacing the linear damping force $\gamma v$ for some non-l
 The positive part drives the system by supplying energy when the amplitude of the oscillations are small and the negative part acts as a strong nonlinear damping that prevents the unbounded buildup of energy for larger oscillations. 
 In its simplest form we can think of a nonlinear damping in the form of $\gamma v - v ^ 3$.
 
-%\subsection{The meaning of a saddle}
+\begin{eqnarray}
+    \dot{x} & = & v \\
+    \dot{v} & = & \gamma y - y^3 -kx 
+\end{eqnarray}
+
+\begin{figure}
+    \centering
+    \resizebox*{17cm}{!}{\includegraphics{figure8.eps}}
+    \caption{} 
+    \label{fig_selfosc}
+\end{figure}
+
+\subsubsection{A self-tuned oscillator}
+
+\begin{eqnarray}
+    \dot{x} & = & v \\
+    \dot{v} & = & \gamma y - y^3 -kx(1+0.16\sqrt{k}x^2)
+\end{eqnarray}
+
+\begin{figure}
+    \centering
+    \resizebox*{17cm}{!}{\includegraphics{figure9.eps}}
+    \caption{} 
+    \label{fig_selftunedosc}
+\end{figure}
+
+\subsection{The meaning of a saddle}
 
 %\section{Bifurcations giving rise to oscillations}
 
