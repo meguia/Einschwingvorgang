@@ -251,7 +251,7 @@ This means that the Saddle Node Bifurcation on the Circle is one of the ways (pe
 \end{enumerate}
 \section{Self-sustained oscilations}
 
-\subsubsection{Impossibility of oscillations in one dimension (on the straight line).}
+\subsection{Impossibility of oscillations in one dimension (on the straight line).}
 
 The previous system was defined by the evolution of a single variable, namely that the value of that variable univocally determines the state of the system.
 The phase space, which is defined as the space of all possible states where each state corresponds to a single point in that space and vice versa, was therefore one-dimensional. 
@@ -327,14 +327,23 @@ To write the differential equations that give the evolution of this system we ca
 
 The first equation links the velocity with the derivative of the position in time. 
 In fact that is the definition of velocity. 
-The second is Newton's second law of movement which gives the proportionality between the time derivative of the velocity (i.e. the acceleration) with the sum of the acting forces on the right. 
-And these forces are two: on the one hand the elastic force that opposes the displacement linearly with a constant $k$ and the frictional force that always opposes the movement with a constant $\gamma$. 
+The second is Newton's second law of movement which gives the proportionality between the time derivative of the velocity on the left $\dot v$ (i.e. the acceleration) with the sum of the acting forces on the right. 
+And these forces are two: on the one hand the elastic force that opposes the displacement linearly with a constant $k$ and a frictional force that acts a resistance, always opposing the movement with a constant $\gamma$. 
 The result of the evolution of this system is the spiral shown in figure 7. 
 This means that for each initial position the evolution in the phase space is a spiral approaching the origin where there is a single fixed point which is an attractor node. 
 
 As an exercise we can study how the parameters $k$ and $\gamma$ affect the result and if we transform in sound some of the two variables we can study if there is a simple relation between the frequency and the parameter $k$.
 
-%\subsection{Turning on the oscillation (negative friction)}
+\subsection{Turning on the oscillation (negative friction)}
+
+But this oscillator although physically realistic is not very interesting as a sound generator (except as an approximation to the point excitation of a single oscillation mode). 
+We are interested in how we can keep an oscillation on and if possible a system whose final oscillation does not depend on the initial condition. 
+This can be achieved by self-sustained oscillations and there are several ways to accomplish this. 
+
+Perhaps the simple way to obtain self-sustained oscillations is to introduce a negative resistance that acts as a positive feedback for small oscillations.
+This can be done by replacing the linear damping force $\gamma v$ for some non-linear function that is positive for small values of the velocity y and negative for larger values.
+The positive part drives the system by supplying energy when the amplitude of the oscillations are small and the negative part acts as a strong nonlinear damping that prevents the unbounded buildup of energy for larger oscillations. 
+In its simplest form we can think of a nonlinear damping in the form of $\gamma v - v ^ 3$.
 
 %\subsection{The meaning of a saddle}
 
