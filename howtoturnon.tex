@@ -238,7 +238,7 @@ It is interesting that this process can happen the other way around.
 That is, the value of $\mu$ can have a positive value less than one and in that case there is no oscillation. But if for some reason the system changes and $\mu$ exceeds one, an oscillation starts. 
 This means that the Saddle Node Bifurcation on the Circle is one of the ways (perhaps the simplest) in which an oscillation can be turned on. 
 
-\subsubsection{Questionnaire}
+\subsection{Questionnaire}
 \begin{enumerate}
     \item In Figure 1.c the time evolution for a initial state $\theta=0$ is portrayed. How could the ensemble of all possible initial conditions between 0 and $2\pi$ be represented in this graph?
     \item Is it possible to have an evolution in which the point moves clockwise on the circle? How would the graph of $f(\theta)$ in Figure 1 and the differential equation (1) change?
@@ -249,7 +249,7 @@ This means that the Saddle Node Bifurcation on the Circle is one of the ways (pe
     \item What happens if the system is at node N and we add a small perturbation in the variable? And how does it change if we add the perturbation when the system is in the saddle S? 
     \item Suppose we are at a value very close to the bifurcation with the value of $\mu$ slightly below 1. This implies that the node and the saddle are very close. What happens if the system is decaying to the node and we add a perturbation? Distinguish whether the perturbation is positive or negative.
 \end{enumerate}
-\section{Self-sustained oscilations}
+\section{Two dimensional self-sustained oscilations}
 
 \subsection{Impossibility of oscillations in one dimension (on the straight line).}
 
@@ -364,21 +364,41 @@ In its simplest form we can think of a nonlinear damping in the form of $\gamma 
     \dot{v} & = & \gamma y - y^3 -kx(1+0.16\sqrt{k}x^2)
 \end{eqnarray}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure9.eps}}
     \caption{} 
     \label{fig_selftunedosc}
 \end{figure}
 
+\begin{figure}[h]
+    \centering
+    %\resizebox*{17cm}{!}{\includegraphics{}}
+    \caption{} 
+    \label{fig_selfcompared}
+\end{figure}
+
+\subsection{Fictional frictions}
+
 \subsection{The meaning of a saddle}
 
-%\section{Bifurcations giving rise to oscillations}
+\subsection{Questionnaire}
+\begin{enumerate}
+\item 
+\end{enumerate}
 
-%\subsection{Saddle-Node on Limit Cycle}
+\section{One dimensional oscillations in systems with delay}
 
-%\subsection{Hopf}
+\subsection{The "simplest" system}
+\begin{equation}
+    \dot{x} =  x(t-\tau)-x(t-\tau)^3 - \gamma x 
+\end{equation}
 
-%\subsection{Homoclinic}
+\begin{figure}[h]
+    \centering
+    \resizebox*{17cm}{!}{\includegraphics{figure11.eps}}
+    \caption{} 
+    \label{fig_delay}
+\end{figure}
 
 \end{document}

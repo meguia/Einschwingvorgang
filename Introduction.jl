@@ -298,7 +298,9 @@ begin
 	p83b = plot(sol83b,idxs=(1,2),xlabel="x",ylabel="y",legend=false)
 	plot!(sol83,idxs=(1,2))
 	p8 = plot(p81,p82,p83,p81b,p82b,p83b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	savefig(p8, "figure8.svg")
+	if savefigures
+		savefig(p8, "figure8.svg")
+	end
 	p8
 end	
 
@@ -328,8 +330,35 @@ begin
 	p94 = plot(sol93b,idxs=(0,2),ylabel="y(t)",legend=false)
 	plot!(sol94b,idxs=(0,2),ylabel="y(t)",legend=false)
 	p9 = plot(p91,p92,p93,p94,layout=(2,2),size=(1200,400),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	savefig(p9, "figure9.svg")
+	if savefigures
+		savefig(p9, "figure9.svg")
+	end	
 	p9
+end	
+
+# ╔═╡ 41fda3e5-b7ef-4af0-80ce-91a716cd759a
+function simplest!(du,u,h,p,t)
+	hs = h(p,t-p[1])[1]
+	du[1] = hs*(1.0-hs*hs) - 0.2*u[1]
+end
+
+# ╔═╡ fab4d99e-f560-43b7-bc10-a66f667173b9
+begin
+	xd0 = 0.05
+	h(p,t) = [xd0]
+	τ1 = 1.1
+	τ2 = 2.1
+	τ3 = 3.14
+	tend = 700.0
+	solD1 = solve(DDEProblem(simplest!,h([τ1],0.),h,(0,tend),[τ1]; constant_lags=[τ1]),alg = MethodOfSteps(Tsit5()));
+	pD1 = plot(solD1(0:0.1:tend-τ1,idxs=1).u,solD1((0:0.1:tend-τ1) .+ τ1/2,idxs=1).u,solD1((0:0.1:tend-τ1) .+ τ1,idxs=1).u,xlims=(-1.5,1.5),ylims=(-1.5,1.5),zlims=(-1.5,1.5),legend=false,title="τ=1.1")
+	solD2 = solve(DDEProblem(simplest!,h([τ2],0.),h,(0,tend),[τ2]; constant_lags=[τ2]),alg = MethodOfSteps(Tsit5()));
+	pD2 = plot(solD2(0:0.1:tend-τ2,idxs=1).u,solD2((0:0.1:tend-τ2) .+ τ2/2,idxs=1).u,solD2((0:0.1:tend-τ2) .+ τ2,idxs=1).u,xlims=(-1.5,1.5),ylims=(-1.5,1.5),zlims=(-1.5,1.5),legend=false,title="τ=2.1")
+	solD3 = solve(DDEProblem(simplest!,h([τ3],0.),h,(0,tend),[τ3]; constant_lags=[τ3]),alg = MethodOfSteps(Tsit5()));
+	pD3 = plot(solD3(0:0.1:tend-τ3,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3/2,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3,idxs=1).u,xlims=(-1.5,1.5),ylims=(-1.5,1.5),zlims=(-1.5,1.5),legend=false,title="τ=3.1")
+	p_11 = plot(pD1,pD2,pD3,layout=(1,3),size=(1200,500),thickness_scaling = 1.2)
+	savefig(p_11, "figure11.svg")
+	p_11
 end	
 
 # ╔═╡ aacd48cb-77c3-4458-aece-09def7b28a9d
@@ -2975,6 +3004,8 @@ version = "1.4.1+1"
 # ╟─f5a0d1a8-0b24-4a6a-ae0c-59c6b67d68b3
 # ╠═1e89d3da-961e-40f8-b1b4-0fef94a16b4b
 # ╠═1f4cd54d-2334-440d-a2c4-b012cd09a3db
+# ╠═41fda3e5-b7ef-4af0-80ce-91a716cd759a
+# ╠═fab4d99e-f560-43b7-bc10-a66f667173b9
 # ╟─aacd48cb-77c3-4458-aece-09def7b28a9d
 # ╟─5de836bc-d3aa-4e5f-bb50-8862099e895f
 # ╟─00000000-0000-0000-0000-000000000001
