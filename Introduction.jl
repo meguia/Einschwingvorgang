@@ -239,7 +239,7 @@ begin
 	x2,y2 = spring(2.0,10,ysc/10);
 	x3,y3 = spring(0.5,10,ysc/10);
 	x4,y4 = spring(2.0,10,ysc/10);
-	p7 = plot(x1 .- of,y1 .+ 1.5*ysc, c=:black)
+	p7a = plot(x1 .- of,y1 .+ 1.5*ysc, c=:black)
 	plot!(x2 .- of,y2 .+ 0.5*ysc, c=:black)
 	plot!(x3 .- of,y3 .- 0.5*ysc, c=:black)
 	plot!(x4 .- of,y4 .- 1.5*ysc, c=:black)
@@ -261,8 +261,10 @@ begin
 	plot!([0,0],[-5,5],ls=:dash,c=:black,arrow=true)
 	annotate!([6,0.5],[-0.5,5],["x","v"])
 	annotate!([-10.5,-10.5,-10.5,-10.5],[1.5,0.5,-0.5,-1.5].*ysc,string.(1:4),:red)
-	plot!(xlims=(-11,6.0),size=(800,500),legend=false,showaxis=false,thickness_scaling = 1.4)
+	plot!(xlims=(-11,6.0),size=(800,500),legend=false,showaxis=false)
 	plot!(4*exp.(-(0:0.01:tmax)/25).*cos.(0:0.01:tmax),4*exp.(-(0:0.01:tmax)/25).*sin.(0:0.01:tmax),c=RGBA(0,0,1.0,0.5))
+	p7b = plot(0:0.01:tmax,4*exp.(-(0:0.01:tmax)/25).*cos.(0:0.01:tmax),xlabel="t",ylabel="x(t)",c=1,lw=2,size=(400,500),legend=false)
+	p7 = plot(p7a,p7b,layout = grid(1,2, widths=[0.7 ,0.3]),size=(1200,500),left_margin=5mm,bottom_margin=5mm,thickness_scaling = 1.4)
 	savefig(p7, "figure7.svg")
 	p7
 end	
