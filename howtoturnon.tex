@@ -322,7 +322,7 @@ To write the differential equations that give the evolution of this system we ca
 
 \begin{eqnarray}
     \dot{x} & = & v \\
-    \dot{v} & = & -\gamma y -kx 
+    \dot{v} & = & -\gamma v -kx 
 \end{eqnarray}
 
 The first equation links the velocity with the derivative of the position in time. 
@@ -347,8 +347,58 @@ In its simplest form we can think of a nonlinear damping in the form of $\gamma 
 
 \begin{eqnarray}
     \dot{x} & = & v \\
-    \dot{v} & = & \gamma y - y^3 -kx 
+    \dot{v} & = & \gamma v - v^3 -kx 
+    \label{eq_selfosc}
 \end{eqnarray}
+
+The behavior of this system is displayed in Figure 8 for three values of $\gamma$ with a fixed value $k$ of 0.2. 
+The top row shows the time evolution of $v$ for an initial condition and the bottom row shows the evolution of that trajectory in the ($x,v$) phase space. 
+When the value of $\gamma$ is negative we have the same situation as for the harmonic oscillator with dissipation (the effect of the cubic term is to increase the resistance for higher amplitudes) and all the initial conditions evolve following spirals towards the node at the origin, as shown in the left column of Figure 8. 
+
+However, when $\gamma$ becomes positive the origin becomes an unstable fixed point because any small perturbation grows locally because of the positive $
+\gamma v$ term. 
+However the system continues to be globally stable since for large amplitudes of oscillation the cubic term dominates and the trajectories tend towards the origin. 
+These two effects combine, causing the trajectories to accumulate in an intermediate amplitude zone, giving rise to a stable limit cycle. 
+This is shown the central column of Figure 8 where an outward spiraling trajectory from very close to the origin, an inward spiraling trajectory coming from large amplitudes and the stable limit cycle are depicted in blue and orange color respectively. 
+ 
+On the other hand, when the value of $\gamma$ is small the oscillations resemble those of the harmonic oscillator as shown in the center column of Figure 8 for $\gamma=0.1$. Note that approximately ten cycles are displayed in the time range chosen for the variable (150 time units).
+
+As the value of $\gamma$ increases, the amplitude of the stable limit cycle becomes larger but also changes its shape, as can be seen in the right column of Figure 8. 
+The periodic orbit now consists of two parts: a slow one corresponding to the slightly tilted horizontal sections and a fast one corresponding to the vertical sections of the trajectory. 
+This is what is known as a {\em relaxation oscillator} and as a consequence the waveform (displayed on top) has a higher harmonic content and its frequency decreases by approximately 30 percent (seven cycles are displayed for the same time range). Also the convergence to the limit cycle is much faster.
+
+The qualitative change that happens in this system when $\gamma$ crosses zero also constitutes a bifurcation and its type is perhaps the most common bifurcation among all natural systems that give rise to an oscillation. 
+It is known as a {\em Hopf} bifurcation and is characterized by a spiral attractor point losing stability and becoming a repulsor while the system remains globally stable. As a consequence a limit cycle of low amplitude and well-defined frequency appears encircling the repulsor. This well-defined frequency for the self-oscillator described by the equations \ref{eq_selfosc} is $\omega=\sqrt{k}$.
+
+What is the difference between the saddle node bifurcation in the circle that we saw before and the Hopf bifurcation? 
+Both give rise to oscillations but with very different characteristics which are summarized in the following table.
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |c|c|c| }
+ \hline
+ Bifurcation & Saddle-Node on Circle & Hopf \\ 
+ \hline
+ \hline
+ Frequency & 0 &  $\sqrt{k}$ \\
+ \hline
+ Amplitude & finite & 0 \\ 
+ \hline
+ Before & Saddle and Node with an & Spiral attractor \\ 
+ & heteroclinic connection & \\
+ \hline
+ Bifurcation & Saddle and Node collapse & Spiral loose stability \\ 
+ \hline
+ After & Limit Cycle & Spiral repulsor and limit cycle\\
+ \hline
+\end{tabular}
+\caption{...}
+\end{center}
+\end{table}
+
+It is important to note that these characteristics do not depend on the specific system. 
+They can even appear in systems with many variables. 
+They constitute, so to speak, classes of universality in the way an oscillation can appear in the system.
 
 \begin{figure}
     \centering
@@ -359,10 +409,26 @@ In its simplest form we can think of a nonlinear damping in the form of $\gamma 
 
 \subsubsection{A self-tuned oscillator}
 
+One drawback of the self-oscillator described by the equations \ref{eq_selfosc} is that although at the bifurcation its frequency is well defined by the parameter $k$, as the bifurcation parameter $\gamma$ increases the frequency drops dramatically. 
+This can be seen in Figure 8, but also more clearly in the left panels of Figure 9. 
+The upper panel displays the waveform for the $v$ variable for $k=0.2$ with two different values of $\gamma$: 0.2 (blue line) and 1.5 (orange line). 
+The lower panel depicts the same for $k=1.5$. 
+In both cases the waveform for the higher value of $\gamma$ is lower in frequency but this effect is much more evident for $k=0.2$.
+
+This frequency drop appears because the trajectory of the limit cycle is gradually decomposing into two distinct sections (the diagonal and vertical sides of the relaxation oscillator) and the slow part is becoming more and more important. 
+Fortunately this can be partially compensated by introducing a nonlinearity in the elastic force. 
+We thus have a much more finely tuned self-oscillator given by the equations.
+
 \begin{eqnarray}
     \dot{x} & = & v \\
     \dot{v} & = & \gamma y - y^3 -kx(1+0.16\sqrt{k}x^2)
+    \label{eq_selftuned}
 \end{eqnarray}
+
+the parameters are the same but now a new term appears with a manually adjusted value of 0.16 that partially compensates the detuning. 
+
+This can be seen in the right column of Figure 9 where we display the waveforms for $k=0.2$ (top) and $k=1.5$ (bottom) with two values of $\gamma$: 0.2 (blue) and 1.5 (orange), as before. 
+In this case, although there is some detuning, it is clear that it is much less than in the case of the self-oscillator shown on the left.
 
 \begin{figure}[h]
     \centering
@@ -392,6 +458,7 @@ In its simplest form we can think of a nonlinear damping in the form of $\gamma 
 \subsection{The "simplest" system}
 \begin{equation}
     \dot{x} =  x(t-\tau)-x(t-\tau)^3 - \gamma x 
+    \label{eq_delay}
 \end{equation}
 
 \begin{figure}[h]

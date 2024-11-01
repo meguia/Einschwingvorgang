@@ -289,18 +289,18 @@ begin
 	sol82b = solve(ODEProblem(self_oscillator!, [0.1,0.0], (0.0,150), [0.1, 0.2]));
 	sol83 = solve(ODEProblem(self_oscillator!, [0.0,2.0], (0.0,150), [1.5, 0.2]));
 	sol83b = solve(ODEProblem(self_oscillator!, [0.0,0.1], (0.0,150), [1.5, 0.2]));
-	p81 = plot(sol81,idxs=(0,2),ylabel="y(t)",title="γ=-0.05 k=0.2",legend=false)
-	p81b = plot(sol81,idxs=(1,2),xlabel="x",ylabel="y",legend=false)
-	p82 = plot(sol82b,idxs=(0,2),ylabel="y(t)",title="γ=0.1 k=0.2",legend=false)
-	p82b = plot(sol82b,idxs=(1,2),xlabel="x",ylabel="y",legend=false)
+	p81 = plot(sol81,idxs=(0,2),ylabel="v(t)",title="γ=-0.05 k=0.2",legend=false)
+	p81b = plot(sol81,idxs=(1,2),xlabel="x",ylabel="v",legend=false)
+	p82 = plot(sol82b,idxs=(0,2),ylabel="v(t)",title="γ=0.1 k=0.2",legend=false)
+	p82b = plot(sol82b,idxs=(1,2),xlabel="x",ylabel="v",legend=false)
 	plot!(sol82,idxs=(1,2))
-	p83 = plot(sol83b,idxs=(0,2),ylabel="y(t)",title="γ=1.5 k=0.2",legend=false)
-	p83b = plot(sol83b,idxs=(1,2),xlabel="x",ylabel="y",legend=false)
+	p83 = plot(sol83b,idxs=(0,2),ylabel="v(t)",title="γ=1.5 k=0.2",legend=false)
+	p83b = plot(sol83b,idxs=(1,2),xlabel="x",ylabel="v",legend=false)
 	plot!(sol83,idxs=(1,2))
 	p8 = plot(p81,p82,p83,p81b,p82b,p83b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	if savefigures
-		savefig(p8, "figure8.svg")
-	end
+	#if savefigures
+	savefig(p8, "figure8.svg")
+	#end
 	p8
 end	
 
@@ -321,18 +321,18 @@ begin
 	sol92b = solve(ODEProblem(selftune_oscillator!, [0.0,0.1], (0.0,150), [1.5, 0.2,0.17]));
 	sol93b = solve(ODEProblem(selftune_oscillator!, [0.0,0.1], (0.0,150), [0.2, 1.0,0.17]));
 	sol94b = solve(ODEProblem(selftune_oscillator!, [0.0,0.1], (0.0,150), [1.5, 1.0,0.17]));
-	p91 = plot(sol91,idxs=(0,2),ylabel="y(t)",title="self-oscillator",legend=false)
-	plot!(sol92,idxs=(0,2),ylabel="y(t)",legend=false)
-	p92 = plot(sol91b,idxs=(0,2),ylabel="y(t)",title="self-tuned oscillator",legend=false)
-	plot!(sol92b,idxs=(0,2),ylabel="y(t)",legend=false)
-	p93 = plot(sol93,idxs=(0,2),ylabel="y(t)",legend=false)
-	plot!(sol94,idxs=(0,2),ylabel="y(t)",legend=false)
-	p94 = plot(sol93b,idxs=(0,2),ylabel="y(t)",legend=false)
-	plot!(sol94b,idxs=(0,2),ylabel="y(t)",legend=false)
+	p91 = plot(sol91,idxs=(0,2),ylabel="v(t)",title="self-oscillator",legend=false)
+	plot!(sol92,idxs=(0,2),ylabel="v(t)",legend=false)
+	p92 = plot(sol91b,idxs=(0,2),ylabel="v(t)",title="self-tuned oscillator",legend=false)
+	plot!(sol92b,idxs=(0,2),ylabel="v(t)",legend=false)
+	p93 = plot(sol93,idxs=(0,2),ylabel="v(t)",legend=false)
+	plot!(sol94,idxs=(0,2),ylabel="v(t)",legend=false)
+	p94 = plot(sol93b,idxs=(0,2),ylabel="v(t)",legend=false)
+	plot!(sol94b,idxs=(0,2),ylabel="v(t)",legend=false)
 	p9 = plot(p91,p92,p93,p94,layout=(2,2),size=(1200,400),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	if savefigures
-		savefig(p9, "figure9.svg")
-	end	
+	#if savefigures
+	savefig(p9, "figure9.svg")
+	#end	
 	p9
 end	
 
