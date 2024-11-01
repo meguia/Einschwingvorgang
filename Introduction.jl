@@ -234,6 +234,7 @@ begin
 	of = 10
 	ysc = 3.0
 	xsc = 0.5
+	tmax = 150
 	x1,y1 = spring(3.5,10,ysc/10);
 	x2,y2 = spring(2.0,10,ysc/10);
 	x3,y3 = spring(0.5,10,ysc/10);
@@ -261,6 +262,7 @@ begin
 	annotate!([6,0.5],[-0.5,5],["x","v"])
 	annotate!([-10.5,-10.5,-10.5,-10.5],[1.5,0.5,-0.5,-1.5].*ysc,string.(1:4),:red)
 	plot!(xlims=(-11,6.0),size=(800,500),legend=false,showaxis=false,thickness_scaling = 1.4)
+	plot!(4*exp.(-(0:0.01:tmax)/25).*cos.(0:0.01:tmax),4*exp.(-(0:0.01:tmax)/25).*sin.(0:0.01:tmax),c=RGBA(0,0,1.0,0.5))
 	savefig(p7, "figure7.svg")
 	p7
 end	
