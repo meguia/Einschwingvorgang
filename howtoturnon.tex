@@ -44,7 +44,7 @@
 
 \maketitle
 
-\section{Evolution Rules}
+\section{One dimensional oscillations on the circle}
 We are interested in oscillations for the generation of sound. So we are interested in some magnitude that changes in time in a continuous way but remains bounded. It does not necessarily have to be periodic but it must be continuous because eventually at some point it will be transformed into sound.
 We will further consider that this quantity arises from a deterministic system, i.e. the immediate future state of the system is determined by a rule that depends only on the present state. The state of the system is defined by one or more variables that evolve over time, and it is from these variables that we derive the magnitude to be converted into sound. 
 Because we assume continuous evolution, defining the concept of "immediate future" requires careful consideration.
@@ -143,6 +143,7 @@ The frequency is constant because once the system returns to the same state afte
 And the waveform is asymmetric because the point moves faster in one part of the cycle than in the other.
 
 \begin{figure}[h]
+    \centering
     \resizebox*{6cm}{!}{\includegraphics{figure3.eps}}
     \caption{The magnitude to be converted into sound (the cosine of the angle as a function of time) for the Adler's equation (3) with $\mu=1.5$} 
     \label{adler2}
@@ -194,7 +195,7 @@ As expected, this produces a flatter part of the waveform even than in the previ
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure5.eps}}
-    \caption{dler oscillator given by Equation (3) with $\mu=0.9$: a) phase space, b) time derivative, and c) the cosine of the angle as a function of time} 
+    \caption{Adler oscillator given by Equation (3) with $\mu=0.9$: a) phase space, b) time derivative, and c) the cosine of the angle as a function of time} 
     \label{fig_adler4}
 \end{figure}
 
@@ -248,9 +249,69 @@ This means that the Saddle Node Bifurcation on the Circle is one of the ways (pe
     \item What happens if the system is at node N and we add a small perturbation in the variable? And how does it change if we add the perturbation when the system is in the saddle S? 
     \item Suppose we are at a value very close to the bifurcation with the value of $\mu$ slightly below 1. This implies that the node and the saddle are very close. What happens if the system is decaying to the node and we add a perturbation? Distinguish whether the perturbation is positive or negative.
 \end{enumerate}
-%\section{Two Dimensional Phase Space}
+\section{Self-sustained oscilations}
 
-%\subsection{The simplest physical oscillator (harmonic)}
+\subsubsection{Impossibility of oscillations in one dimension (on the straight line).}
+
+The previous system was defined by the evolution of a single variable, namely that the value of that variable univocally determines the state of the system.
+The phase space, which is defined as the space of all possible states where each state corresponds to a single point in that space and vice versa, was therefore one-dimensional. 
+However, a peculiarity of the previous phase space is that the state was defined by the angle and was therefore a circle. 
+Any angle by adding or subtracting $2\pi$ corresponds to the same state. 
+In general a continuous variable that does not have this requirement can be associated to a phase space on a straight line.
+In this case our differential equation for the $x$ variable in the straight line:
+
+\begin{equation}
+    \dot x = f(x)
+    \label{eq_1d}
+\end{equation}
+
+will define the evolution through the arbitrary function $f(x)$. 
+If we represent this arbitrary function superimposed to the line we can plot with arrows qualitatively where the system will evolve as shown in Figure 6.
+
+\begin{figure}
+    \centering
+    \resizebox*{6cm}{!}{\includegraphics{figure6.eps}}
+    \caption{An arbitrary function $f(x)$ for the time evolution of the one-dimensional dynamical system given by equation \ref{eq_1d} and the flow in the phase space given by the red arrows} 
+    \label{fig_onedimension}
+\end{figure}
+
+In all the intervals where the function is positive the derivative with respect to time is positive and the evolution increases the variable, i.e. the flow is to the right. 
+And in turn, in all the intervals where the function is negative the time derivative is negative and the evolution decreases the variable and the flow is to the left.
+
+As in Figure 5 the points where the function crosses the horizontal axis correspond to fixed points and if the arrows converge towards them are stable nodes (N) and if the arrows diverge they are unstable or saddle points (S). 
+Note that we can also distinguish S and N points by the slope of the function when it crosses the horizontal axis. 
+If the slope is negative the arrows converge (it is an N) and if the slope is positive the arrows diverge (an S point). 
+Any initial condition in this system will evolve approaching the nearest node N and will stay in its neighborhood. In other words, it is not possible to have oscillations in any one-dimensional system on the line. 
+
+Another way of looking at it is that no evolution can cross the same point twice going in two different directions, which would be equivalent to having two arrows at the same point. 
+Note that this is because precisely the definition of our systems is that their evolution is univocally determined by their present state which corresponds only to one point in the phase space and if that point had two arrows it would have two futures. 
+The “trick” that allowed to have oscillations with only one variable in the previous case was to curve the phase space of the straight line to form a circle. 
+In that case an always positive evolution corresponds to an oscillation around the circle. 
+In other words, the oscillation was possible only because of the particular topology of the phase space. 
+
+\subsection{The simplest physical oscillator (harmonic)}
+
+To have oscillations without any “tricks” with phase space topology we need to go into two dimensions. 
+That is, we need at least two continuous variables in a phase space on the plane in order to have oscillations. 
+
+This is a well-known result from physics. 
+In order to describe an oscillator we need at least two variables: its position and its velocity, since with only the position we cannot univocally determine its state. 
+A mass attached to a spring or a pendulum passes twice through the same position but with two different velocities and that is something constitutive of the oscillation. T
+herefore, if we say that the state of the system is univocally determined by the value of its variables, a physical oscillator needs at least a two-dimensional phase space. 
+
+And since we take this example we can make those variables the position and velocity of this simple oscillator. 
+Figure 7 shows a mass attached to a spring and four stages in its oscillation. 
+The position is indicated by the horizontal coordinate ($x$) and the velocity by the arrow ($v$). In the bottom row this state is represented in the phase space ($x,v$).
+It is not difficult to see that the evolution of this system results in a cycle in phase space that closes on itself if there is no dissipation of energy. 
+After starting from the right position with the spring stretched with no velocity (1) the system accelerates by the spring action in the negative direction and passes through the middle point with maximum negative velocity (2) and starts to compress the spring until it reaches the maximum compression on the left with zero velocity (3) and then starts to accelerate in the negative direction passing again through the middle point with maximum positive velocity (4) and starts to stretch the spring until it returns to the initial point.  
+
+\begin{figure}[h]
+    \centering
+    \resizebox*{9cm}{!}{\includegraphics{figure7.eps}}
+    \caption{Phase space representation of four states (1-4) of the ideal harmonic oscillator without dissipation portrayed as a spring-mass system in the left} 
+    \label{fig_harmosc}
+\end{figure}
+
 
 %\subsection{Turning on the oscillation (negative friction)}
 

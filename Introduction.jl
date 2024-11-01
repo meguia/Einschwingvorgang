@@ -4,8 +4,21 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ d6432280-943b-11ef-22c3-99d4db1fb21d
 using Plots, DifferentialEquations, PlutoUI, LaTeXStrings, Measures
+
+# ╔═╡ 5117071c-e560-4e1c-8414-ab87848abefa
+savefigures = false
 
 # ╔═╡ b0733f49-e486-45b2-bb17-396400079ba7
 begin
@@ -23,7 +36,9 @@ begin
 	p1c = plot([0,10],[0,10],ylabel="θ(t)",xlabel="t",legend=false)
 	annotate!(p1c,-4, 10.0, text("c)", :black,:12))
 	p1 = plot(p1a,p1b,p1c,layout=(1,3),size=(1500,450),left_margin=5mm,bottom_margin=5mm,thickness_scaling = 1.5)
-	savefig(p1, "figure1.svg")
+	if savefigures
+		savefig(p1, "figure1.svg")
+	end	
 	p1
 end	
 
@@ -68,20 +83,29 @@ begin
 	plot!(p2c,[2*pi-0.7-2,2*pi-0.7+2],[2*pi-5,2*pi+5],ls=:dash,c=2)
 	annotate!(p2c,-5, 20.0, text("c)", :black,:12))
 	p2 = plot(p2a,p2b,p2c,layout=(1,3),size=(1500,450),left_margin=5mm,bottom_margin=5mm,thickness_scaling = 1.5)
-	savefig(p2, "figure2.svg")
+	if savefigures
+		savefig(p2, "figure2.svg")
+	end
 	p2
 end	
 
 # ╔═╡ e9fa51db-3f3d-4b51-985b-22417c6fee30
 begin
 	p2d = plot(sol,idxs=((t,x)->(t,cos(x)),0,1),ylabel="cos(θ)",legend=false,size=(500,450))
-	p3 = plot(p2d,layout=(1,3),left_margin=5mm,bottom_margin=5mm,thickness_scaling = 1.5)
-	savefig(p3, "figure3.svg")
+	p3 = plot(p2d,layout=(1,3),thickness_scaling = 1.5)
+	if savefigures
+		savefig(p3, "figure3.svg")
+	end	
 	p3
 end	
 
 # ╔═╡ fb975469-32cd-4eab-94ae-0f1ffdb28931
-
+# solucion analitica
+begin
+	μ = 1.5
+	t = 0:0.001:17
+	θt = 2.0*atan(μ)
+end	
 
 # ╔═╡ bebfb1ed-bf92-4c91-947e-90e5b52608cc
 adler2(u,p,t) = 1.5+cos(u)-0.3*sin(2*u+0.5)-0.2*cos(3*u+2)
@@ -115,7 +139,9 @@ begin
 	p3c = plot(sol2,idxs=((t,x)->(t,cos(x)),0,1),ylabel="cos(θ)",legend=false)
 	annotate!(p3c,-9, 1.0, text("c)", :black,:12))
 	p4 = plot(p3a,p3b,p3c,layout=(1,3),size=(1500,450),left_margin=5mm,bottom_margin=5mm,thickness_scaling = 1.5)
-	savefig(p4, "figure4.svg")
+	if savefigures
+		savefig(p4, "figure4.svg")
+	end
 	p4
 end	
 
@@ -156,12 +182,104 @@ begin
 	p4c = plot(sol3,idxs=((t,x)->(t,cos(x)),0,1),ylabel="cos(θ)",legend=false)
 	annotate!(p4c,-8, 1.0, text("c)", :black,:12))
 	p5 = plot(p4a,p4b,p4c,layout=(1,3),size=(1500,450),left_margin=5mm,bottom_margin=5mm,thickness_scaling = 1.5)
-	savefig(p5, "figure5.svg")
+	if savefigures
+		savefig(p5, "figure5.svg")
+	end	
 	p5
 end	
 
-# ╔═╡ 35f0cf24-0415-4ca7-9b3e-0e685800d02f
+# ╔═╡ 4457ff79-c2b6-4ad1-ba6e-18f7dab19366
+begin
+	f1(x) = 0.5*cos(2*x+0.3)-0.1*sin(x-0.3)^2+0.1*sin(x-1)^2+0.1*(x-0.2)^2
+	xs = -4:0.001:4
+	p6a = plot(xs,f1.(xs),lw=2,c=1,xlabel="x",ylabel="f(x)")
+	plot!(p6a,[-4,-2.1],[0,0],lw=3,c=:red,arrow=true)
+	plot!(p6a,[-1.15,-1.9],[0,0],lw=3,c=:red,arrow=true)
+	plot!(p6a,[-1,0.55],[0,0],lw=3,c=:red,arrow=true)
+	plot!(p6a,[1.8,0.75],[0,0],lw=3,c=:red,arrow=true)
+	plot!(p6a,[2,4],[0,0],lw=3,c=:red,arrow=true)
+	plot!(p6a,[-4.3,4.3],[0.0,0.0],ls=:dash,c=:black,legend=false)
+	scatter!(p6a,[-2],[0],ms=5,c=1)
+	scatter!(p6a,[-1.08],[0],ms=5,c=:white)
+	scatter!(p6a,[0.65],[0],ms=5,c=1)
+	scatter!(p6a,[1.93],[0],ms=5,c=:white)
+	annotate!(p6a,-2,-0.2,"N")
+	annotate!(p6a,-1.08,-0.2,"S")
+	annotate!(p6a,0.65,-0.2,"N")
+	annotate!(p6a,1.93,-0.2,"S",size=(600,450))
+	p6 = plot(p6a,layout=(1,3),thickness_scaling = 1.4)
+	savefig(p6, "figure6.svg")
+	p6
+end	
 
+# ╔═╡ 71135230-069b-450d-906c-5aeb63b4d0f5
+function spring(length,nspires,h)
+	x = [-0.1,0.0]
+	y = [0.0,0.0]
+	lsp = length/nspires
+	for n = 0:nspires-1
+		append!(x,[(n+0.25)*lsp,(n+0.5)*lsp,(n+0.75)*lsp,(n+1)*lsp])
+		append!(y,[h,0,-h,0])
+	end
+	append!(x,[length+0.1])
+	append!(y,[0])
+	return x,y
+end
+
+# ╔═╡ 0dc3dce5-da63-4ffc-934b-e14513b2d63a
+rectangle(w, h, x, y) = Shape(x .+ [0,w,w,0], y .+ [0,0,h,h])
+
+# ╔═╡ b2ff717b-7c25-40f0-91cf-d2159977c0de
+begin
+	of = 10
+	ysc = 3.0
+	xsc = 0.5
+	x1,y1 = spring(3.5,10,ysc/10);
+	x2,y2 = spring(2.0,10,ysc/10);
+	x3,y3 = spring(0.5,10,ysc/10);
+	x4,y4 = spring(2.0,10,ysc/10);
+	p7 = plot(x1 .- of,y1 .+ 1.5*ysc, c=:black)
+	plot!(x2 .- of,y2 .+ 0.5*ysc, c=:black)
+	plot!(x3 .- of,y3 .- 0.5*ysc, c=:black)
+	plot!(x4 .- of,y4 .- 1.5*ysc, c=:black)
+	plot!(rectangle(2*xsc,ysc/5,2.1 .- of,-ysc/10 - 1.5*ysc),c=:gray)
+	plot!(rectangle(2*xsc,ysc/5,0.6 .- of,-ysc/10 - 0.5*ysc),c=:gray)
+	plot!(rectangle(2*xsc,ysc/5,2.1 .- of,-ysc/10 + 0.5*ysc),c=:gray)
+	plot!(rectangle(2*xsc,ysc/5,3.6 .- of,-ysc/10 + 1.5*ysc),c=:gray)
+	scatter!([2.1,0.6,2.1,3.6] .+ (xsc-of),[-1.5,-0.5,0.5,1.5].*ysc,c=:green)
+	annotate!([2.1,0.6,2.1,3.6] .+ (4.5*xsc-of),[-1.5,-0.5,0.5,1.5].*ysc,["v>0","v=0","v<0","v=0"],:green)
+	plot!([2.1,1.1] .+ (xsc-of),[0.5,0.5] .* ysc,lw=2,arrow=true,c=:green)
+	plot!([2.1,3.1] .+ (xsc-of),[-1.5,-1.5] .* ysc,lw=2,arrow=true,c=:green)
+	plot!(4*cos.(0:-pi/20:-pi/2),4*sin.(0:-pi/20:-pi/2),c=:black,arrow=true)
+	plot!(4*cos.(-pi/2:-pi/20:-pi),4*sin.(-pi/2:-pi/20:-pi),c=:black,arrow=true)
+	plot!(4*cos.(pi:-pi/20:pi/2),4*sin.(pi:-pi/20:pi/2),c=:black,arrow=true)
+	plot!(4*cos.(pi/2:-pi/20:0),4*sin.(pi/2:-pi/20:-0),c=:black,arrow=true)
+	scatter!([4,0,-4,0],[0,-4,0,4],c=:black)
+	annotate!([4.4,0.3,-4.4,0.3],[0.3,-4.4,0.3,4.4],string.(1:4),:red)
+	plot!([-6,6],[0,0],ls=:dash,c=:black,arrow=true)
+	plot!([0,0],[-5,5],ls=:dash,c=:black,arrow=true)
+	annotate!([6,0.5],[-0.5,5],["x","v"])
+	annotate!([-10.5,-10.5,-10.5,-10.5],[1.5,0.5,-0.5,-1.5].*ysc,string.(1:4),:red)
+	plot!(xlims=(-11,6.0),size=(800,500),legend=false,showaxis=false,thickness_scaling = 1.4)
+	savefig(p7, "figure7.svg")
+	p7
+end	
+
+# ╔═╡ 995c438f-6c64-41b4-93ce-8a302053b629
+string.(1:4)
+
+# ╔═╡ 35f0cf24-0415-4ca7-9b3e-0e685800d02f
+function self_oscillator!(du,u,p,t)
+	du[1] = u[2]
+	du[2] = (p[1]-u[2]^2)*u[2]-p[2]*u[1]
+end
+
+# ╔═╡ 8317a5d7-788d-45c0-a44d-3167697c904b
+function selftune_oscillator!(du,u,p,t)
+	(μ,k,σ) = p
+    du[1] = u[2] 
+	du[2] = u[2]*(μ-u[2]^2)-k*u[1]*(1.0+σ*sqrt(k)*u[1]^2)
+end
 
 # ╔═╡ aacd48cb-77c3-4458-aece-09def7b28a9d
 html"""
@@ -176,6 +294,49 @@ input[type*="range"] {
 	width: 40%;
 }
 </style>
+"""
+
+# ╔═╡ 5de836bc-d3aa-4e5f-bb50-8862099e895f
+sp = html"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+
+# ╔═╡ d8fb9a89-4092-427f-b3d8-98a500237bbb
+md"""
+ω $(@bind ω Slider(0.1:0.1:3.0,default=1.0;show_value=true)) $sp
+γ $(@bind γ Slider(-0.1:0.1:2.0,default=0.0;show_value=true)) \
+tm $(@bind tm Slider(1:0.1:2,default=1.0;show_value=true)) $sp
+x0 $(@bind x0 Slider(-5.0:0.01:5.0,default=0.1;show_value=true)) \
+""" 
+
+# ╔═╡ f7ccd2ae-a128-473f-b8b0-189ef8ea5b2c
+begin
+	prob4 = ODEProblem(self_oscillator!, [x0,0.0], (0.0,10^tm), [γ, ω])
+	sol4 = solve(prob4);
+	p11 = plot(sol4,idxs=(0,2))
+	p12 = plot(sol4,idxs=(1,2))
+	plot(p11,p12,layout=(1,2),size=(1000,400))
+end	
+
+# ╔═╡ 1e89d3da-961e-40f8-b1b4-0fef94a16b4b
+md"""
+μ1 $(@bind μ1 Slider(-0.1:0.01:1.5,default=1.0;show_value=true)) $sp
+k $(@bind k Slider(0.1:0.01:2.0,default=0.0;show_value=true)) \
+σ $(@bind σ Slider(0.0:0.01:0.2,default=0.1;show_value=true)) \
+tm2 $(@bind tm2 Slider(1:0.1:2,default=1.0;show_value=true)) $sp
+x02 $(@bind x02 Slider(-5.0:0.01:5.0,default=0.1;show_value=true)) \
+""" 
+
+# ╔═╡ f5a0d1a8-0b24-4a6a-ae0c-59c6b67d68b3
+begin
+	prob5 = ODEProblem(selftune_oscillator!, [x02,0.0], (0.0,10^tm2), [μ1, k, σ])
+	sol5 = solve(prob5);
+	p21 = plot(sol5,idxs=(0,2))
+	p22 = plot(sol5,idxs=(1,2))
+	plot(p21,p22,layout=(1,2),size=(1000,400))
+end	
+
+# ╔═╡ 75eadd50-decf-48e4-a48b-78b678276861
+md"""
+$\dot\theta = \omega - \lambda\rho\cos(\theta)$
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -2740,6 +2901,7 @@ version = "1.4.1+1"
 
 # ╔═╡ Cell order:
 # ╠═d6432280-943b-11ef-22c3-99d4db1fb21d
+# ╠═5117071c-e560-4e1c-8414-ab87848abefa
 # ╠═b0733f49-e486-45b2-bb17-396400079ba7
 # ╠═b5d19727-f5de-45e8-a068-3f113ed272d9
 # ╠═95e27cbf-b41b-4670-b531-547ac9947fbc
@@ -2754,7 +2916,19 @@ version = "1.4.1+1"
 # ╠═f29ecc60-881f-4ec0-ac13-3e63245e800f
 # ╠═d5c3cfbe-ef27-4a37-a052-e44ad400de5c
 # ╠═07dff323-3206-4619-b086-2f90a456c5d9
+# ╠═4457ff79-c2b6-4ad1-ba6e-18f7dab19366
+# ╠═71135230-069b-450d-906c-5aeb63b4d0f5
+# ╠═0dc3dce5-da63-4ffc-934b-e14513b2d63a
+# ╠═b2ff717b-7c25-40f0-91cf-d2159977c0de
+# ╠═995c438f-6c64-41b4-93ce-8a302053b629
 # ╠═35f0cf24-0415-4ca7-9b3e-0e685800d02f
-# ╠═aacd48cb-77c3-4458-aece-09def7b28a9d
+# ╠═f7ccd2ae-a128-473f-b8b0-189ef8ea5b2c
+# ╠═d8fb9a89-4092-427f-b3d8-98a500237bbb
+# ╠═8317a5d7-788d-45c0-a44d-3167697c904b
+# ╟─f5a0d1a8-0b24-4a6a-ae0c-59c6b67d68b3
+# ╠═1e89d3da-961e-40f8-b1b4-0fef94a16b4b
+# ╟─aacd48cb-77c3-4458-aece-09def7b28a9d
+# ╟─5de836bc-d3aa-4e5f-bb50-8862099e895f
+# ╠═75eadd50-decf-48e4-a48b-78b678276861
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
