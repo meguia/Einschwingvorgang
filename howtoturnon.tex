@@ -8,6 +8,7 @@
  top=20mm,
  }
  \usepackage{graphicx}
+ \usepackage{amsmath}
  \usepackage{titling}
 
 \title{{\em Einschwingvorgänge} or How to turn on an oscillation}
@@ -302,7 +303,7 @@ herefore, if we say that the state of the system is univocally determined by the
 \begin{figure}
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure7.eps}}
-    \caption{Phase space representation of four states (1-4) of the ideal harmonic oscillator without dissipation (center) portrayed as a spring-mass system in the left, and time evolution of the $x$ variable for the case with friction (blue trajectory in the phase space)} 
+    \caption{Phase space representation of four states (1-4) of the ideal harmonic oscillator without dissipation (center) portrayed as a spring-mass system in the left, and time evolution of the $x$ variable for the case with dissipation (blue trajectory in the phase space)} 
     \label{fig_harmosc}
 \end{figure}
 
@@ -320,10 +321,12 @@ Thus, the real trajectory of the system in phase space is represented by the blu
 
 To write the differential equations that give the evolution of this system we can recur to the laws of Newton, which in this case have a simple expression. 
 
-\begin{eqnarray}
-    \dot{x} & = & v \\
-    \dot{v} & = & -\gamma v -kx 
-\end{eqnarray}
+\begin{subequations} \label{eq_harmosc}
+\begin{align}
+    \dot{x} & = v \\
+    \dot{v} & = -\gamma v -kx 
+\end{align}
+\end{subequations}
 
 The first equation links the velocity with the derivative of the position in time. 
 In fact that is the definition of velocity. 
@@ -345,14 +348,24 @@ This can be done by replacing the linear damping force $\gamma v$ for some non-l
 The positive part drives the system by supplying energy when the amplitude of the oscillations are small and the negative part acts as a strong nonlinear damping that prevents the unbounded buildup of energy for larger oscillations. 
 In its simplest form we can think of a nonlinear damping in the form of $\gamma v - v ^ 3$.
 
-\begin{eqnarray}
-    \dot{x} & = & v \\
-    \dot{v} & = & \gamma v - v^3 -kx 
-    \label{eq_selfosc}
-\end{eqnarray}
+\begin{subequations} \label{eq_selfosc}
+\begin{align}
+    \dot{x} & = v \\
+    \dot{v} & = \gamma v - v^3 -kx 
+\end{align}
+\end{subequations}
+
+
+\begin{figure}
+    \centering
+    \resizebox*{17cm}{!}{\includegraphics{figure8.eps}}
+    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the self-oscillator given by equation \ref{eq_selfosc} and three sets of parameters: before the Hopf bifurcation with $\gamma=-0.05$ (left), after the Hopf bifurcation with a small $\gamma=0.2$ value (center) and with a high $\gamma=1.5$ value when the relaxation oscillation is established (right).} 
+    \label{fig_selfosc}
+\end{figure}
 
 The behavior of this system is displayed in Figure 8 for three values of $\gamma$ with a fixed value $k$ of 0.2. 
-The top row shows the time evolution of $v$ for an initial condition and the bottom row shows the evolution of that trajectory in the ($x,v$) phase space. 
+The top row shows the time evolution of $v$ for an initial condition and the bottom row shows the evolution of that trajectory in the ($x,v$) phase space.
+The depiction of the trajectories in the phase space is also called a {\em phase portrait} of the system.
 When the value of $\gamma$ is negative we have the same situation as for the harmonic oscillator with dissipation (the effect of the cubic term is to increase the resistance for higher amplitudes) and all the initial conditions evolve following spirals towards the node at the origin, as shown in the left column of Figure 8. 
 
 However, when $\gamma$ becomes positive the origin becomes an unstable fixed point because any small perturbation grows locally because of the positive $
@@ -400,12 +413,7 @@ It is important to note that these characteristics do not depend on the specific
 They can even appear in systems with many variables. 
 They constitute, so to speak, classes of universality in the way an oscillation can appear in the system.
 
-\begin{figure}
-    \centering
-    \resizebox*{17cm}{!}{\includegraphics{figure8.eps}}
-    \caption{} 
-    \label{fig_selfosc}
-\end{figure}
+
 
 \subsubsection{A self-tuned oscillator}
 
@@ -419,11 +427,12 @@ This frequency drop appears because the trajectory of the limit cycle is gradual
 Fortunately this can be partially compensated by introducing a nonlinearity in the elastic force. 
 We thus have a much more finely tuned self-oscillator given by the equations.
 
-\begin{eqnarray}
-    \dot{x} & = & v \\
-    \dot{v} & = & \gamma y - y^3 -kx(1+0.16\sqrt{k}x^2)
-    \label{eq_selftuned}
-\end{eqnarray}
+\begin{subequations} \label{eq_selftuned}
+\begin{align}
+    \dot{x} & = v \\
+    \dot{v} & = \gamma y - y^3 -kx(1+0.16\sqrt{k}x^2)
+\end{align}
+\end{subequations}
 
 the parameters are the same but now a new term appears with a manually adjusted value of 0.16 that partially compensates the detuning. 
 
@@ -437,9 +446,25 @@ In this case, although there is some detuning, it is clear that it is much less 
     \label{fig_selftunedosc}
 \end{figure}
 
+Figure 10 shows four features of the oscillator defined by the equations \ref{eq_selftuned} plotted as a color scale in the parameter space ($k,\mu$). 
+Note that unlike the phase space, each point in this space corresponds to a different system, with a different evolution and with a different phase portrait. 
+In terms of sound synthesis we can think of the dynamic system as the sound generator and the parameters as external adjustment knobs that in principle serve us to explore different possibilities but that could also be modulated externally, although we will leave that for later.
+
+The upper left panel shows the angular frequency of the oscillator, which as already anticipated depends mainly on the $k$ parameter and does not vary too much with $\mu$ (only a slight pitch bend) thanks to the additional autotuning term. 
+Each thin black line separates a semitone and the thick black lines mark octaves. 
+As the frequency depends on $\sqrt{k}$ here we plot $k$ from 0.125 to 2 and that corresponds to two octaves in frequency.
+
+The upper right panel displays the peak-to-peak amplitude of the $v$ variable and it is apparent that only depends on $\mu$ (in fact it grows as $\sqrt{\mu}$). 
+
+The duration of the transient after starting at a distances of $\epsilon = 10^{-4}$ of the fixed point is displayed in a logarithmic scale in the lower left panel. 
+In this case the transient rapidly decreases after crossing the Hopf bifurcation ($\mu=0$). 
+
+Finally, the harmonic content of the signal is estimated as the percentage increase between the mean frequency (or spectral centroid, the average frequency weighted by the spectrum amplitude) and the inverse of the period of the limit cycle (fundamental frequency) and is displayed in the lower right panel.
+
+
 \begin{figure}[h]
     \centering
-    %\resizebox*{17cm}{!}{\includegraphics{}}
+    \resizebox*{15cm}{!}{\includegraphics{figure10.eps}}
     \caption{} 
     \label{fig_selfcompared}
 \end{figure}

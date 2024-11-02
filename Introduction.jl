@@ -15,7 +15,7 @@ macro bind(def, element)
 end
 
 # ╔═╡ d6432280-943b-11ef-22c3-99d4db1fb21d
-using Plots, DifferentialEquations, PlutoUI, LaTeXStrings, Measures
+using Plots, DifferentialEquations, PlutoUI, LaTeXStrings, Measures, JLD2
 
 # ╔═╡ 5117071c-e560-4e1c-8414-ab87848abefa
 savefigures = false
@@ -298,9 +298,9 @@ begin
 	p83b = plot(sol83b,idxs=(1,2),xlabel="x",ylabel="v",legend=false)
 	plot!(sol83,idxs=(1,2))
 	p8 = plot(p81,p82,p83,p81b,p82b,p83b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	#if savefigures
-	savefig(p8, "figure8.svg")
-	#end
+	if savefigures
+		savefig(p8, "figure8.svg")
+	end
 	p8
 end	
 
@@ -330,10 +330,33 @@ begin
 	p94 = plot(sol93b,idxs=(0,2),ylabel="v(t)",legend=false)
 	plot!(sol94b,idxs=(0,2),ylabel="v(t)",legend=false)
 	p9 = plot(p91,p92,p93,p94,layout=(2,2),size=(1200,400),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	#if savefigures
-	savefig(p9, "figure9.svg")
-	#end	
+	if savefigures
+		savefig(p9, "figure9.svg")
+	end	
 	p9
+end	
+
+# ╔═╡ 305276ba-fa54-4dbd-90cd-b2f78407367f
+begin
+	saved_values = load("nreed.jld2")
+	mu = saved_values["mu"]
+	knotes = saved_values["knotes"]
+	ampl = saved_values["ampl"]
+	freq = saved_values["freq"]
+	trans = saved_values["trans"]
+	harmc = saved_values["harmc"]
+end;	
+
+# ╔═╡ c7f1d4a9-7cff-42f3-9fb9-ad9c4e57e5c3
+begin
+	f3a = contourf(knotes,mu,freq',lc=:black, c = :imola, levels=sqrt.(2.0 .^(-3:1/6:1)),title="Frequency",xlabel="k",ylabel="μ")
+	contour!(knotes,mu,freq',lc=:black,lw=2, levels=sqrt.(2.0 .^(-3:2:1)))
+	f3b = contourf(knotes,mu,ampl',lw=0, c = :imola, title="Amplitude",xlabel="k",ylabel="μ")
+	f3c = contourf(knotes,mu,log10.(trans') .-1,c = :imola,lw=0,title="Transient Duration (Log 10)")
+	f3d = contourf(knotes,mu,100*(harmc' .- 1),c = :imola,lw=0,title="Harmonic Content")
+	fig10 = plot(f3a,f3b,f3c,f3d,layout=(2,2),size=(1200,1000))
+	savefig(fig10, "fig10.svg")
+	fig10
 end	
 
 # ╔═╡ 41fda3e5-b7ef-4af0-80ce-91a716cd759a
@@ -357,7 +380,9 @@ begin
 	solD3 = solve(DDEProblem(simplest!,h([τ3],0.),h,(0,tend),[τ3]; constant_lags=[τ3]),alg = MethodOfSteps(Tsit5()));
 	pD3 = plot(solD3(0:0.1:tend-τ3,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3/2,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3,idxs=1).u,xlims=(-1.5,1.5),ylims=(-1.5,1.5),zlims=(-1.5,1.5),legend=false,title="τ=3.1")
 	p_11 = plot(pD1,pD2,pD3,layout=(1,3),size=(1200,500),thickness_scaling = 1.2)
-	savefig(p_11, "figure11.svg")
+	if savefigures
+		savefig(p_11, "figure11.svg")
+	end	
 	p_11
 end	
 
@@ -418,6 +443,7 @@ end
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 Measures = "442fdcdd-2543-5da2-b0f3-8c86c306513e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
@@ -425,6 +451,7 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 DifferentialEquations = "~7.14.0"
+JLD2 = "~0.5.6"
 LaTeXStrings = "~1.4.0"
 Measures = "~0.3.2"
 Plots = "~1.40.8"
@@ -437,7 +464,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "010a0efac4d489fdcb508dc39f1e43d543e4832a"
+project_hash = "69fbe0ab4d5b0b45b6710f8de37c864bf64667fb"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "eea5d80188827b35333801ef97a40c2ed653b081"
@@ -1033,6 +1060,12 @@ version = "1.1.0"
     ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
     Tracker = "9f7883ad-71c0-57eb-9f7f-b5c9e6d3789c"
 
+[[deps.FileIO]]
+deps = ["Pkg", "Requires", "UUIDs"]
+git-tree-sha1 = "62ca0547a14c57e98154423419d8a342dca75ca9"
+uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+version = "1.16.4"
+
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
@@ -1266,6 +1299,12 @@ version = "0.2.2"
 git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
 uuid = "82899510-4779-5014-852e-03e436cf321d"
 version = "1.0.0"
+
+[[deps.JLD2]]
+deps = ["FileIO", "MacroTools", "Mmap", "OrderedCollections", "PrecompileTools", "Requires", "TranscodingStreams"]
+git-tree-sha1 = "b464b9b461ee989b435a689a4f7d870b68d467ed"
+uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+version = "0.5.6"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -3004,6 +3043,8 @@ version = "1.4.1+1"
 # ╟─f5a0d1a8-0b24-4a6a-ae0c-59c6b67d68b3
 # ╠═1e89d3da-961e-40f8-b1b4-0fef94a16b4b
 # ╠═1f4cd54d-2334-440d-a2c4-b012cd09a3db
+# ╠═305276ba-fa54-4dbd-90cd-b2f78407367f
+# ╠═c7f1d4a9-7cff-42f3-9fb9-ad9c4e57e5c3
 # ╠═41fda3e5-b7ef-4af0-80ce-91a716cd759a
 # ╠═fab4d99e-f560-43b7-bc10-a66f667173b9
 # ╟─aacd48cb-77c3-4458-aece-09def7b28a9d
