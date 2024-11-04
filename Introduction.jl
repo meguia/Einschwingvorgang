@@ -349,13 +349,13 @@ end;
 
 # ╔═╡ c7f1d4a9-7cff-42f3-9fb9-ad9c4e57e5c3
 begin
-	f3a = contourf(knotes,mu,freq',lc=:black, c = :imola, levels=sqrt.(2.0 .^(-3:1/6:1)),title="Frequency",xlabel="k",ylabel="μ")
+	f3a = contourf(knotes,mu,freq',lc=:black, c = :imola, levels=sqrt.(2.0 .^(-3:1/6:1)),title="Frequency",xlabel="k",ylabel="γ")
 	contour!(knotes,mu,freq',lc=:black,lw=2, levels=sqrt.(2.0 .^(-3:2:1)))
-	f3b = contourf(knotes,mu,ampl',lw=0, c = :imola, title="Amplitude",xlabel="k",ylabel="μ")
-	f3c = contourf(knotes,mu,log10.(trans') .-1,c = :imola,lw=0,title="Transient Duration (Log 10)",xlabel="k",ylabel="μ")
-	f3d = contourf(knotes,mu,100*(harmc' .- 1),c = :imola,lw=0,title="Harmonic Content",xlabel="k",ylabel="μ")
+	f3b = contourf(knotes,mu,ampl',lw=0, c = :imola, title="Amplitude",xlabel="k",ylabel="γ")
+	f3c = contourf(knotes,mu,log10.(trans') .-1,c = :imola,lw=0,title="Transient Duration (Log 10)",xlabel="k",ylabel="γ")
+	f3d = contourf(knotes,mu,100*(harmc' .- 1),c = :imola,lw=0,title="Harmonic Content",xlabel="k",ylabel="γ")
 	fig10 = plot(f3a,f3b,f3c,f3d,layout=(2,2),size=(1200,1000),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	if savefigures
+	if true
 		savefig(fig10, "figure10.svg")
 	end	
 	fig10
@@ -464,6 +464,9 @@ begin
 	end	
 	p_13
 end
+
+# ╔═╡ 27694471-34d9-46f6-92e1-aba080399b85
+
 
 # ╔═╡ 41fda3e5-b7ef-4af0-80ce-91a716cd759a
 function simplest!(du,u,h,p,t)
@@ -3482,6 +3485,7 @@ version = "1.4.1+1"
 # ╠═468b5ef2-6078-41e0-b212-ec4775ed54db
 # ╠═8b3b370b-96d7-4de4-9183-a0b3feac9e7c
 # ╠═49a0f4aa-36cf-4835-a2f5-856827d4a52a
+# ╠═27694471-34d9-46f6-92e1-aba080399b85
 # ╠═41fda3e5-b7ef-4af0-80ce-91a716cd759a
 # ╠═fab4d99e-f560-43b7-bc10-a66f667173b9
 # ╟─aacd48cb-77c3-4458-aece-09def7b28a9d

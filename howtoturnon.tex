@@ -405,7 +405,7 @@ Both give rise to oscillations but with very different characteristics which are
  After & Limit Cycle & Spiral repulsor and limit cycle\\
  \hline
 \end{tabular}
-\caption{...}
+\caption{Saddle-Node on Circle and Hopf bifurcations compared in terms of the frequency and amplitude of the stable limit cycle created at the bifurcation point. Also a description of the dynamical scenarios before during and after the bifurcation is included.}
 \end{center}
 \end{table}
 
@@ -442,13 +442,20 @@ In this case, although there is some detuning, it is clear that it is much less 
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure9.eps}}
-    \caption{} 
+    \caption{Time evolution of the $v$ variable for the self-oscillator given by equations \ref{eq_selfosc}} (left column) and the self-tuned oscillator given by equations \ref{eq_selftuned} (right column) for values of $k=0.2$ (top row) and $k=1.0$ (bottom row) and values of $\gamma=0.2$ (blue line) and $\gamma=1.5$ (orange line). 
     \label{fig_selftunedosc}
 \end{figure}
 
 Figure 10 shows four features of the oscillator defined by the equations \ref{eq_selftuned} plotted as a color scale in the parameter space ($k,\mu$). 
 Note that unlike the phase space, each point in this space corresponds to a different system, with a different evolution and with a different phase portrait. 
 In terms of sound synthesis we can think of the dynamic system as the sound generator and the parameters as external adjustment knobs that in principle serve us to explore different possibilities but that could also be modulated externally, although we will leave that for later.
+
+\begin{figure}[h!]
+    \centering
+    \resizebox*{15cm}{!}{\includegraphics{figure10.eps}}
+    \caption{Four characteristic mangnitudes for the self-tuned oscillator given by equations \ref{eq_selftuned} displayed as a color scale in the parameter space ($k,\gamma$): angular frequency, peak-to-peak amplitude for the $v$ variable, transient duration starting at $x=10^{-4}$, and harmonic content as a percentage} 
+    \label{fig_selfcompared}
+\end{figure}
 
 The upper left panel shows the angular frequency of the oscillator, which as already anticipated depends mainly on the $k$ parameter and does not vary too much with $\mu$ (only a slight pitch bend) thanks to the additional autotuning term. 
 Each thin black line separates a semitone and the thick black lines mark octaves. 
@@ -460,14 +467,6 @@ The duration of the transient after starting at a distances of $\epsilon = 10^{-
 In this case the transient rapidly decreases after crossing the Hopf bifurcation ($\mu=0$). 
 
 Finally, the harmonic content of the signal is estimated as the percentage increase between the mean frequency (or spectral centroid, the average frequency weighted by the spectrum amplitude) and the inverse of the period of the limit cycle (fundamental frequency) and is displayed in the lower right panel.
-
-
-\begin{figure}[h]
-    \centering
-    \resizebox*{15cm}{!}{\includegraphics{figure10.eps}}
-    \caption{} 
-    \label{fig_selfcompared}
-\end{figure}
 
 \subsection{Fictional frictions}
 
@@ -485,8 +484,8 @@ When the elastic force pulling to the left exceeds the friction, the mass will s
 
 \begin{figure}[h]
     \centering
-    \resizebox*{15cm}{!}{\includegraphics{figure11.eps}}
-    \caption{} 
+    \resizebox*{14cm}{!}{\includegraphics{figure11.eps}}
+    \caption{Spring-mass system on a conveyor belt with friction: a) physical representation of the system, b) two functional forms of the friction force with (blue) and without (red) a discontinuity at the origin} 
     \label{fig_belt}
 \end{figure}
 
@@ -531,7 +530,7 @@ orange line. Therefore the fixed point is always located at the intersection of 
 \begin{figure}[h]
     \centering
     \resizebox*{15cm}{!}{\includegraphics{figure12.eps}}
-    \caption{} 
+    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the system given by equations \ref{eq_bow} with the functional form for the friction of equation \ref{eq_bowfriction} that models the physical system of Figure 11. The left column displays the system before the Hopf bifurcation with only a stable fixed point and the center and left columns display the system after the Hopf bifurcation with a stable limit cycle for two values of the friction parameter $\gamma$} 
     \label{fig_bow}
 \end{figure}
 
@@ -576,8 +575,9 @@ Therefore this is a qualitatively different form in which an oscillation can app
 \begin{figure}[h]
     \centering
     \resizebox*{15cm}{!}{\includegraphics{figure13.eps}}
-    \caption{} 
+    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the system given by equations \ref{eq_bow} with the functional form for the friction of equation \ref{eq_fictional} for three $\sigma$ values. On the two first columns an unstable limit cycle divides the phase space in an inner region with trajectories decaying to a stable fixed point in the center (in blue) and an outer region with trajectories converging to a stable limit cycle (orange). In the left column the stable limit cycle has a clear relaxation oscillator form. In the right column both limit cycles collapsed in a Saddle-Node of Limit Cycles bifurcation and all trajectories decay towards the origin.} 
     \label{fig_friction2}
+    
 \end{figure}
 
 \subsection{The meaning of a saddle}
