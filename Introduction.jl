@@ -17,8 +17,16 @@ end
 # ╔═╡ d6432280-943b-11ef-22c3-99d4db1fb21d
 using Plots, DifferentialEquations, PlutoUI, LaTeXStrings, Measures, JLD2, Images
 
+# ╔═╡ cd8dccd3-5775-46c5-a814-555c25d56ba2
+TableOfContents()
+
 # ╔═╡ 5117071c-e560-4e1c-8414-ab87848abefa
 savefigures = false
+
+# ╔═╡ a92f8ada-8813-41e9-a6f8-483c79778ea8
+md"""
+# Figure 1
+"""
 
 # ╔═╡ b0733f49-e486-45b2-bb17-396400079ba7
 begin
@@ -50,6 +58,11 @@ prob = ODEProblem(adler, 0.0, (0.0,17), [1.5])
 
 # ╔═╡ 7783ef1a-caac-464e-bad9-118b5ae167b0
 sol = solve(prob);
+
+# ╔═╡ c27a294f-c407-464a-80a1-8745a002ba9c
+md"""
+# Figure 2
+"""
 
 # ╔═╡ 5c840a16-5aae-4811-9fe5-e70ebd42620e
 begin
@@ -89,6 +102,11 @@ begin
 	p2
 end	
 
+# ╔═╡ 06ded1ec-74d2-45cf-9207-7c0be99e7a44
+md"""
+# Figure 3
+"""
+
 # ╔═╡ e9fa51db-3f3d-4b51-985b-22417c6fee30
 begin
 	p2d = plot(sol,idxs=((t,x)->(t,cos(x)),0,1),ylabel="cos(θ)",legend=false,size=(500,450))
@@ -115,6 +133,11 @@ prob2 = ODEProblem(adler2, 0.0, (0.0,27.0))
 
 # ╔═╡ 15d40569-22eb-47fc-90e7-34e142f76ea1
 sol2 = solve(prob2);
+
+# ╔═╡ 729c8f03-dc0d-46e1-aabf-6b2ebe363f6c
+md"""
+# Figure 4
+"""
 
 # ╔═╡ b99692fb-7177-4062-b1c2-30d99c025ce7
 begin
@@ -150,6 +173,11 @@ prob3 = ODEProblem(adler, 0.0, (0.0,21.8), [0.87])
 
 # ╔═╡ d5c3cfbe-ef27-4a37-a052-e44ad400de5c
 sol3 = solve(prob3);
+
+# ╔═╡ 4be68d20-b06d-4b8c-8c08-88c7258cf01f
+md"""
+# Figure 5
+"""
 
 # ╔═╡ 07dff323-3206-4619-b086-2f90a456c5d9
 begin
@@ -187,6 +215,11 @@ begin
 	end	
 	p5
 end	
+
+# ╔═╡ 62374f62-ad91-4dc3-a7af-b7034b3f4782
+md"""
+# Figure 6
+"""
 
 # ╔═╡ 4457ff79-c2b6-4ad1-ba6e-18f7dab19366
 begin
@@ -231,6 +264,11 @@ end
 # ╔═╡ 0dc3dce5-da63-4ffc-934b-e14513b2d63a
 rectangle(w, h, x, y) = Shape(x .+ [0,w,w,0], y .+ [0,0,h,h])
 
+# ╔═╡ 817cbfc2-6a57-4329-80dd-9c230b6b94f8
+md"""
+# Figure 7
+"""
+
 # ╔═╡ b2ff717b-7c25-40f0-91cf-d2159977c0de
 begin
 	of = 10
@@ -273,14 +311,16 @@ begin
 	p7
 end	
 
-# ╔═╡ 995c438f-6c64-41b4-93ce-8a302053b629
-string.(1:4)
-
 # ╔═╡ 35f0cf24-0415-4ca7-9b3e-0e685800d02f
 function self_oscillator!(du,u,p,t)
 	du[1] = u[2]
 	du[2] = (p[1]-u[2]^2)*u[2]-p[2]*u[1]
 end
+
+# ╔═╡ e2ba3c93-0c9e-47e7-84cc-928d3ae3d16f
+md"""
+# Figure 8
+"""
 
 # ╔═╡ e926e9db-9c09-4f94-b147-4b7067030241
 begin
@@ -310,6 +350,11 @@ function selftune_oscillator!(du,u,p,t)
     du[1] = u[2] 
 	du[2] = u[2]*(μ-u[2]^2)-k*u[1]*(1.0+σ*sqrt(k)*u[1]^2)
 end
+
+# ╔═╡ d514e330-c2dd-4b56-8913-da9f1084a444
+md"""
+# Figure 9
+"""
 
 # ╔═╡ 1f4cd54d-2334-440d-a2c4-b012cd09a3db
 begin
@@ -347,6 +392,11 @@ begin
 	harmc = saved_values["harmc"]
 end;	
 
+# ╔═╡ 3ca76d34-c619-4ae3-942f-74deb6434c28
+md"""
+# Figure 10
+"""
+
 # ╔═╡ c7f1d4a9-7cff-42f3-9fb9-ad9c4e57e5c3
 begin
 	f3a = contourf(knotes,mu,freq',lc=:black, c = :imola, levels=sqrt.(2.0 .^(-3:1/6:1)),title="Frequency",xlabel="k",ylabel="γ")
@@ -355,7 +405,7 @@ begin
 	f3c = contourf(knotes,mu,log10.(trans') .-1,c = :imola,lw=0,title="Transient Duration (Log 10)",xlabel="k",ylabel="γ")
 	f3d = contourf(knotes,mu,100*(harmc' .- 1),c = :imola,lw=0,title="Harmonic Content",xlabel="k",ylabel="γ")
 	fig10 = plot(f3a,f3b,f3c,f3d,layout=(2,2),size=(1200,1000),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	if true
+	if savefigures
 		savefig(fig10, "figure10.svg")
 	end	
 	fig10
@@ -374,6 +424,11 @@ function bow!(du,u,p,t)
     du
 end    
 
+# ╔═╡ 8a4b2137-fbcc-4b32-92f1-15e4bfa47cb8
+md"""
+# Figure 11
+"""
+
 # ╔═╡ 883d4670-9a17-4e89-8737-e208bddfed43
 begin
 	vi = -2:0.01:2
@@ -391,6 +446,11 @@ begin
 	end	
 	p10
 end	
+
+# ╔═╡ 595b44c9-ad42-4c6f-8ae0-f3280fc2a8cf
+md"""
+# Figure 12
+"""
 
 # ╔═╡ dae53096-0d02-4b8c-987e-d46add3bf931
 begin
@@ -422,7 +482,6 @@ end
 # ╔═╡ 85a412e5-ca8a-415e-8ffd-1705e64f1b65
 begin
 	friction2(x,s) = +x-x^3+s*x^5
-	plot(-2:0.01:2,friction2.(-2:0.01:2,0.25))
 end
 
 # ╔═╡ 9de11efe-dd0f-4b33-b8ad-3fd734eae87b
@@ -431,6 +490,11 @@ function strange_bow!(du,u,p,t)
     du[2]=-p[1]*friction2(u[2],p[2])-u[1]
     du
 end   
+
+# ╔═╡ 5fa997b8-82b4-43a6-988e-f88b9ce97d35
+md"""
+# Figure 13
+"""
 
 # ╔═╡ 49a0f4aa-36cf-4835-a2f5-856827d4a52a
 begin
@@ -466,13 +530,69 @@ begin
 end
 
 # ╔═╡ 27694471-34d9-46f6-92e1-aba080399b85
+function homoclinic!(du, u, p, t)
+	(x,y) = u
+	du[1] = y
+    #du[2] = -p[1]+u[1]*(-0.5*u[2]+u[1]*(1-u[1]-u[2]))
+	du[2] = -0.5*x*y + x^2 - x^3 - x^2*y - p[1]
+end
 
+# ╔═╡ e7440b71-9eee-4f18-ba84-c057210a86fc
+md"""
+# Figure 14
+"""
+
+# ╔═╡ e1bee821-87ff-41e9-9049-c109a77cabcb
+begin
+	sol141 = solve(ODEProblem(homoclinic!, [-0.32,0.0], (0.0,121), [0.1]));
+	sol141b = solve(ODEProblem(homoclinic!, [0.6,-0.2], (0.0,80), [0.1]));
+	sol142 = solve(ODEProblem(homoclinic!, [-0.32,0.0], (0.0,250), [0.12]));
+	sol142b = solve(ODEProblem(homoclinic!, [0.58,-0.2], (0.0,60), [0.12]));
+	sol143 = solve(ODEProblem(homoclinic!, [-0.32,0.0], (0.0,200), [0.2]));
+	sol143b = solve(ODEProblem(homoclinic!, [0.5,-0.15], (0.0,100), [0.2]));
+	# for the time series
+	sol_141 = solve(ODEProblem(homoclinic!, [-0.32,0.0], (0.0,200), [0.1]));
+	sol_141b = solve(ODEProblem(homoclinic!, [0.6,-0.2], (0.0,200), [0.1]));
+	sol_142 = solve(ODEProblem(homoclinic!, [-0.32,0.0], (0.0,200), [0.12]));
+	sol_142b = solve(ODEProblem(homoclinic!, [0.58,-0.2], (0.0,200), [0.12]));
+	sol_143 = solve(ODEProblem(homoclinic!, [-0.32,0.0], (0.0,200), [0.2]));
+	sol_143b = solve(ODEProblem(homoclinic!, [0.5,-0.15], (0.0,200), [0.2]));
+	p141 = plot(sol_141,idxs=(0,2),ylabel="v(t)",title="μ=0.1",legend=false)
+	plot!(sol_141b,idxs=(0,2))
+	p141b = plot(sol141,idxs=(1,2),xlabel="x",ylabel="v",arrow=true,legend=false)
+	plot!(sol141b,idxs=(1,2),arrow=true)
+	scatter!([-0.28],[0],ms=3,c=:white)
+	scatter!([0.44],[0],ms=3,shape=:cross,c=:black)
+	scatter!([0.86],[0],ms=3,c=:black)
+	p142 = plot(sol_142,idxs=(0,2),ylabel="v(t)",title="μ=0.12",legend=false)
+	plot!(sol_142b,idxs=(0,2))
+	p142b = plot(sol142,idxs=(1,2),xlabel="x",ylabel="v",arrow=true,legend=false)
+	plot!(sol142b,idxs=(1,2),arrow=true)
+	scatter!([-0.3],[0],ms=3,c=:white)
+	scatter!([0.45],[0],ms=3,shape=:cross,c=:black)
+	scatter!([0.84],[0],ms=3,c=:black)
+	p143 = plot(sol_143,idxs=(0,2),ylabel="v(t)",title="μ=0.16",legend=false)
+	plot!(sol_143b,idxs=(0,2))
+	p143b = plot(sol143,idxs=(1,2),xlabel="x",ylabel="v",arrow=true,legend=false)
+	plot!(sol143b,idxs=(1,2),arrow=true)
+	scatter!([-0.38],[0],ms=3,c=:white)
+	p_14 = plot(p141,p142,p143,p141b,p142b,p143b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	if true
+		savefig(p_14, "figure14.svg")
+	end	
+	p_14
+end
 
 # ╔═╡ 41fda3e5-b7ef-4af0-80ce-91a716cd759a
 function simplest!(du,u,h,p,t)
 	hs = h(p,t-p[1])[1]
 	du[1] = hs*(1.0-hs*hs) - 0.2*u[1]
 end
+
+# ╔═╡ b46bcbbb-54ce-468d-9af0-dae9361de20d
+md"""
+# Extra
+"""
 
 # ╔═╡ fab4d99e-f560-43b7-bc10-a66f667173b9
 begin
@@ -513,77 +633,17 @@ input[type*="range"] {
 # ╔═╡ 5de836bc-d3aa-4e5f-bb50-8862099e895f
 sp = html"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
 
-# ╔═╡ d8fb9a89-4092-427f-b3d8-98a500237bbb
+# ╔═╡ a3337a2f-58c5-49fb-944b-339064bd0161
 md"""
-ω $(@bind ω Slider(0.1:0.1:3.0,default=1.0;show_value=true)) $sp
-γ $(@bind γ Slider(-0.1:0.1:2.0,default=0.0;show_value=true)) \
-tm $(@bind tm Slider(1:0.1:2,default=1.0;show_value=true)) $sp
+μ1 $(@bind μ1 Slider(0.0:0.01:0.2,default=0.1;show_value=true)) $sp
+tm $(@bind tm Slider(1:0.1:2,default=1.0;show_value=true)) \
 x0 $(@bind x0 Slider(-5.0:0.01:5.0,default=0.1;show_value=true)) \
 """ 
 
-# ╔═╡ f7ccd2ae-a128-473f-b8b0-189ef8ea5b2c
+# ╔═╡ 2f3e2583-3771-4096-af1e-8ad01f63c9d6
 begin
-	prob4 = ODEProblem(self_oscillator!, [x0,0.0], (0.0,10^tm), [γ, ω])
-	sol4 = solve(prob4);
-	p11 = plot(sol4,idxs=(0,2))
-	p12 = plot(sol4,idxs=(1,2))
-	plot(p11,p12,layout=(1,2),size=(1000,400))
-end	
-
-# ╔═╡ 1e89d3da-961e-40f8-b1b4-0fef94a16b4b
-md"""
-μ1 $(@bind μ1 Slider(-0.1:0.01:1.5,default=1.0;show_value=true)) $sp
-k $(@bind k Slider(0.1:0.01:2.0,default=0.0;show_value=true)) \
-σ $(@bind σ Slider(0.0:0.01:0.2,default=0.1;show_value=true)) \
-tm2 $(@bind tm2 Slider(1:0.1:2,default=1.0;show_value=true)) $sp
-x02 $(@bind x02 Slider(-5.0:0.01:5.0,default=0.1;show_value=true)) \
-""" 
-
-# ╔═╡ f5a0d1a8-0b24-4a6a-ae0c-59c6b67d68b3
-begin
-	prob5 = ODEProblem(selftune_oscillator!, [x02,0.0], (0.0,10^tm2), [μ1, k, σ])
-	sol5 = solve(prob5);
-	p21 = plot(sol5,idxs=(0,2))
-	p22 = plot(sol5,idxs=(1,2))
-	plot(p21,p22,layout=(1,2),size=(1000,400))
-end	
-
-# ╔═╡ 31785774-51a6-47ba-a8eb-66d26da3dcb7
-md"""
-v $(@bind v Slider(-2.0:0.1:2.0,default=0.0;show_value=true)) $sp
-k2 $(@bind k2 Slider(0.1:0.1:2.0,default=0.1;show_value=true)) \
-γ2 $(@bind γ2 Slider(0.1:0.1:2.0,default=0.1;show_value=true)) \
-tm3 $(@bind tm3 Slider(1:0.1:2,default=1.0;show_value=true)) $sp
-x03 $(@bind x03 Slider(-5.0:0.01:5.0,default=0.1;show_value=true)) \
-""" 
-
-# ╔═╡ becf7281-89fa-4ee9-901a-1da7e49e187f
-begin
-	prob6 = ODEProblem(bow!, [x03,0.0], (0.0,10^tm3), [γ2, v, k2])
-	sol6 = solve(prob6);
-	p121a = plot(sol6,idxs=(0,2),legend=false)
-	p122a = plot(sol6,idxs=(1,2))
-	plot!(-γ2*friction.((-1:0.01:1).-v),-1:0.01:1)
-	plot!([-1,1.2],[v,v],c=:black,ls=:dash,legend=false)
-	plot(p121a,p122a,layout=(1,2),size=(1000,400))
-	
-end	
-
-# ╔═╡ 8b3b370b-96d7-4de4-9183-a0b3feac9e7c
-md"""
-s4 $(@bind s4 Slider(0.05:0.005:0.3,default=0.1;show_value=true))
-γ4 $(@bind γ4 Slider(0.1:0.1:2.0,default=0.1;show_value=true)) \
-tm4 $(@bind tm4 Slider(1:0.1:2,default=1.0;show_value=true)) $sp
-x04 $(@bind x04 Slider(-5.0:0.01:5.0,default=0.1;show_value=true)) \
-""" 
-
-# ╔═╡ 468b5ef2-6078-41e0-b212-ec4775ed54db
-begin
-	prob7 = ODEProblem(strange_bow!, [x04,0.0], (0.0,10^tm4), [γ4, s4])
-	sol7 = solve(prob7);
-	p131a = plot(sol7,idxs=(0,2),legend=false)
-	p132a = plot(sol7,idxs=(1,2))
-	plot(p131a,p132a,layout=(1,2),size=(1000,400))
+	sol14 = solve(ODEProblem(homoclinic!,[x0,0.0],(0.0,10^tm),[μ1]))
+	plot(sol14,idxs=(1,2))
 end	
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -3444,49 +3504,59 @@ version = "1.4.1+1"
 
 # ╔═╡ Cell order:
 # ╠═d6432280-943b-11ef-22c3-99d4db1fb21d
+# ╠═cd8dccd3-5775-46c5-a814-555c25d56ba2
 # ╠═5117071c-e560-4e1c-8414-ab87848abefa
+# ╟─a92f8ada-8813-41e9-a6f8-483c79778ea8
 # ╠═b0733f49-e486-45b2-bb17-396400079ba7
 # ╠═b5d19727-f5de-45e8-a068-3f113ed272d9
 # ╠═95e27cbf-b41b-4670-b531-547ac9947fbc
 # ╠═7783ef1a-caac-464e-bad9-118b5ae167b0
+# ╟─c27a294f-c407-464a-80a1-8745a002ba9c
 # ╠═5c840a16-5aae-4811-9fe5-e70ebd42620e
+# ╟─06ded1ec-74d2-45cf-9207-7c0be99e7a44
 # ╠═e9fa51db-3f3d-4b51-985b-22417c6fee30
 # ╠═fb975469-32cd-4eab-94ae-0f1ffdb28931
 # ╠═bebfb1ed-bf92-4c91-947e-90e5b52608cc
 # ╠═c5e8be12-fbb9-4eb3-bbfe-e6eb70b3c768
 # ╠═15d40569-22eb-47fc-90e7-34e142f76ea1
+# ╟─729c8f03-dc0d-46e1-aabf-6b2ebe363f6c
 # ╠═b99692fb-7177-4062-b1c2-30d99c025ce7
 # ╠═f29ecc60-881f-4ec0-ac13-3e63245e800f
 # ╠═d5c3cfbe-ef27-4a37-a052-e44ad400de5c
+# ╠═4be68d20-b06d-4b8c-8c08-88c7258cf01f
 # ╠═07dff323-3206-4619-b086-2f90a456c5d9
+# ╟─62374f62-ad91-4dc3-a7af-b7034b3f4782
 # ╠═4457ff79-c2b6-4ad1-ba6e-18f7dab19366
 # ╠═71135230-069b-450d-906c-5aeb63b4d0f5
 # ╠═0dc3dce5-da63-4ffc-934b-e14513b2d63a
+# ╟─817cbfc2-6a57-4329-80dd-9c230b6b94f8
 # ╠═b2ff717b-7c25-40f0-91cf-d2159977c0de
-# ╠═995c438f-6c64-41b4-93ce-8a302053b629
 # ╠═35f0cf24-0415-4ca7-9b3e-0e685800d02f
-# ╠═f7ccd2ae-a128-473f-b8b0-189ef8ea5b2c
-# ╠═d8fb9a89-4092-427f-b3d8-98a500237bbb
+# ╠═e2ba3c93-0c9e-47e7-84cc-928d3ae3d16f
 # ╠═e926e9db-9c09-4f94-b147-4b7067030241
 # ╠═8317a5d7-788d-45c0-a44d-3167697c904b
-# ╠═1e89d3da-961e-40f8-b1b4-0fef94a16b4b
-# ╠═f5a0d1a8-0b24-4a6a-ae0c-59c6b67d68b3
+# ╟─d514e330-c2dd-4b56-8913-da9f1084a444
 # ╠═1f4cd54d-2334-440d-a2c4-b012cd09a3db
 # ╠═305276ba-fa54-4dbd-90cd-b2f78407367f
+# ╟─3ca76d34-c619-4ae3-942f-74deb6434c28
 # ╠═c7f1d4a9-7cff-42f3-9fb9-ad9c4e57e5c3
 # ╠═381af2f1-fcbb-485e-a7b4-2f79f789c86e
 # ╠═9c2d53ab-d3cb-452e-9037-8b0a8c96809e
+# ╟─8a4b2137-fbcc-4b32-92f1-15e4bfa47cb8
 # ╠═883d4670-9a17-4e89-8737-e208bddfed43
-# ╠═becf7281-89fa-4ee9-901a-1da7e49e187f
-# ╟─31785774-51a6-47ba-a8eb-66d26da3dcb7
+# ╟─595b44c9-ad42-4c6f-8ae0-f3280fc2a8cf
 # ╠═dae53096-0d02-4b8c-987e-d46add3bf931
 # ╠═85a412e5-ca8a-415e-8ffd-1705e64f1b65
 # ╠═9de11efe-dd0f-4b33-b8ad-3fd734eae87b
-# ╠═468b5ef2-6078-41e0-b212-ec4775ed54db
-# ╠═8b3b370b-96d7-4de4-9183-a0b3feac9e7c
+# ╟─5fa997b8-82b4-43a6-988e-f88b9ce97d35
 # ╠═49a0f4aa-36cf-4835-a2f5-856827d4a52a
 # ╠═27694471-34d9-46f6-92e1-aba080399b85
+# ╠═2f3e2583-3771-4096-af1e-8ad01f63c9d6
+# ╟─a3337a2f-58c5-49fb-944b-339064bd0161
+# ╟─e7440b71-9eee-4f18-ba84-c057210a86fc
+# ╠═e1bee821-87ff-41e9-9049-c109a77cabcb
 # ╠═41fda3e5-b7ef-4af0-80ce-91a716cd759a
+# ╟─b46bcbbb-54ce-468d-9af0-dae9361de20d
 # ╠═fab4d99e-f560-43b7-bc10-a66f667173b9
 # ╟─aacd48cb-77c3-4458-aece-09def7b28a9d
 # ╟─5de836bc-d3aa-4e5f-bb50-8862099e895f
