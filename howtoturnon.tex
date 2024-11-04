@@ -507,7 +507,7 @@ where as before the term $-kx$ corresponds to the elastic restitution and $F$ is
 Now we must imagine how is the form of this force. 
 One requirement for $F$ is that it must be very high for very low velocities and decrease as the velocity increases. 
 Of course, it must also always oppose the motion. 
-Notice that as we now put the negative sign outside the function it must be positive when $y>v_0$ (the mass is sliding on the belt pulled by the spring) and negative when $y<v_0$ (something that can happen on the left if the spring pushes the mass at a higher velocity than the belt). 
+Notice that as we now put the negative sign outside the function it must be positive when $v>v_0$ (the mass is sliding on the belt pulled by the spring) and negative when $v<v_0$ (something that can happen on the left if the spring pushes the mass at a higher velocity than the belt). 
 It is also reasonable to assume that this force is symmetric in both directions. 
 Thus, we need a function that is positive on the right that starts at a high value and begins to decay and on the left that is the same but from the negative. 
 
@@ -518,7 +518,7 @@ However we are going to use a “smoothed” version of this function (to avoid 
     F_{bow}(v) = \arctan(v/\epsilon) e^{-2|v|} 
 \end{equation}
 
-where $\epsilon$ is a small regularization parameter (we use $\epsilon = 10^{-4}$).
+where $\epsilon$ is a small regularization parameter (we use $\epsilon = 0.05$).
 The behavior of the system defined by equations \ref{eq_bow} with the friction force given by equation \ref{eq_bowfriction} is displayed in Figure 12 for three parameter values. 
 For the sake of simplicity we will fix $k=1$ in the following.
 
@@ -582,6 +582,22 @@ Therefore this is a qualitatively different form in which an oscillation can app
 
 \subsection{The meaning of a saddle}
 
+Homoclinic
+
+\begin{subequations} \label{eq_homoclinic}
+\begin{align}
+    \dot{x} & = v \\
+    \dot{v} & = xv/2 + x^2 - x^3 -x^2y - \mu
+\end{align}
+\end{subequations}
+
+\begin{figure}[h]
+    \centering
+    \resizebox*{15cm}{!}{\includegraphics{figure14.eps}}
+    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the system given by equations \ref{eq_homoclinic}.
+    unstable fixed point (white circle), saddle point (cross), stable fixed point or node (black circle)} 
+    \label{fig_homoclinic}
+\end{figure}
 \subsection{Questionnaire}
 \begin{enumerate}
 \item 
