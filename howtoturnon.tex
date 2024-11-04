@@ -471,12 +471,123 @@ Finally, the harmonic content of the signal is estimated as the percentage incre
 
 \subsection{Fictional frictions}
 
+In the previous section we showed how an oscillation can be started using a negative resistance for low velocities. 
+A negative resistance means a force acting in favor of the velocity, which represents a positive feedback. 
+However for high speeds this resistance has to become positive, i.e. again acting against the velocity. 
+We then gave the simplest form of a function that meets these requirements which involved adding a cubic term to the resistance. 
+
+However, this is not the only way we can deliver energy to an oscillation to prevent it from dying out (which is what positive feedback represents for low velocities). 
+Another possibility is that the resistance is relative to an applied external velocity. 
+Imagine the mass attached to the spring but now resting on a conveyor belt with friction and moving continuously to the right as shown in Figure 11 a . 
+In this case the mass will remain attached to the belt by static friction for a portion of the path. 
+But static friction has a limit, as anyone who has tried to push a piece of furniture knows. 
+When the elastic force pulling to the left exceeds the friction, the mass will slip and the spring will pull the mass to the left until the conveyor belt re-engages the mass and this {\em slip-stick} process repeats periodically. 
+
+\begin{figure}[h]
+    \centering
+    \resizebox*{15cm}{!}{\includegraphics{figure11.eps}}
+    \caption{} 
+    \label{fig_belt}
+\end{figure}
+
+This simplified system illustrates for example what happens punctually in the bow against the string of an instrument, the finger against the rim of the crystal glass or any oscillation that starts by a combination of linear displacement, surface friction and any form of elastic restitution. 
+It is also responsible for the squeaking noise of shuffling chairs and many other sources of noise. 
+
+But what are the equations describing this system like? 
+In general we can write the following. 
+
+
+\begin{subequations} \label{eq_bow}
+\begin{align}
+    \dot{x} & = v \\
+    \dot{v} & = - \gamma F(v-v_0) - kx
+\end{align}
+\end{subequations}
+
+where as before the term $-kx$ corresponds to the elastic restitution and $F$ is the friction acting now no longer on the velocity of the mass but on the difference of the velocity of the mass with the conveyor belt of velocity $v_0$. 
+Now we must imagine how is the form of this force. 
+One requirement for $F$ is that it must be very high for very low velocities and decrease as the velocity increases. 
+Of course, it must also always oppose the motion. 
+Notice that as we now put the negative sign outside the function it must be positive when $y>v_0$ (the mass is sliding on the belt pulled by the spring) and negative when $y<v_0$ (something that can happen on the left if the spring pushes the mass at a higher velocity than the belt). 
+It is also reasonable to assume that this force is symmetric in both directions. 
+Thus, we need a function that is positive on the right that starts at a high value and begins to decay and on the left that is the same but from the negative. 
+
+A simple possibility is shown in Figure 11.b in blue $F(v) = \text{sgn}(x) e^{-2|v|}$. 
+However we are going to use a “smoothed” version of this function (to avoid the discontinuous jump to zero) which is shown in the red curve in Figure 11.b and has the functional form:
+
+\begin{equation} \label{eq_bowfriction}
+    F_{bow}(v) = \arctan(v/\epsilon) e^{-2|v|} 
+\end{equation}
+
+where $\epsilon$ is a small regularization parameter (we use $\epsilon = 10^{-4}$).
+The behavior of the system defined by equations \ref{eq_bow} with the friction force given by equation \ref{eq_bowfriction} is displayed in Figure 12 for three parameter values. 
+For the sake of simplicity we will fix $k=1$ in the following.
+
+For small values of $|v_0|$ the slope of $F$ is positive, resulting in a single stable fixed point, as shown in the left column of Figure 12.
+Every initial condition evolves spiraling down towards that fixed point. 
+The function $F(v-v_0)$ as a function of $v$ is also depicted by the 
+orange line. Therefore the fixed point is always located at the intersection of this curve with the horizontal line $v=0$.
+
+\begin{figure}[h]
+    \centering
+    \resizebox*{15cm}{!}{\includegraphics{figure12.eps}}
+    \caption{} 
+    \label{fig_bow}
+\end{figure}
+
+As $v_0$ increases, the fixed point shifts to a region of the  $F$ curve where the slope is negative. In this region, the fixed point loses stability, undergoing a Hopf bifurcation that gives rise to a stable limit cycle with a small amplitude. 
+This behavior is illustrated in the central column of Figure 12.
+
+Note that the shape of the limit cycle is flattened at the top and that in that part it follows closely the curve of $F$. 
+This portion of the cycle corresponds to the moment when the mass is dragged by the conveyor belt and does not slip so the velocity difference with the belt is minimal. 
+When it reaches the right side the trajectory takes off downwards returning with a negative velocity (slipping) towards a point on the left where it reattaches to the belt. 
+This behavior is much more evident on the right column of Figure 12 where the friction is higher therefore the mass is stuck much stronger to the belt while being dragged. 
+The waveform obtained has the timbral characteristic of rubbed instruments or slip stick processes in general with a series of triangular pulses followed by flat sections.
+
+Finally it is worth noticing that the same behavior can be observed with a negative $v_0$ but in this case the mass slips in the other direction and the limite cycle is reversed in both coordinates.
+
+\subsubsection{Other frictions}
+
+As a last example we will explore other "fictional" forms of friction, in the sense that they do not necessarily have to replicate a physical system (although for some of them it might be possible to find examples). 
+In particular we are interested in a system in which the oscillations are created (or destroyed) by a mechanism different from the two seen so far (Saddle-Node on the circle or Hopf). 
+The system is given by the equations with the following functional form for the friction:
+
+\begin{equation} \label{eq_fictional}
+    F_{fictional}(v;\sigma) = v - v^3 + \sigma v^5  
+\end{equation}
+
+The parameter $\sigma$ accompanying the fifth order term will be responsible for the bifurcation that will give rise to (or end) the oscillations.
+This functional form alternates positive and negative sections and results in the creation of an unstable limit cycle in addition to the stable one. 
+This unstable limit cycle will form a {\em separatrix} that will divide the phase space into two {\em basins of attraction}: an inner one where all initial condions will converge to a stable fixed point and an outer one where all the initial conditions will converge to the stable limit cycle. 
+
+To understand how this is reflected in the behavior of the system we can examine the phase portrait displayed in the first two columns of Figure 13. 
+An initial condition inside the unstable limit cycle is shown there in blue that spirals inward toward the center where there is a stable fixed point. 
+An initial condition at a point with a slightly larger value of the coordinate (on the other side of the unstable limit cycle) displayed in orange spirals outward until it is trapped in a neighbourhood of the stable limit cycle. 
+The difference is that when the parameter $\sigma$ is small the separatrix is close to the origin and almost all initial conditions end up in the unstable limit cycle, which has the form of a large relaxation oscillator and square waveform. 
+As $\sigma$ increases the unstable limit cycle grows in size and the stable one shrinks so that they end up very tightly spaced, as can be seen in the middle column of Figure 13. 
+For a value of $\sigma$ between 0.22 and 0.23 both cycles collapse in what is known as a Saddle-Node bifurcation of limit cycles and only the stable fixed point remains at the origin as can be seen in the right column of Figure 13. 
+
+Of course, if we traverse this bifurcation backwards (decreasing the value of $\sigma$) we have that a stable limit cycle (together with an unstable one) is created “out of nothing” in a region of phase space. 
+Therefore this is a qualitatively different form in which an oscillation can appear and is characterized by the occurrence of oscillations of finite amplitude (as in the Saddle-Node on the circle) but with definite frequency (as in the Hopf).
+
+
+
+
+\begin{figure}[h]
+    \centering
+    \resizebox*{15cm}{!}{\includegraphics{figure13.eps}}
+    \caption{} 
+    \label{fig_friction2}
+\end{figure}
+
 \subsection{The meaning of a saddle}
 
 \subsection{Questionnaire}
 \begin{enumerate}
 \item 
 \end{enumerate}
+
+\end{document}
 
 \section{One dimensional oscillations in systems with delay}
 
@@ -493,4 +604,4 @@ Finally, the harmonic content of the signal is estimated as the percentage incre
     \label{fig_delay}
 \end{figure}
 
-\end{document}
+
