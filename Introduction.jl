@@ -531,10 +531,10 @@ end
 
 # ╔═╡ 27694471-34d9-46f6-92e1-aba080399b85
 function homoclinic!(du, u, p, t)
-	(x,y) = u
-	du[1] = y
+	(x,v) = u
+	du[1] = v
     #du[2] = -p[1]+u[1]*(-0.5*u[2]+u[1]*(1-u[1]-u[2]))
-	du[2] = -0.5*x*y + x^2 - x^3 - x^2*y - p[1]
+	du[2] = -0.5*x*v + x^2 - x^3 - x^2*v - p[1]
 end
 
 # ╔═╡ e7440b71-9eee-4f18-ba84-c057210a86fc
@@ -578,7 +578,7 @@ begin
 	scatter!([-0.38],[0],ms=3,c=:white)
 	p_14 = plot(p141,p142,p143,p141b,p142b,p143b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if true
-		savefig(p_14, "figure14.svg")
+		savefig(p_14, "figure16.svg")
 	end	
 	p_14
 end
@@ -610,10 +610,13 @@ begin
 	pD3 = plot(solD3(0:0.1:tend-τ3,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3/2,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3,idxs=1).u,xlims=(-1.5,1.5),ylims=(-1.5,1.5),zlims=(-1.5,1.5),legend=false,title="τ=3.1")
 	p_11 = plot(pD1,pD2,pD3,layout=(1,3),size=(1200,500),thickness_scaling = 1.2)
 	if savefigures
-		savefig(p_11, "figure11.svg")
+		savefig(p_11, "figure17.svg")
 	end	
 	p_11
 end	
+
+# ╔═╡ 31473788-70da-4442-8a07-26f8211e6d1f
+
 
 # ╔═╡ aacd48cb-77c3-4458-aece-09def7b28a9d
 html"""
@@ -3558,6 +3561,7 @@ version = "1.4.1+1"
 # ╠═41fda3e5-b7ef-4af0-80ce-91a716cd759a
 # ╟─b46bcbbb-54ce-468d-9af0-dae9361de20d
 # ╠═fab4d99e-f560-43b7-bc10-a66f667173b9
+# ╠═31473788-70da-4442-8a07-26f8211e6d1f
 # ╟─aacd48cb-77c3-4458-aece-09def7b28a9d
 # ╟─5de836bc-d3aa-4e5f-bb50-8862099e895f
 # ╟─00000000-0000-0000-0000-000000000001

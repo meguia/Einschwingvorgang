@@ -337,7 +337,7 @@ This means that for each initial position the evolution in the phase space is a 
 
 As an exercise we can study how the parameters $k$ and $\gamma$ affect the result and if we transform in sound some of the two variables we can study if there is a simple relation between the frequency and the parameter $k$.
 
-\subsection{Turning on the oscillation (negative friction)}
+\subsection{Turning on the oscillation (Hopf Bifurcation)}
 
 The simple harmonic oscillator, although physically realistic, is not very interesting as a sound generator (except as an approximation to the point excitation of a single oscillation mode). 
 We are interested in how we can keep an oscillation on and if possible a system whose final oscillation does not depend on the initial condition. 
@@ -503,8 +503,7 @@ In general we can write the following.
 \end{align}
 \end{subequations}
 
-where as before the term $-kx$ corresponds to the elastic restitution and $F(v)$ is the friction, now depending no longer on the velocity of the mass, but on the difference of the velocity of the mass $v$ with the conveyor belt of velocity $v_0$, expressed by $F(v - v_0)$.
-
+where as before the term $-kx$ corresponds to the elastic restitution and $F$ is the friction acting now no longer on the velocity of the mass but on the difference of the velocity of the mass with the conveyor belt of velocity $v_0$. 
 Now we must imagine how is the form of this force. 
 One requirement for $F$ is that it must be very high for very low velocities and decrease as the velocity increases. 
 Of course, it must also always oppose the motion. 
@@ -516,11 +515,10 @@ A simple possibility is shown in Figure 11.b in blue $F(v) = \text{sgn}(x) e^{-2
 However we are going to use a “smoothed” version of this function (to avoid the discontinuous jump to zero) which is shown in the red curve in Figure 11.b and has the functional form:
 
 \begin{equation} \label{eq_bowfriction}
-    F_{\text{bow}}(v) = \arctan(v/\epsilon) e^{-2|v|} 
+    F_{bow}(v) = \arctan(v/\epsilon) e^{-2|v|} 
 \end{equation}
 
-
-where $v$ is the relative velocity between mass and bow, and $\epsilon$ is a small regularization parameter (we use $\epsilon = 0.05}$).
+where $\epsilon$ is a small regularization parameter (we use $\epsilon = 0.05$).
 The behavior of the system defined by equations \ref{eq_bow} with the friction force given by equation \ref{eq_bowfriction} is displayed in Figure 12 for three parameter values. 
 For the sake of simplicity we will fix $k=1$ in the following.
 
@@ -547,14 +545,14 @@ The waveform obtained has the timbral characteristic of rubbed instruments or sl
 
 Finally it is worth noticing that the same behavior can be observed with a negative $v_0$ but in this case the mass slips in the other direction and the limite cycle is reversed in both coordinates.
 
-\subsubsection{Other frictions}
+\subsubsection{Other frictions (Saddle-Node of Limit Cycles)}
 
 As a last example we will explore other "fictional" forms of friction, in the sense that they do not necessarily have to replicate a physical system (although for some of them it might be possible to find examples). 
 In particular we are interested in a system in which the oscillations are created (or destroyed) by a mechanism different from the two seen so far (Saddle-Node on the circle or Hopf). 
 The system is given by the equations with the following functional form for the friction:
 
 \begin{equation} \label{eq_fictional}
-    F_{\text{fictional}}(v;\sigma) = v - v^3 + \sigma v^5  
+    F_{fictional}(v;\sigma) = v - v^3 + \sigma v^5  
 \end{equation}
 
 The parameter $\sigma$ accompanying the fifth order term will be responsible for the bifurcation that will give rise to (or end) the oscillations.
@@ -582,16 +580,46 @@ Therefore this is a qualitatively different form in which an oscillation can app
     
 \end{figure}
 
-\subsection{The meaning of a saddle}
+\subsection{The meaning of a saddle (Homoclinic Bifurcation)}
 
-Homoclinic
+There is an additional, qualitatively different, mechanism by which a limit cycle (and hence an oscillation) can be created/annihilated at least in two-dimensional phase space and it corresponds to a homoclinic bifurcation. 
+This bifurcation involves a saddle point which so far did not intervene so much in the scenario except in the bifurcation on the circle and it had not been clear why we called it a saddle and not merely a repulsor. 
+
+So before showing the bifurcation let's see how the flow behaves in an neighborhood of different types of fixed points and that will allow us to understand the meaning of a Saddle.
+
+Figure 14 shows a qualitative diagram of the flow around five categories of fixed points in the plane. 
+The first two on the left are stable or attractors and they differ in that the flow goes directly to them following straight lines as in the attractor node (NA) or forming a spiral as in the attractor spiral (SA). 
+The latter was the fixed point that changed stability in the Hopf. 
+The two on the right correspond to unstable fixed or repulsor points, either repulsor nodes (NR) or spirals (SR). 
+The fixed point in the middle is the Saddle and as can be seen it has two different directions. 
+In one direction it is an attractor and in the other a repulsor, therefore the flow approaches it in a grazing way. 
+Note also that, with the exception of the two straight trajectories that end in the fixed point all the others circulate approaching the Saddle without touching it. The portion of the trajectory that is close to the Saddle also is slowed down dramatically.
+A very relevant feature of saddle points is that they act as watersheds or flow separatrices, often separating different basins of attraction. As can be seen, the stable direction acts in this way and the trajectories that are to its left or right are sent to different destinations in the unstable direction.
+
+The homoclinic bifurcation involves the encounter of a saddle with a stable limit cycle. 
+And the consequence of that encounter is the anhilation of the limit cycle. 
+If we imagine that one of these trajectories approaching the saddle is a stable limit cycle we will have a slowing of the flow and the behavior of the oscillation would be as shown in Figure 15a. 
+By modifying the system parameters in the homoclinic bifurcation the limit cycle collides with the Saddle forming a loop (or homoclinic connection) as shown in figure 15 b. 
+That loop can be seen as the limit cycle slowing down to such a length that it is now an infinite period orbit. After the bifurcation the limit cycle disappears (Figure 15 c).
+If we traverse the bifurcation from right to left in Figure 15 we can see how a stable limit cycle is created when a saddle point forms a homoclinic connection or loop. And then after the bifurcation that loop detaches from the saddle forming a stable limit cycle. This is a new mechanism by which an oscillation can be turned on.
+
+Let's see an example of a system that generates oscillations by this bifurcation. The system is given by the following equations:
 
 \begin{subequations} \label{eq_homoclinic}
 \begin{align}
     \dot{x} & = v \\
-    \dot{v} & = xv/2 + x^2 - x^3 -x^2y - \mu
+    \dot{v} & = \delta xv + x^2 - x^3 -x^2y - \mu
 \end{align}
 \end{subequations}
+
+For this case we fix $\delta=0.5$ and explore $\mu$ that will be our bifurcation parameter. 
+
+In Figure 16 we display as before the time evolution of the $v$ variable on top and the phase portraits on the bottom for three $\mu$ values. 
+On the first two phase portraits there are three fixed points indicated by symbols: an unstable spiral (white circle), a saddle point (cross) and a stable node (black square). 
+In the first column, all initial condition end in the stable node, so there. is no oscillation. 
+However there are trajectories, like the blue one, that approach the saddle almost touching it. 
+One of these trajectories will form the homoclinic connection at the bifurcation. 
+
 
 \begin{figure}[h]
     \centering
@@ -600,9 +628,47 @@ Homoclinic
     unstable fixed point (white circle), saddle point (cross), stable fixed point or node (black circle)} 
     \label{fig_homoclinic}
 \end{figure}
+
+In the central column the scenario after the bifurcation ($mu=0.12$) is displayed: a stable limit cycle is formed and all initial conditions inside it end up on the cycle (blue line). 
+Also, a very thin region outside converges into it, 
+However, other trajectories are deflected by the saddle separatrix and end at the attractor node (orange line). 
+In this regime the system behaves as bi-stable because it has two possible competing behaviors: an oscillatory one shown by the blue trajectory and a stationary one shown by the orange trajectory.
+
+Finally, in this system there is one more bifurcation but that does not affect the limit cycle. 
+In the right column it can be seen that for $\mu=0.16$ the saddle and the node disappeared (in an ordinary Saddle-Node bifurcation) and therefore only the limit cycle remains. 
+The system is no longer bi-stable and the behavior is purely oscillatory for all initial conditions.
+
+To conclude this part we can summarize in a table the behavior of the four bifurcations that can turn on an oscillation by completing the previous table:
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| }
+ \hline
+ Bifurcation & SN on Circle & Hopf & SN of Limit Cycles & Homoclinic\\ 
+ \hline
+ \hline
+ Frequency & 0 &  $\sqrt{k}$ & arbitrary & 0\\
+ \hline
+ Amplitude & finite & 0 & finite & finite \\ 
+ \hline
+ Before & Saddle and Node with an & Spiral attractor & & Saddle\\ 
+ & heteroclinic connection & & &\\
+ \hline
+ Bifurcation & Saddle and Node collapse & Spiral loose stability & Limit Cycle Neutral & Homoclinic connection\\ 
+ \hline
+ After & Limit Cycle & Spiral Repulsor & Pair of Stable/Unstable & Saddle and Stable\\
+ & & Limit Cycle & Limit Cycles & Limit Cycle\\
+ \hline
+\end{tabular}
+\caption{The four bifurcations compared}
+\end{center}
+\end{table}
+
 \subsection{Questionnaire}
 \begin{enumerate}
-\item 
+\item Why the "simplest" form of the negative resistance is $\gamma v - v^3$? Why there are no quadratic terms?
+\item Explore the limit of high damping (high $\gamma$ values) and low frequency (low $k$ values) for the self-oscillator. What happens with the relazation oscillator?
+\item What happens if we add a non-linear restitution force $kx-x^3$
 \end{enumerate}
 
 \end{document}
