@@ -578,7 +578,7 @@ begin
 	scatter!([-0.38],[0],ms=3,c=:white)
 	p_14 = plot(p141,p142,p143,p141b,p142b,p143b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if true
-		savefig(p_14, "figure14.svg")
+		savefig(p_14, "figure16.svg")
 	end	
 	p_14
 end
@@ -610,7 +610,7 @@ begin
 	pD3 = plot(solD3(0:0.1:tend-τ3,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3/2,idxs=1).u,solD3((0:0.1:tend-τ3) .+ τ3,idxs=1).u,xlims=(-1.5,1.5),ylims=(-1.5,1.5),zlims=(-1.5,1.5),legend=false,title="τ=3.1")
 	p_11 = plot(pD1,pD2,pD3,layout=(1,3),size=(1200,500),thickness_scaling = 1.2)
 	if savefigures
-		savefig(p_11, "figure11.svg")
+		savefig(p_11, "figure17.svg")
 	end	
 	p_11
 end	
