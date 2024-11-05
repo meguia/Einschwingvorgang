@@ -531,10 +531,10 @@ end
 
 # ╔═╡ 27694471-34d9-46f6-92e1-aba080399b85
 function homoclinic!(du, u, p, t)
-	(x,y) = u
-	du[1] = y
+	(x,v) = u
+	du[1] = v
     #du[2] = -p[1]+u[1]*(-0.5*u[2]+u[1]*(1-u[1]-u[2]))
-	du[2] = -0.5*x*y + x^2 - x^3 - x^2*y - p[1]
+	du[2] = -0.5*x*v + x^2 - x^3 - x^2*v - p[1]
 end
 
 # ╔═╡ e7440b71-9eee-4f18-ba84-c057210a86fc
