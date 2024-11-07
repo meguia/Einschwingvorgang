@@ -1,18 +1,8 @@
 ### A Pluto.jl notebook ###
-# v0.20.0
+# v0.20.3
 
 using Markdown
 using InteractiveUtils
-
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
 
 # ╔═╡ d6432280-943b-11ef-22c3-99d4db1fb21d
 using Plots, DifferentialEquations, PlutoUI, LaTeXStrings, Measures, JLD2, Images
@@ -537,9 +527,103 @@ function homoclinic!(du, u, p, t)
 	du[2] = -0.5*x*v + x^2 - x^3 - x^2*v - p[1]
 end
 
-# ╔═╡ e7440b71-9eee-4f18-ba84-c057210a86fc
+# ╔═╡ 223bc641-0ec0-43fd-9989-2ab40bee2190
 md"""
 # Figure 14
+"""
+
+# ╔═╡ fbbbb0de-2d85-488e-811a-f2dbcd2d56da
+begin
+	pd2 = scatter([0],[0],shape=:square,c=:black,ms=5,legend=false,showaxis=false)
+	for n=0:7
+		plot!(pd2,cos(n*pi/4).*[1,0.1],sin(n*pi/4).*[1,0.1],c=:black,arrow=true)
+	end	
+	annotate!(0,-1.2,"NA")
+	pd1 = scatter([0],[0],shape=:circle,c=:black,ms=5,legend=false,showaxis=false)
+	t1 = 0:0.01:1
+	for n=0:7
+		plot!(pd1,exp.(-2.5*t1).*cos.(n*pi/4 .+ 3*t1),exp.(-2.5*t1).*sin.(n*pi/4 .+ 3*t1),c=:black,arrow=true)
+	end	
+	annotate!(0,-1.2,"SA")
+	pd5 = scatter([0],[0],shape=:square,c=:white,ms=5,msw=3,legend=false,showaxis=false)
+	for n=0:7
+		plot!(pd5,cos(n*pi/4).*[0.1,1],sin(n*pi/4).*[0.1,1],c=:black,arrow=true)
+	end	
+	annotate!(0,-1.2,"NR")
+	pd4 = scatter([0],[0],shape=:circle,c=:white,ms=5,msw=3,lw=3,legend=false,showaxis=false)
+	for n=0:7
+		plot!(pd4,exp.(-2.5*(1 .-t1)).*cos.(n*pi/4 .- 3*t1),exp.(-2.5*(1 .-t1)).*sin.(n*pi/4 .- 3*t1),c=:black,arrow=true)
+	end
+	annotate!(0,-1.2,"SR")
+	pd3 = scatter([0],[0],shape=:cross,c=:black,ms=5,msw=3,legend=false,showaxis=false)
+	for n=0:7
+		plot!(pd3,exp.(2*t1).*cos.(n*pi/4),exp.(-2*t1).*sin.(n*pi/4),c=:black,arrow=true)
+	end
+	annotate!(0,-1.2,"S")
+	pd14 = plot(pd1,pd2,pd3,pd4,pd5,layout=(1,5),size=(1200,250),left_margin=-5mm,bottom_margin=2mm,thickness_scaling = 1.1)
+	if savefigures
+		savefig(pd14, "figure14.svg")
+	end	
+	pd14
+end	
+
+# ╔═╡ 47605c9a-8396-4635-91f9-bfe2f8fa8aba
+md"""
+# Figure 15
+"""
+
+# ╔═╡ 3036b73c-7238-461b-a863-eb7db5914f7f
+begin
+	sol15 = solve(ODEProblem(homoclinic!,[-0.1034,0.0],(0.0,150),[0.01]))
+	sol15b = solve(ODEProblem(homoclinic!,[0.20125,-0.05],(0.0,8),[0.01]))
+	sol15c = solve(ODEProblem(homoclinic!,[0.1,0.0],(0.0,12),[0.01]))
+	sol15d = solve(ODEProblem(homoclinic!,[0.11,0.005],(0.0,7),[0.01]))
+	fd15 = plot(sol15,idxs=(1,2),arrow=true,legend=false,c=1,showaxis=false)
+	plot!(sol15b,idxs=(1,2),arrow=true,c=1)
+	plot!(sol15c,idxs=(1,2),arrow=true,c=2)
+	plot!(sol15d,idxs=(1,2),arrow=true,c=2)
+	scatter!([0.105],[0.001],shape=:xcross,c=:black,ms=6,msw=3)
+	scatter!([-0.095],[0.0],shape=:circle,c=:white,ms=4,msw=3)
+	annotate!(0.105,-0.05,"S")
+	annotate!(-0.25,0.05,"a)")
+	sol151 = solve(ODEProblem(homoclinic!,[0.44,0.0],(0.0,40),[0.111]))
+	sol151c = solve(ODEProblem(homoclinic!,[0.45,0.0],(0.0,18),[0.111]))
+	sol151b = solve(ODEProblem(homoclinic!,[0.7,-0.225],(0.0,8),[0.111]))
+	sol151d = solve(ODEProblem(homoclinic!,[-0.3,0.005],(0.0,160),[0.111]))
+	fd151 = plot(sol151,idxs=(1,2),arrow=true,legend=false,c=2,showaxis=false)
+	plot!(sol151b,idxs=(1,2),arrow=true,c=1)
+	plot!(sol151c,idxs=(1,2),arrow=true,c=2)
+	plot!(sol151d,idxs=(1,2),arrow=true,c=1)
+	annotate!(0.44,-0.3,"S")
+	annotate!(-0.3,-0.4,"LOOP")
+	annotate!(-0.7,0.3,"b)")
+	scatter!([0.44],[0.001],shape=:xcross,c=:black,ms=6,msw=3)
+	scatter!([-0.3],[0.0],shape=:circle,c=:white,ms=4,msw=3)
+	sol152 = solve(ODEProblem(homoclinic!,[0.51,-0.001],(0.0,200),[0.13]))
+	sol152c = solve(ODEProblem(homoclinic!,[0.52,0.001],(0.0,30),[0.13]))
+	sol152b = solve(ODEProblem(homoclinic!,[0.7,-0.19],(0.0,3),[0.12]))
+	sol152d = solve(ODEProblem(homoclinic!,[-0.31,0.005],(0.0,160),[0.12]))
+	sol152e = solve(ODEProblem(homoclinic!,[0.22,0.19],(0.0,3.5),[0.12]))
+	fd152 = plot(sol152,idxs=(1,2),arrow=true,legend=false,c=2,showaxis=false)
+	plot!(sol152b,idxs=(1,2),arrow=true,c=1)
+	plot!(sol152c,idxs=(1,2),arrow=true,c=2)
+	plot!(sol152d,idxs=(1,2),arrow=true,c=1)
+	plot!(sol152e,idxs=(1,2),arrow=true,c=1)
+	scatter!([0.515],[0.0],shape=:xcross,c=:black,ms=6,msw=3)
+	scatter!([-0.31],[0.0],shape=:circle,c=:white,ms=4,msw=3)
+	annotate!(0.515,-0.32,"S")
+	annotate!(-0.3,-0.45,"LC")
+	annotate!(-0.8,0.33,"c)")
+	fd_15=plot(fd15,fd151,fd152,layout=(1,3),size=(1200,300),left_margin=-5mm,bottom_margin=2mm,thickness_scaling = 1.5)
+	if savefigures
+		savefig(fd_15, "figure15.svg")
+	end	
+	fd_15
+end	
+
+# ╔═╡ e7440b71-9eee-4f18-ba84-c057210a86fc
+md"""
+# Figure 16
 """
 
 # ╔═╡ e1bee821-87ff-41e9-9049-c109a77cabcb
@@ -577,11 +661,14 @@ begin
 	plot!(sol143b,idxs=(1,2),arrow=true)
 	scatter!([-0.38],[0],ms=3,c=:white)
 	p_14 = plot(p141,p142,p143,p141b,p142b,p143b,layout=grid(2,3,heights=[0.3,0.7]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	if true
+	if savefigures
 		savefig(p_14, "figure16.svg")
 	end	
 	p_14
 end
+
+# ╔═╡ dd6ea2e9-7ac5-453a-aea7-e4f5c6e85fee
+
 
 # ╔═╡ 41fda3e5-b7ef-4af0-80ce-91a716cd759a
 function simplest!(du,u,h,p,t)
@@ -635,19 +722,6 @@ input[type*="range"] {
 
 # ╔═╡ 5de836bc-d3aa-4e5f-bb50-8862099e895f
 sp = html"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-
-# ╔═╡ a3337a2f-58c5-49fb-944b-339064bd0161
-md"""
-μ1 $(@bind μ1 Slider(0.0:0.01:0.2,default=0.1;show_value=true)) $sp
-tm $(@bind tm Slider(1:0.1:2,default=1.0;show_value=true)) \
-x0 $(@bind x0 Slider(-5.0:0.01:5.0,default=0.1;show_value=true)) \
-""" 
-
-# ╔═╡ 2f3e2583-3771-4096-af1e-8ad01f63c9d6
-begin
-	sol14 = solve(ODEProblem(homoclinic!,[x0,0.0],(0.0,10^tm),[μ1]))
-	plot(sol14,idxs=(1,2))
-end	
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -3554,10 +3628,13 @@ version = "1.4.1+1"
 # ╟─5fa997b8-82b4-43a6-988e-f88b9ce97d35
 # ╠═49a0f4aa-36cf-4835-a2f5-856827d4a52a
 # ╠═27694471-34d9-46f6-92e1-aba080399b85
-# ╠═2f3e2583-3771-4096-af1e-8ad01f63c9d6
-# ╟─a3337a2f-58c5-49fb-944b-339064bd0161
+# ╟─223bc641-0ec0-43fd-9989-2ab40bee2190
+# ╠═fbbbb0de-2d85-488e-811a-f2dbcd2d56da
+# ╟─47605c9a-8396-4635-91f9-bfe2f8fa8aba
+# ╠═3036b73c-7238-461b-a863-eb7db5914f7f
 # ╟─e7440b71-9eee-4f18-ba84-c057210a86fc
 # ╠═e1bee821-87ff-41e9-9049-c109a77cabcb
+# ╠═dd6ea2e9-7ac5-453a-aea7-e4f5c6e85fee
 # ╠═41fda3e5-b7ef-4af0-80ce-91a716cd759a
 # ╟─b46bcbbb-54ce-468d-9af0-dae9361de20d
 # ╠═fab4d99e-f560-43b7-bc10-a66f667173b9
