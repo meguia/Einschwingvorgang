@@ -46,9 +46,9 @@
 \maketitle
 
 \section{One dimensional oscillations on the circle}
-We are interested in oscillations for the generation of sound. So we are interested in some magnitude that changes in time in a continuous way but remains bounded. It does not necessarily have to be periodic but it must be continuous because eventually at some point it will be transformed into sound.
-We will further consider that this quantity arises from a deterministic system, i.e. the immediate future state of the system is determined by a rule that depends only on the present state. The state of the system is defined by one or more variables that evolve over time, and it is from these variables that we derive the magnitude to be converted into sound. 
-Because we assume continuous evolution, defining the concept of "immediate future" requires careful consideration.
+We are interested in oscillations as a sound source. So we are interested in some magnitude that continuously changes in time, but remains bounded. The magnitude does not necessarily have to be periodic, but it must be continuous because eventually it will be transformed into a continuous sound.
+
+Further, we will consider this quantity to arise from a deterministic system -- the immediate future state of the system is determined by a rule that depends only on the present state. The state of the system is defined by one or more variables which evolve over time, and it is from these variables that we derive the magnitude to be converted into sound. Because we assume continuous evolution, defining the concept of `immediate future' requires careful consideration.
 
 
 
@@ -63,26 +63,27 @@ Because we assume continuous evolution, defining the concept of "immediate futur
 
 Let's see an example, perhaps the simplest posible for an oscillator, to understand how this rule must be given. 
 Let us consider a system with a state specified by a single angular variable $\theta$. 
-We can represent the state of the system as a point on a circle and the magnitude is the angle on the circle as shown in Figure 1.a.
-This representation is known as the {\em phase space} of the system and is one where each state is represented by a single point in the space. 
-In this case the phase space is one-dimensional but there can be phase spaces of various dimensions and with different topologies (for example a one-dimensional space corresponding to the straight line is topologically different from the circle).
-This state of the system $\theta$ is going to vary in time following some deterministic rule and the magnitude that we will convert into sound will be $\cos(\theta)$.
+We can represent this state as a point on a circle, where its magnitude is the angle on the circle as shown in Figure 1.a.
 
-It should not be surprising that at this point the simplest thing that could be proposed as an oscillation is to postulate that the variable of the system grows linearly with time $\theta(t)=\omega t$ as shown in figure 1.c.  Therefore we have at the output a pure tone of frequency $f=\omega/(2\pi)$ and it is clear that the variable $\theta$ represents the phase of this oscillator.
+The representation of a system where each state is given by a single point in the space is known as the {\em phase space} of the system. In this case the phase space is one-dimensional but there can be phase spaces of various dimensions and with different topologies (for example a one-dimensional space corresponding to the straight line is topologically different from the circle).
+This state of the system $\theta$ is going to vary in time following some deterministic rule. The magnitude that we will convert into sound will be the horizontal position $\cos(\theta)$.
 
-However, notice that in that case we are not giving the rule of evolution of the state of the system but the result of that rule, or the solution of it. 
-And there is a problem with this approach being that it is not general and flexible enough. 
-For example, it is not always possible to calculate the final result of a given rule. 
-Also, the final result also depends on the initial state of the system (which will be called {\em initial condition} in the following), while classifying systems by means of their rules will allow us a higher degree of generalization than from their solutions.
+It should not be surprising that at this point the simplest thing that could be proposed as an oscillation is to postulate that the variable of the system grows linearly with time $\theta(t)=\omega t$ as shown in figure 1.c.  Therefore we have at the output a pure tone, where the variable $\theta$ represents the phase of this oscillator and $\omega/(2\pi)$ its frequency. However, notice that in that case we are not giving the rule of evolution of the state of the system but the result of that rule, its solution. 
+
+This approach is not general and flexible enough. 
+For example, for some rules, it is not possible to calculate the final result. 
+Also, the final result depends on the initial state of the system (which will be called {\em initial condition} in the following). Their rules will allow us more general ways of classifying systems than their solutions.
 
 As noted, the evolution rule must describe the immediate future state of the system. 
-For a continuous system like this, the rule is provided by the time rate of change of our variable $\theta$, which, in this case, corresponds to the slope of the line in Figure 1.c. 
-Here, the slope is constant at $\omega=1$, meaning the system evolves at a steady angular rate, independent of its initial condition (or initial phase). Figure 1.b displays this constant rate of change, which as we anticipated is always constant. 
+For a continuous system like this, the rule is provided by the rate of change in time of our variable $\theta$, which, in this case, corresponds to the slope of the line in Figure 1.c. 
+Here, the slope is constant at $\omega=1$, meaning the system evolves at a steady angular rate, independent of its initial condition (or initial phase). Figure 1.b displays this rate of change, which as we anticipated is always constant. 
 It should also come as no surprise that we call the magnitude represented in this graph the angular frequency (or velocity\footnote{The distinction between angular frequency and velocity is subtle and does not apply to the one dimensional case that we are presenting. In general terms the velocity is a vector while the frequency is a scalar magnitude}) of our oscillator.
 
 Let us then for the moment write the evolution rule as: 
 
-[time-varying rate of] $\theta$ = $\omega$
+\[
+\text{[time-varying rate of]} \quad \theta = \omega
+\]
 
 The graphical representation of this rule is given by the graph in Figure 1.b. This means that the rate of change of $\theta$ is uniform, independent of the state of the system. 
 
@@ -91,22 +92,22 @@ Formulating the rule in terms of time-varying rates allows for generalization to
 \subsubsection{The rule as a differential equation}
 
 We are now ready to give the rule formally using the mathematical concept of {\em derivative}. 
-What we wrote earlier as thetime-varying rate of the variable $\theta$ is in fact the definition of the derivative of the variable $\theta$ with respect to time which we will denote with a dot above the variable. 
+What we wrote earlier as `the time-varying rate of the variable $\theta$' is in fact the definition of the derivative of the variable $\theta$ with respect to time, which we will denote with a dot above the variable. 
 
-Our rule is then finally written: 
+Our rule is then finally written as: 
 \begin{equation}
 \dot\theta = \omega    
 \end{equation}
-. 
-This is what is known as a differential equation and is the rule that gives the evolution of deterministic systems with continuous variables. 
+
+This is what is known as a \emph{differential equation} and is the rule that gives the evolution of deterministic systems with continuous variables. 
 In general a differential equation for this variable will be written as follows:
 
 \begin{equation}
 \dot\theta = f(\theta)    
 \end{equation}
 
-where the derivative with respect to time appears always on the left and on the right in general a function $f$ of the state of the system given by our single variable. 
-Note that in the rule given by $f(\theta)$ there is no dependence with respect to time, only with respect to the state of the system. 
+where the derivative with respect to time appears always on the left, and where in general a function $f$ of the state of the system given by our single variable appears on the right.
+Note that in the rule given by $f(\theta)$ there is no dependence with respect to time, only with respect to the state of the system.
 In the particular case of our simple oscillator this function is constant $f=\omega$ and does not depend on $\theta$. 
 
 
@@ -120,8 +121,8 @@ In the particular case of our simple oscillator this function is constant $f=\om
 \end{figure}
 
 Our next example will be slightly less obvious. 
-From now on, we will avoid providing the solution of the variable $\theta$ as a function of time, instead specifying the rate-of-change rule for $\theta$ using a graph like the one in Figure 1.b. or, equivalently as the differential equation for the time evolution of $\theta$.
-It is important to note that the states $\theta=0$ and $\theta=2\pi$ represent the same state, so any curve we place in this graph or any function $f(\theta)$ must be periodic in $2\pi$. 
+From now on, we will avoid providing the solution of the variable~$\theta$ as a function of time like in Figure 1.c. and instead specify the rate-of-change rule for $\theta$ using a graph like the one in Figure 1.b. or, equivalently -- as the differential equation for the time evolution of $\theta$.
+It is important to note, because our phase space is a circle, that the states $\theta=0$ and $\theta=2\pi$ represent the same state, so any curve we place in this graph or any function $f(\theta)$ must be periodic in $2\pi$. 
 Furthermore, for the moment, we are going to restrict it to be positive for every state, that means that the variable always increases. 
 
 A simple way to create a more interesting scenario than a constant rate of change is to postulate that the angular frequency varies as shown in Figure 2.b. 
