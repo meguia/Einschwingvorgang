@@ -73,11 +73,11 @@ It should not be surprising that at this point the simplest thing that could be 
 However, notice that in that case we are not giving the rule of evolution of the state of the system but the result of that rule, or the solution of it. 
 And there is a problem with this approach being that it is not general and flexible enough. 
 For example, it is not always possible to calculate the final result of a given rule. 
-Also, the final result also depends on the initial state of the system (which will be called {\em initial condition} in the following), while classifying systems by means of their rules will allow us a higher degree of generalization than from their solutions.
+Also, the final result also depends on the initial state of the system, while classifying systems by means of their rules will allow us a higher degree of generalization than from their solutions.
 
 As noted, the evolution rule must describe the immediate future state of the system. 
 For a continuous system like this, the rule is provided by the time rate of change of our variable $\theta$, which, in this case, corresponds to the slope of the line in Figure 1.c. 
-Here, the slope is constant at $\omega=1$, meaning the system evolves at a steady angular rate, independent of its initial condition (or initial phase). Figure 1.b displays this constant rate of change, which as we anticipated is always constant. 
+Here, the slope is constant at $\omega=1$, meaning the system evolves at a steady angular rate, independent of its initial state (or initial phase). Figure 1.b displays this constant rate of change, which as we anticipated is always constant. 
 It should also come as no surprise that we call the magnitude represented in this graph the angular frequency (or velocity\footnote{The distinction between angular frequency and velocity is subtle and does not apply to the one dimensional case that we are presenting. In general terms the velocity is a vector while the frequency is a scalar magnitude}) of our oscillator.
 
 Let us then for the moment write the evolution rule as: 
@@ -106,7 +106,7 @@ In general a differential equation for this variable will be written as follows:
 \end{equation}
 
 where the derivative with respect to time appears always on the left and on the right in general a function $f$ of the state of the system given by our single variable. 
-Note that in the rule given by $f(\theta)$ there is no dependence with respect to time, only with respect to the state of the system. 
+Note that there is no dependence with respect to time, only with respect to the state of the system. 
 In the particular case of our simple oscillator this function is constant $f=\omega$ and does not depend on $\theta$. 
 
 
@@ -115,7 +115,7 @@ In the particular case of our simple oscillator this function is constant $f=\om
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure2.eps}}
-    \caption{Adler oscillator given by Equation \ref{eq_adler} with $\mu=1.5$: a) phase space, b) time derivative, and c) time evolution of the variable} 
+    \caption{Adler oscillator given by Equation (3) with $\mu=1.5$: a) phase space, b) time derivative, and c) time evolution of the variable} 
     \label{fig_adler1}
 \end{figure}
 
@@ -152,7 +152,7 @@ And the waveform is asymmetric because the point moves faster in one part of the
 
 Let us now write the differential equation governing this system. As before the right hand member $f(\theta)$ indicates the instantaneous angular velocity of the point on the circle as a function of the angle and must be a function of period $2\pi$. 
 
-\begin{equation} \label{eq_adler}
+\begin{equation}
 \dot\theta = \mu + \cos(\theta)
 \end{equation}
 
@@ -297,8 +297,8 @@ That is, we need at least two continuous variables in a phase space on the plane
 
 This is a well-known result from physics. 
 In order to describe an oscillator we need at least two variables: its position and its velocity, since with only the position we cannot univocally determine its state. 
-A mass attached to a spring or a pendulum passes twice through the same position but with two different velocities and that is something constitutive of the oscillation. 
-Therefore, if we say that the state of the system is univocally determined by the value of its variables, a physical oscillator needs at least a two-dimensional phase space. 
+A mass attached to a spring or a pendulum passes twice through the same position but with two different velocities and that is something constitutive of the oscillation. T
+herefore, if we say that the state of the system is univocally determined by the value of its variables, a physical oscillator needs at least a two-dimensional phase space. 
 
 \begin{figure}
     \centering
@@ -307,17 +307,17 @@ Therefore, if we say that the state of the system is univocally determined by th
     \label{fig_harmosc}
 \end{figure}
 
-And since we used the mass-spring system as an example we can make those variables the position and velocity of this simple oscillator. 
+And since we take this example we can make those variables the position and velocity of this simple oscillator. 
 Figure 7 shows a mass attached to a spring and four stages in its oscillation. 
-The position is indicated by the horizontal coordinate ($x$) and the velocity by the green arrow ($v$). In the central panel this state is represented on the phase space ($x,v$).
-It is not difficult to see that the evolution of this system results in a cycle in phase space that closes on itself when there is no energy dissipation. 
-Starting from the initial position on the right, with the spring stretched and zero velocity (1), the system accelerates leftward due to the spring’s force, passing through the midpoint with maximum negative velocity (2). It then continues until reaching maximum compression on the left, where velocity drops to zero (3). At this point, it begins accelerating rightward, passing through the midpoint again with maximum positive velocity (4), and stretches the spring until it returns to the initial state.
+The position is indicated by the horizontal coordinate ($x$) and the velocity by the arrow ($v$). In the bottom row this state is represented in the phase space ($x,v$).
+It is not difficult to see that the evolution of this system results in a cycle in phase space that closes on itself if there is no dissipation of energy. 
+After starting from the right position with the spring stretched with no velocity (1) the system accelerates by the spring action in the negative direction and passes through the middle point with maximum negative velocity (2) and starts to compress the spring until it reaches the maximum compression on the left with zero velocity (3) and then starts to accelerate in the negative direction passing again through the middle point with maximum positive velocity (4) and starts to stretch the spring until it returns to the initial point.  
 
-Of course this is an idealized case and in a real situation there are always dissipative forces \footnote{We will use the terms "dissipation" and "damping" interchangeably; however, it's worth noting that the oscillator is damped due to the dissipation of energy. This energy dissipation may be caused by various factors, including (but not limited to) friction.} acting either by internal friction or with the air.
-In this case, the system does not return precisely to state 1 but instead reaches a position with slightly less amplitude in elongation each cycle. 
-As a result, the system's actual trajectory in phase space forms the blue spiral shown in Figure 7. 
-With each cycle, the system experiences reduced elongation on the right, less compression on the left, and a lower velocity as it passes through the midpoint. 
-Gradually, this spiral converges toward the center (x=0, v=0), which, as is easy to imagine, represents the rest state.
+
+
+Of course this is an idealized case and in a real situation there are always dissipative forces acting either by internal friction or with the air. 
+In that case the system does not return exactly to state 1 but to a state with a little less amplitude of elongation and so on at each turn. 
+Thus, the real trajectory of the system in phase space is represented by the blue spiral in the graph of Figure 7, which in each cycle has less elongation on the right, less compression on the left and less velocity when it passes through the midpoint and gradually converges to the center (x=0,v=0), which as it is easy to imagine corresponds to the rest state.  
 
 To write the differential equations that give the evolution of this system we can recur to the laws of Newton, which in this case have a simple expression. 
 
@@ -329,12 +329,11 @@ To write the differential equations that give the evolution of this system we ca
 \end{subequations}
 
 The first equation links the velocity with the derivative of the position in time. 
-In fact that is the actual definition of velocity. 
-The second equation is Newton's second law of movement which gives the proportionality between the time derivative of the velocity on the left $\dot v$ (i.e. the acceleration) with the sum of the acting forces on the right. 
-And these forces are two: on the one hand the elastic force that opposes the displacement linearly with a constant $k$, and a dissipative force that acts a resistance, always opposing the movement with a constant $\gamma$.
-
+In fact that is the definition of velocity. 
+The second is Newton's second law of movement which gives the proportionality between the time derivative of the velocity on the left $\dot v$ (i.e. the acceleration) with the sum of the acting forces on the right. 
+And these forces are two: on the one hand the elastic force that opposes the displacement linearly with a constant $k$ and a frictional force that acts a resistance, always opposing the movement with a constant $\gamma$. 
 The result of the evolution of this system is the spiral shown in figure 7. 
-This means that for each initial condition the evolution in the phase space is a spiral approaching the origin where there is a single fixed point which is an attractor node. One example of such evolution is displayed in the right panel of Figure 7. As can be seen, the variable $x$ oscillates around the origin while decaying (exponentially) to the steady state.
+This means that for each initial position the evolution in the phase space is a spiral approaching the origin where there is a single fixed point which is an attractor node. One example of such evolution is displayed in the right panel of Figure 7. As can be seen, the variable $x$ oscillates around the origin while decaying (exponentially) to the steady state.
 
 As an exercise we can study how the parameters $k$ and $\gamma$ affect the result and if we transform in sound some of the two variables we can study if there is a simple relation between the frequency and the parameter $k$.
 
@@ -345,7 +344,7 @@ We are interested in how we can keep an oscillation on and if possible a system 
 This can be achieved by self-sustained oscillations and there are several ways to accomplish this. 
 
 Perhaps the simple way to obtain self-sustained oscillations is to introduce a negative resistance that acts as a positive feedback for small oscillations.
-This can be done by replacing the linear damping force $\gamma v$ for some non-linear function that is positive for small values of the velocity $v$ and negative for larger values.
+This can be done by replacing the linear damping force $\gamma v$ for some non-linear function that is positive for small values of the velocity y and negative for larger values.
 The positive part drives the system by supplying energy when the amplitude of the oscillations are small and the negative part acts as a strong nonlinear damping that prevents the unbounded buildup of energy for larger oscillations. 
 In its simplest form we can think of a nonlinear damping in the form of $\gamma v - v ^ 3$.
 
@@ -364,19 +363,18 @@ In its simplest form we can think of a nonlinear damping in the form of $\gamma 
     \label{fig_selfosc}
 \end{figure}
 
-The behavior of this system is displayed in Figure 8 for three values of $\gamma$ with a fixed value $k=0.2$. 
+The behavior of this system is displayed in Figure 8 for three values of $\gamma$ with a fixed value $k$ of 0.2. 
 The top row shows the time evolution of $v$ for an initial condition and the bottom row shows the evolution of that trajectory in the ($x,v$) phase space.
-This representation of trajectories in phase space is also known as the {\em phase portrait} of the system.
-When the value of $\gamma$ is negative we have the same situation as for the harmonic oscillator with dissipation (the effect of the cubic term is to increase the resistance for higher amplitudes) and all the initial conditions evolve following spirals towards the node at the origin, as illustrated in the left column of Figure 8. 
+The depiction of the trajectories in the phase space is also called a {\em phase portrait} of the system.
+When the value of $\gamma$ is negative we have the same situation as for the harmonic oscillator with dissipation (the effect of the cubic term is to increase the resistance for higher amplitudes) and all the initial conditions evolve following spirals towards the node at the origin, as shown in the left column of Figure 8. 
 
-When $\gamma$ becomes positive, the origin becomes an unstable fixed point because any small perturbation grows locally due to the positive $\gamma v$ term. 
-However the system remains globally stable since for large amplitudes of oscillation the cubic term dominates and the trajectories tend towards the origin. 
+However, when $\gamma$ becomes positive the origin becomes an unstable fixed point because any small perturbation grows locally because of the positive $
+\gamma v$ term. 
+However the system continues to be globally stable since for large amplitudes of oscillation the cubic term dominates and the trajectories tend towards the origin. 
 These two effects combine, causing the trajectories to accumulate in an intermediate amplitude zone, giving rise to a stable limit cycle. 
-
-This behavior is shown in the central column of Figure 8, where an outward-spiraling trajectory starting close to the origin, an inward-spiraling trajectory originating from large amplitudes, both converging to the stable limit cycle in between are represented in blue and orange lines, respectively.
+This is shown the central column of Figure 8 where an outward spiraling trajectory from very close to the origin, an inward spiraling trajectory coming from large amplitudes and the stable limit cycle are depicted in blue and orange color respectively. 
  
-Aditionally, when the value of $\gamma$ is positive but small the oscillations resemble those of the harmonic oscillator as shown in the center column of Figure 8 for $\gamma=0.1$. 
-Note that approximately ten cycles are displayed in the time range chosen for the variable (150 time units).
+On the other hand, when the value of $\gamma$ is small the oscillations resemble those of the harmonic oscillator as shown in the center column of Figure 8 for $\gamma=0.1$. Note that approximately ten cycles are displayed in the time range chosen for the variable (150 time units).
 
 As the value of $\gamma$ increases, the amplitude of the stable limit cycle becomes larger but also changes its shape, as can be seen in the right column of Figure 8. 
 The periodic orbit now consists of two parts: a slow one corresponding to the slightly tilted horizontal sections and a fast one corresponding to the vertical sections of the trajectory. 
@@ -438,15 +436,15 @@ We thus have a much more finely tuned self-oscillator given by the equations.
 
 the parameters are the same but now a new term appears with a manually adjusted value of 0.16 that partially compensates the detuning. 
 
+This can be seen in the right column of Figure 9 where we display the waveforms for $k=0.2$ (top) and $k=1.5$ (bottom) with two values of $\gamma$: 0.2 (blue) and 1.5 (orange), as before. 
+In this case, although there is some detuning, it is clear that it is much less than in the case of the self-oscillator shown on the left.
+
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure9.eps}}
     \caption{Time evolution of the $v$ variable for the self-oscillator given by equations \ref{eq_selfosc}} (left column) and the self-tuned oscillator given by equations \ref{eq_selftuned} (right column) for values of $k=0.2$ (top row) and $k=1.0$ (bottom row) and values of $\gamma=0.2$ (blue line) and $\gamma=1.5$ (orange line). 
     \label{fig_selftunedosc}
 \end{figure}
-
-This can be seen in the right column of Figure 9 where we display the waveforms for $k=0.2$ (top) and $k=1.5$ (bottom) with two values of $\gamma$: 0.2 (blue) and 1.5 (orange), as before. 
-In this case, although there is some detuning, it is clear that it is much less than in the case of the self-oscillator shown on the left.
 
 Figure 10 shows four features of the oscillator defined by the equations \ref{eq_selftuned} plotted as a color scale in the parameter space ($k,\mu$). 
 Note that unlike the phase space, each point in this space corresponds to a different system, with a different evolution and with a different phase portrait. 
@@ -614,10 +612,10 @@ A very relevant feature of saddle points is that they act as watersheds or flow 
 
 The homoclinic bifurcation involves the encounter of a saddle with a stable limit cycle. 
 And the consequence of that encounter is the anhilation of the limit cycle. 
-If we imagine that one of these trajectories approaching the saddle is a stable limit cycle we will have a slowing of the flow and the behavior of the oscillation would be as shown in Figure 15.c. 
+If we imagine that one of these trajectories approaching the saddle is a stable limit cycle we will have a slowing of the flow and the behavior of the oscillation would be as shown in Figure 15a. 
 By modifying the system parameters in the homoclinic bifurcation the limit cycle collides with the Saddle forming a loop (or homoclinic connection) as shown in figure 15 b. 
-That loop can be seen as the limit cycle slowing down to such a length that it is now an infinite period orbit. After the bifurcation the limit cycle disappears (Figure 15.a).
-If we traverse the bifurcation from left to right in Figure 15 we can see how a stable limit cycle is created when a saddle point forms a homoclinic connection or loop. And then after the bifurcation that loop detaches from the saddle forming a stable limit cycle. This is a new mechanism by which an oscillation can be turned on.
+That loop can be seen as the limit cycle slowing down to such a length that it is now an infinite period orbit. After the bifurcation the limit cycle disappears (Figure 15 c).
+If we traverse the bifurcation from right to left in Figure 15 we can see how a stable limit cycle is created when a saddle point forms a homoclinic connection or loop. And then after the bifurcation that loop detaches from the saddle forming a stable limit cycle. This is a new mechanism by which an oscillation can be turned on.
 
 Let's see an example of a system that generates oscillations by this bifurcation. The system is given by the following equations:
 
@@ -684,14 +682,10 @@ To conclude this part we can summarize in a table the behavior of the four bifur
 
 \subsection{Questionnaire}
 \begin{enumerate}
-\item Draw a qualitative phase portrait for the harmonic oscillator with no damping $\gamma=0$ for different initial conditions.
 \item Why the "simplest" form of the negative resistance is $\gamma v - v^3$? Why there are no quadratic terms?
 \item Explore the limit of high damping (high $\gamma$ values) and low frequency (low $k$ values) for the self-oscillator. What happens with the relaxation oscillator?
-\item Imagine a MIDI controlled musical instrument using the self-tuned oscillator. Propose a mapping between the parameters ($\gamma,k$) and the key note and velocity. 
-\item How does the parameter $k$ influence the frequency of the resulting sound in the simplified bow model given by the equations \ref{eq_bow} and \ref{eq_bowfriction}? 
-\item And in the above model for a fixed $k$, how does the parameter $v_0$ influence the sound frequency?
-\item Explore the same dependence in the fictional frequency model given by the equations \ref{eq_bow} and \ref{eq_fictional}. When the stable and unstable limit cycles arise, do they do so with a given frequency?
-\item What happens if we add a perturbation in the $x$ variable near the homoclinic bifurcation in the model given by equations \ref{eq_homoclinic}?
+\item What happens if we add a non-linear restitution force $kx-x^3$ to the self-oscillator?
+\item 
 \end{enumerate}
 
 \end{document}
