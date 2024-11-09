@@ -41,6 +41,7 @@
 \usepackage{lipsum}  
 \usepackage{cmbright}
 \usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
 
 \begin{document}
 
@@ -63,31 +64,30 @@ Further, we will consider this quantity to arise from a deterministic system -- 
 \end{figure}
 
 Let's see an example, perhaps the simplest posible for an oscillator, to understand how this rule must be given. 
-Let us consider a system with a state specified by a single angular variable $\theta$. 
+Let us consider a system with a state specified by a single angular variable $\theta$ (theta). 
 We can represent this state as a point on a circle, where its magnitude is the angle on the circle as shown in Figure 1.a.
 
 The representation of a system where each state is given by a single point in the space is known as the {\em phase space} of the system. In this case the phase space is one-dimensional but there can be phase spaces of various dimensions and with different topologies (for example a one-dimensional space corresponding to the straight line is topologically different from the circle).
 This state of the system $\theta$ is going to vary in time following some deterministic rule. The magnitude that we will convert into sound will be the horizontal position $\cos(\theta)$.
 
-It should not be surprising that at this point the simplest thing that could be proposed as an oscillation is to postulate that the variable of the system grows linearly with time $\theta(t)=\omega t$ as shown in figure 1.c.  Therefore we have at the output a pure tone, where the variable $\theta$ represents the phase of this oscillator and $\omega/(2\pi)$ its frequency.
+It should not be surprising that at this point the simplest thing that could be proposed as an oscillation is to postulate that the variable of the system grows linearly with time $\theta(t)=\omega t$ as shown in figure 1.c.  The output is a pure tone, where the variable $\theta$ represents the phase and $\omega/(2\pi)$ the frequency. Since the output signal $\cos(\theta)$ has a range of $[-1…1]$, which is full amplitude of speakers, we scale it by $0.1$. Here is the corresponding program in the SuperCollider language:
+
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
 
 \lstset{
-basicstyle=\footnotesize 
+basicstyle=\footnotesize,
+backgroundcolor=\color{backcolour},   
 }
-\begin{lstlisting}
-(
-Ndef(\x, {
-	var time = Sweep.ar;   // a constantly rising signal
-	var omega = 200 * 2pi; // a frequency of 200 in a circle
-	var theta = time * omega; // scaling the time by angular velocity
-	cos(theta) * 0.1;      // horizontal component scaled in amplitude by 0.1
-}).play // play out through the speakers
-)
+
+
+\begin{lstlisting}[caption=A pure tone from time $t$]
+Ndef(\x, { var t = Sweep.ar, omega = 200 * 2pi, theta = t * omega; cos(theta) * 0.1 }).play
 \end{lstlisting}
 
 
 However, notice that in that case we are not giving the rule of evolution of the state of the system but the result of that rule, its solution. 
-This approach is not general and flexible enough. 
+In many cases, this approach is not general and flexible enough. 
 For example, for some rules, it is not possible to calculate the final result. 
 Also, the final result depends on the initial state of the system (which will be called {\em initial condition} in the following). Their rules will allow us more general ways of classifying systems than their solutions.
 
