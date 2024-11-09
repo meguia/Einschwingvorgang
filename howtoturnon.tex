@@ -43,6 +43,14 @@
 \usepackage{listings}
 \usepackage[dvipsnames]{xcolor}
 
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\usepackage{listings}
+\lstset{
+basicstyle=\footnotesize,
+backgroundcolor=\color{backcolour},   
+}
+
+
 \begin{document}
 
 \maketitle
@@ -72,17 +80,14 @@ This state of the system $\theta$ is going to vary in time following some determ
 
 It should not be surprising that at this point the simplest thing that could be proposed as an oscillation is to postulate that the variable of the system grows linearly with time $\theta(t)=\omega t$ as shown in figure 1.c.  The output is a pure tone, where the variable $\theta$ represents the phase and $\omega/(2\pi)$ the frequency. Since the output signal $\cos(\theta)$ has a range of $[-1…1]$, which is full amplitude of speakers, we scale it by $0.1$. Here is the corresponding program in the SuperCollider language:
 
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
-
-\lstset{
-basicstyle=\footnotesize,
-backgroundcolor=\color{backcolour},   
-}
-
-
-\begin{lstlisting}[caption=A pure tone from time $t$]
-Ndef(\x, { var t = Sweep.ar, omega = 200 * 2pi, theta = t * omega; cos(theta) * 0.1 }).play
+\begin{lstlisting}[frame=single,caption=A pure tone from time $t$]
+Ndef(\x, { 
+    var t = Sweep.ar, 
+    omega = 200 * 2pi, 
+    theta = omega * t; 
+    cos(theta) * 0.1 
+}).play
 \end{lstlisting}
 
 
@@ -127,6 +132,27 @@ where the derivative with respect to time appears always on the left, and where 
 Note that in the rule given by $f(\theta)$ there is no dependence with respect to time, only with respect to the state of the system.
 In the particular case of our simple oscillator this function is constant $f=\omega$ and does not depend on $\theta$. 
 
+To specify a sound using such a rule, we need an algorithm that finds an approximate solution to it: a time evolution that follows the rule. We specify the differential equation and then use a real-time numerical solver that returns a sound signal.
+
+\begin{lstlisting}[frame=single,caption= Defining equation 1 as a sound source]
+
+// a simple system of ordinary differential equations with one equation
+(
+Fb1_ODEdef(\theta, { |t, y| 
+    var theta = y[0], 
+        omega = 2pi; 
+        [
+           { omega } // the derivative of theta is a constant here
+        ] 
+},  y0: [0]);
+
+// defining a solution to the equation as a sound source
+Ndef(\x, { 
+    var theta = Fb1_ODE.ar(\theta, tMul: 200, leakDC: false);
+    cos(theta) * 0.1 
+}).play;
+)
+\end{lstlisting}
 
 \subsection{Non-uniform evolution}
 
@@ -186,11 +212,90 @@ If we do this update instant by instant (which is equivalent to integrate numeri
 The cosine of this function in the waveform shown in Figure 3. 
 The lower slope parts correspond to the flatter part of the waveform because the point moves slower on the circle and the peaks on the waveform to the faster part on the circle.
 
+\begin{lstlisting}[frame=single,caption=Sound from the Adler equation.]
+
+// a system specified by one equation, this time depending on theta
+(
+Fb1_ODEdef(\adler, { |t, y, mu = 1.0|
+	var theta = y[0];
+	[
+		{ mu + cos(theta) }
+	]
+}, t0: 0, y0: [0])
+)
+
+// definition of the sound process that results from the solution of the ODE
+(
+Ndef(\adler, {|mu=0.5|
+	var theta = Fb1_ODE.ar(\adler, [mu], 400, leakDC: false);
+	cos(theta) * 0.5;
+}).play;
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\mu, [0.5, 2, \lin]); // paremeter range for mu
+Ndef(\adler).gui; // show controls
+s.scope.style_(1); // show audio of the first channel
+)
+\end{lstlisting}
+
+The perceptual range of an audio signal is very frequency dependent. Instead of directly producing an audio signal (so called audification), we can sonify it by modulating a given sine tone frequency and amplitude.
+
+
+\begin{lstlisting}[frame=single,caption=Sonifying the Adler equation as frequency and amplitude of a sine signal.]
+(
+Ndef(\adler, { |mu = 0.5|
+	var theta = Fb1_ODE.ar(\adler, [mu], 400, leakDC: false); // range 0..2pi
+	var ratio = theta.cos.linexp(-1, 1, 1, 4); // a half circle is two octaves (* 4)
+	var amp = theta.sin.linexp(-1, 1, 0.01, 1); // the x coordinate is amplitude
+	SinOsc.ar(ratio * 220) * amp * 0.1
+}).play;
+)
+
+// fine tuning mu
+Ndef(\adler).xset(\mu, 1.5);
+Ndef(\adler).xset(\mu, 1.2);
+Ndef(\adler).xset(\mu, 1.057); // around 1 is the interesting part.
+Ndef(\adler).xset(\mu, 1.001);
+\end{lstlisting}
+
+
+
 At this point we can ask ourselves what would happen with an arbitrary function (as long as it remains periodic and positive). 
 We could get very different waveforms but the relationship between $f(\theta)$ and $\cos(\theta)$ is not obvious at all. 
 Even more critically, we cannot know in advance the period that the signal obtained will have. 
 However, there is something that is intuitive, the greater the value of $f(\theta)$, the faster the point will go along the circle. 
-On the other hand, the closer to zero this function gets, the slower the time evolution will become. 
+On the other hand, the closer to zero this function gets, the slower the time evolution will become.
+
+\begin{lstlisting}[frame=single,caption=Sound from an arbitrary periodic function by sonification as before.]
+// sonify functions
+(
+f = { |func|
+	Fb1_ODEdef(\x, { |t, y|
+		var theta = y[0];
+		[
+			{ func.(theta)  }
+		]
+	}, t0: 0, y0: [0]);
+
+	Ndef(\adler, {
+		var theta = Fb1_ODE.ar(\x, [mu], 200, leakDC: false);
+		var ratio = theta.cos.linexp(-1, 1, 1, 4);
+		var amp = theta.sin.linexp(-1, 1, 0.01, 1);
+		SinOsc.ar(ratio * 220) * amp * 0.1
+	}).play;
+};
+)
+
+
+f.({ |theta| 1.5 + cos(theta) });
+f.({ |theta| 0.9 + cos(theta) });
+f.({ |theta| 1.2 + (cos(theta) * cos(theta * 0.5)) });
+\end{lstlisting}
+
+
+In Figure 4 we display a more complex function $f(\theta)$ (built with periodic functions but it is not worth to write the differential equation) having a risky approximation to zero for an value of $\theta$ slightly higher than $\pi$ (see panel b of Figure 4).
 
 \begin{figure}[h]
     \centering
@@ -200,7 +305,7 @@ On the other hand, the closer to zero this function gets, the slower the time ev
     \label{fig_adler3}
 \end{figure}
 
-In Figure 4 we display a more complex function $f(\theta)$ (built with periodic functions but it is not worth to write the differential equation) having a risky approximation to zero for an value of $\theta$ slightly higher than $\pi$ (see panel b of Figure 4). 
+
 In this zone, which corresponds to the left part of the circle in the phase space in Figure 4.a, the motion of the point (or flow) becomes very slow as indicated by the small arrow. 
 As expected, this produces a flatter part of the waveform even than in the previous case because the flow slows down much more.
 
@@ -257,6 +362,17 @@ It is interesting that this process can happen the other way around.
 That is, the value of $\mu$ can have a positive value less than one and in that case there is no oscillation. But if for some reason the system changes and $\mu$ exceeds one, an oscillation starts. 
 This means that the Saddle Node Bifurcation on the Circle is one of the ways (perhaps the simplest) in which an oscillation can be turned on. 
 
+
+\begin{lstlisting}[frame=single,caption=The end of an oscillation.]
+(
+Ndef(\adler, {
+	var mu = XLine.kr(1.1, 1, 10); // end within 10 seconds
+	Fb1_ODE.ar(\adler, [mu], tMul: 400) * 0.2
+}).play;
+s.scope.style_(1);
+)
+\end{lstlisting}
+
 \subsection{Questionnaire}
 \begin{enumerate}
     \item In Figure 1.c the time evolution for a initial state $\theta=0$ is portrayed. How could the ensemble of all possible initial conditions between 0 and $2\pi$ be represented in this graph?
@@ -268,6 +384,9 @@ This means that the Saddle Node Bifurcation on the Circle is one of the ways (pe
     \item What happens if the system is at node N and we add a small perturbation in the variable? And how does it change if we add the perturbation when the system is in the saddle S? 
     \item Suppose we are at a value very close to the bifurcation with the value of $\mu$ slightly below 1. This implies that the node and the saddle are very close. What happens if the system is decaying to the node and we add a perturbation? Distinguish whether the perturbation is positive or negative.
 \end{enumerate}
+
+\newpage
+
 \section{Two dimensional self-sustained oscilations}
 
 \subsection{Impossibility of oscillations in one dimension (on the straight line).}
@@ -307,6 +426,9 @@ Note that this is because precisely the definition of our systems is that their 
 The “trick” that allowed to have oscillations with only one variable in the previous case was to curve the phase space of the straight line to form a circle. 
 In that case an always positive evolution corresponds to an oscillation around the circle. 
 In other words, the oscillation was possible only because of the particular topology of the phase space. 
+
+
+
 
 \subsection{The simplest physical oscillator (harmonic)}
 
@@ -378,7 +500,7 @@ In its simplest form we can think of a nonlinear damping in the form of $\gamma 
 \begin{figure}
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure8.eps}}
-    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the self-oscillator given by equation \ref{eq_selfosc} and three sets of parameters: before the Hopf bifurcation with $\gamma=-0.05$ (left), after the Hopf bifurcation with a small $\gamma=0.2$ value (center) and with a high $\gamma=1.5$ value when the relaxation oscillation is established (right).} 
+    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the self-oscillator given by equation \ref{eq_selfosc} and three sets of parameters: before the Hopf bifurcation with $\gamma=-0.05$ (left), after the Hopf bifurcation with a small $\gamma=0.2$ value (center) and with a high $\gamma=1.5$ value when the relaxation oscillation is established (right). The blue and orange trajectories result from two different initial values.} 
     \label{fig_selfosc}
 \end{figure}
 
