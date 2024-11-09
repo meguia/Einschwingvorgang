@@ -40,7 +40,7 @@
 
 \usepackage{lipsum}  
 \usepackage{cmbright}
-\usepackage{listings}
+
 \usepackage[dvipsnames]{xcolor}
 
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
@@ -478,6 +478,35 @@ This means that for each initial condition the evolution in the phase space is a
 
 As an exercise we can study how the parameters $k$ and $\gamma$ affect the result and if we transform in sound some of the two variables we can study if there is a simple relation between the frequency and the parameter $k$.
 
+\begin{lstlisting}[frame=single,caption=A harmonic oscillator.]
+// definition of a harmonic oscillator in two dimensions, y[0] and y[1]
+// with neg(gamma) * x being the friction force and k * x the elastic force
+(
+Fb1_ODEdef(\harmonic, { |t, y, gamma = 1.0, k = 1|
+	var x = y[0]; // position
+	var v = y[1]; // velocity
+	[
+		{ v }, // derivative of position (=v)
+		{ neg(gamma) * x - (k * x) } // derivative of velocity (force)
+	]
+}, t0: 0, y0: [0, 1]);
+
+Ndef(\harmonic, { |gamma = 1, k = 1|
+	Fb1_ODE.ar(\harmonic, [gamma, k], tMul: 400) * 0.2
+}).play;
+)
+
+// display parameters and signals
+
+(
+ControlSpec.add(\gamma, [-0.2, 4, \lin]);
+ControlSpec.add(\k, [0.001, 10, \exp]);
+Ndef(\harmonic).gui;
+s.scope.style_(2);
+)
+
+\end{lstlisting}
+
 \subsection{Turning on the oscillation (Hopf Bifurcation)}
 
 The simple harmonic oscillator, although physically realistic, is not very interesting as a sound generator (except as an approximation to the point excitation of a single oscillation mode). 
@@ -504,10 +533,11 @@ In its simplest form we can think of a nonlinear damping in the form of $\gamma 
     \label{fig_selfosc}
 \end{figure}
 
+
 The behavior of this system is displayed in Figure 8 for three values of $\gamma$ with a fixed value $k=0.2$. 
 The top row shows the time evolution of $v$ for an initial condition and the bottom row shows the evolution of that trajectory in the ($x,v$) phase space.
 This representation of trajectories in phase space is also known as the {\em phase portrait} of the system.
-When the value of $\gamma$ is negative we have the same situation as for the harmonic oscillator with dissipation (the effect of the cubic term is to increase the resistance for higher amplitudes) and all the initial conditions evolve following spirals towards the node at the origin, as illustrated in the left column of Figure 8. 
+When the value of $\gamma$ is negative we have the same situation as for the harmonic oscillator with dissipation (the effect of the cubic term is to increase the resistance for higher amplitudes) and all the initial conditions evolve following spirals towards the node at the origin, as illustrated in the left column of Figure 8.
 
 When $\gamma$ becomes positive, the origin becomes an unstable fixed point because any small perturbation grows locally due to the positive $\gamma v$ term. 
 However the system remains globally stable since for large amplitudes of oscillation the cubic term dominates and the trajectories tend towards the origin. 
@@ -556,6 +586,33 @@ They can even appear in systems with many variables.
 They constitute, so to speak, classes of universality in the way an oscillation can appear in the system.
 
 
+\begin{lstlisting}[frame=single,caption=Self-sustained oscillation.]
+
+(
+Fb1_ODEdef(\selfsustained, { |t, y, gamma = 1.0, k = 1|
+	var x = y[0];
+	var v = y[1];
+	[
+		{ v },
+		{ gamma * v - (v ** 3) - (k * x) }
+	]
+}, t0: 0, y0: [0, 1]);
+
+
+Ndef(\selfsustained, { |gamma = 1, k = 1|
+	Fb1_ODE.ar(\selfsustained, [gamma, k], tMul: 400) * 0.2
+}).play;
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\gamma, [-0.2, 4, \lin]);
+ControlSpec.add(\k, [0.001, 3, \exp]);
+Ndef(\selfsustained).gui;
+s.scope.style_(2);
+)
+
+\end{lstlisting}
 
 \subsubsection{A self-tuned oscillator}
 
@@ -610,6 +667,39 @@ In this case the transient rapidly decreases after crossing the Hopf bifurcation
 
 Finally, the harmonic content of the signal is estimated as the percentage increase between the mean frequency (or spectral centroid, the average frequency weighted by the spectrum amplitude) and the inverse of the period of the limit cycle (fundamental frequency) and is displayed in the lower right panel.
 
+\begin{lstlisting}[frame=single,caption=Compensated oscillation.]
+
+(
+Fb1_ODEdef(\selftuned, { |t, y, gamma = 1.0, k = 1|
+	var x = y[0];
+	var v = y[1];
+	[
+		{ v },
+		{
+			var nonlinearTerm = 1 + (0.16 * sqrt(k) * x.squared);
+			gamma * v - (v ** 3) - (k * x * nonlinearTerm)
+		}
+	]
+}, t0: 0, y0: [0, 1]);
+
+Ndef(\selftuned, { |gamma = 1, k = 1|
+
+	Fb1_ODE.ar(\selftuned, [gamma, k], tMul: 400) * 0.2
+
+}).play;
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\gamma, [-0.2, 4, \lin]);
+ControlSpec.add(\k, [0.001, 3, \exp]);
+Ndef(\selftuned).gui;
+s.scope.style_(2);
+)
+
+\end{lstlisting}
+
+
 \subsection{Fictional frictions}
 
 In the previous section we showed how an oscillation can be started using a negative resistance for low velocities. 
@@ -661,6 +751,7 @@ However we are going to use a “smoothed” version of this function (to avoid 
 \end{equation}
 
 where $\epsilon$ is a small regularization parameter (we use $\epsilon = 0.05$).
+
 The behavior of the system defined by equations \ref{eq_bow} with the friction force given by equation \ref{eq_bowfriction} is displayed in Figure 12 for three parameter values. 
 For the sake of simplicity we will fix $k=1$ in the following.
 
@@ -686,6 +777,40 @@ This behavior is much more evident on the right column of Figure 12 where the fr
 The waveform obtained has the timbral characteristic of rubbed instruments or slip stick processes in general with a series of triangular pulses followed by flat sections.
 
 Finally it is worth noticing that the same behavior can be observed with a negative $v_0$ but in this case the mass slips in the other direction and the limite cycle is reversed in both coordinates.
+
+\begin{lstlisting}[frame=single,caption=A dynamical system with stick slip friction.]
+
+(
+Fb1_ODEdef(\frictional, { |t, y, gamma = 1.0, k = 1, v0 = 1, epsilon = 0.05|
+	var x = y[0];
+	var v = y[1];
+	[
+		{ v },
+		{
+			var dv = v - v0;
+			var fbow = atan(dv / epsilon) * exp(-2 * dv.abs);
+			neg(gamma * fbow) - (k * x)
+		}
+	]
+}, t0: 0, y0: [0, 1]);
+
+Ndef(\frictional, { |gamma = 1, k = 1, v0 = 1, epsilon = 0.05|
+	Fb1_ODE.ar(\frictional, [gamma, k, v0, epsilon], tMul: 400) * 0.2
+}).play;
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\gamma, [-2, 2, \lin]);
+ControlSpec.add(\k, [0, 2, \lin]);
+ControlSpec.add(\v0, [-5, 5, \lin]);
+ControlSpec.add(\epsilon, [1e-8, 0.1, \lin]);
+Ndef(\frictional).gui;
+s.scope.style_(2);
+)
+
+\end{lstlisting}
+
 
 \subsubsection{Other frictions (Saddle-Node of Limit Cycles)}
 
@@ -722,6 +847,41 @@ Therefore this is a qualitatively different form in which an oscillation can app
     
 \end{figure}
 
+\begin{lstlisting}[frame=single,caption=A dynamical system with stick slip friction.]
+
+(
+Fb1_ODEdef(\frictional2, { |t, y, gamma = 1.0, k = 1, sigma = 0.2|
+	var x = y[0];
+	var v = y[1];
+	[
+		{ v },
+		{
+			var vsq = v.squared;
+			var ffic = v * (1 - vsq + (sigma * vsq.squared));
+			neg(gamma * ffic) - (k * x)
+		}
+	]
+}, t0: 0, y0: [0, 1]);
+
+
+Ndef(\frictional2, { |gamma = 1, k = 1, sigma = 0.2|
+	Fb1_ODE.ar(\frictional2, [gamma, k, sigma], tMul: 400) * 0.2
+}).play;
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\gamma, [-2, 2, \lin]);
+ControlSpec.add(\k, [0, 2, \lin]);
+ControlSpec.add(\v0, [-5, 5, \lin]);
+ControlSpec.add(\sigma, [0.01, 0.5, \lin]);
+
+Ndef(\frictional2).gui;
+s.scope.style_(2);
+)
+\end{lstlisting}
+
+
 \subsection{The meaning of a saddle (Homoclinic Bifurcation)}
 
 There is an additional, qualitatively different, mechanism by which a limit cycle (and hence an oscillation) can be created/annihilated at least in two-dimensional phase space and it corresponds to a homoclinic bifurcation. 
@@ -748,12 +908,12 @@ A very relevant feature of saddle points is that they act as watersheds or flow 
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure15.eps}}
-    \caption{Homoclinic bifurcation: a) a Saddle point (S) is feeded by an spiral repulsor (white circle); b) at the bifurcation point it forms a saddle loop; c) after the bifurcation a stable limit cicle (LC) is emitted from the loop} 
+    \caption{Homoclinic bifurcation: a) a Saddle point (S) is fed by an spiral repulsor (white circle); b) at the bifurcation point it forms a saddle loop; c) after the bifurcation a stable limit cicle (LC) is emitted from the loop} 
     \label{fig_homoclinic}
 \end{figure}
 
 The homoclinic bifurcation involves the encounter of a saddle with a stable limit cycle. 
-And the consequence of that encounter is the anhilation of the limit cycle. 
+And the consequence of that encounter is the annihilation of the limit cycle. 
 If we imagine that one of these trajectories approaching the saddle is a stable limit cycle we will have a slowing of the flow and the behavior of the oscillation would be as shown in Figure 15.c. 
 By modifying the system parameters in the homoclinic bifurcation the limit cycle collides with the Saddle forming a loop (or homoclinic connection) as shown in figure 15 b. 
 That loop can be seen as the limit cycle slowing down to such a length that it is now an infinite period orbit. After the bifurcation the limit cycle disappears (Figure 15.a).
@@ -769,6 +929,49 @@ Let's see an example of a system that generates oscillations by this bifurcation
 \end{subequations}
 
 For this case we fix $\delta=0.5$ and explore $\mu$ that will be our bifurcation parameter. 
+
+
+
+\begin{lstlisting}[frame=single,caption=Exploring the sound of homoclinic bifurcation.]
+
+(
+Fb1_ODEdef(\homoclinic, { |t, y, mu = 0.1, delta = 0.5|
+	var x = y[0];
+	var v = y[1];
+	[
+		{ v },
+		{
+			var xsq = x.squared;
+			x * (neg(v * delta) + x - xsq - (xsq * v)) - mu }
+	]
+}, t0: 0, y0: [-0.32, 0]);
+
+
+Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
+	Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 400) * 0.2
+}).play;
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\mu, [0.01, 0.2, \lin]);
+ControlSpec.add(\delta, [0.5, 1.5, \lin]);
+Ndef(\homoclinic).gui;
+s.scope.style_(2);
+)
+
+// sonification of the homoclinic bifurcation as frequency modulation
+(
+Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
+	var ps = Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 80, leakDC: false);
+	var freq = ps.linlin(-1, 1, 300, 2000);
+	SinOsc.ar(freq) * 0.1
+}).play;
+Ndef(\homoclinic).gui;
+)
+
+\end{lstlisting}
+
 
 \begin{figure}[h!]
     \centering
