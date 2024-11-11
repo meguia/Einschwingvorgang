@@ -501,9 +501,7 @@ Fb1_ODEdef(\homoclinic, { |t, y, mu = 0.1, delta = 0.5|
 	var v = y[1];
 	[
 		{ v },
-		{
-			var xsq = x.squared;
-			x * (neg(v * delta) + x - xsq - (xsq * v)) - mu }
+		{ x * (neg(v * delta) + (x * (1 - x - v))) - mu }
 	]
 }, t0: 0, y0: [-0.32, 0]);
 
@@ -516,7 +514,7 @@ Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
 // display parameters and signals
 (
 ControlSpec.add(\mu, [0.01, 0.2, \lin]);
-ControlSpec.add(\delta, [0.5, 1.5, \lin]);
+ControlSpec.add(\delta, [0.2, 1.5, \lin]);
 Ndef(\homoclinic).gui;
 s.scope.style_(2);
 )
@@ -526,7 +524,7 @@ s.scope.style_(2);
 (
 Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
 	var ps = Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 80, leakDC: false);
-	var freq = ps.linlin(-1, 1, 300, 2000);
+	var freq = ps.linlin(-1, 1, 300, 1000);
 	SinOsc.ar(freq) * 0.1
 }).play;
 Ndef(\homoclinic).gui;
