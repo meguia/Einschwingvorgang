@@ -57,7 +57,15 @@ Ndef(\x, {
 // Question: how would you do frequency modulation?
 // Question: the sweep cannot go to infinity, because computers have limited memory. What happens if we wait long enough? How can we get this earlier? How could we fix it?
 
+/*
+1.1.1 The rule as a differential equation
+*/
 
+// a definition of the very simple equation theta' = omega.
+(
+Fb1_ODEdef(\circle, { |t, y| var theta = y[0], omega = 2pi; omega },  y0: [0]);
+Ndef(\x, { Fb1_ODE.ar(\circle, tMul: 200, leakDC: false).cos * 0.1 }).play;
+)
 
 /*
 1.2 Non-uniform evolution
@@ -89,6 +97,8 @@ Fb1_ODEdef(\adler, { |t, y, mu = 1.0|
 	]
 }, t0: 0, y0: [0]);
 )
+
+
 
 // definition of the sound process that results from the solution of the ODE
 // we pass the parameter mu and a time scale (400)
@@ -515,7 +525,7 @@ s.scope.style_(2);
 // sonification of the homoclinic bifurcation as frequency modulation
 (
 Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
-	var ps = Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 100, leakDC: false);
+	var ps = Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 80, leakDC: false);
 	var freq = ps.linlin(-1, 1, 300, 2000);
 	SinOsc.ar(freq) * 0.1
 }).play;
