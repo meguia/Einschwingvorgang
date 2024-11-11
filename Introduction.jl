@@ -12,28 +12,9 @@ md"""
 # Einschwingvorgänge
 
 This is a Julia notebook to generate all the figures in the document **Einschwingvorgänge, or How to turn on an oscillation**, 
-availabe at (https://github.com/meguia/Einschwingvorgang)[https://github.com/meguia/Einschwingvorgang]
-
+availabe at [https://github.com/meguia/Einschwingvorgang](https://github.com/meguia/Einschwingvorgang)
 
 """
-
-# ╔═╡ 75010f83-0889-4e30-bda0-c5573c684218
-
-
-# ╔═╡ a263dcee-a61e-43e6-a706-bd785370e7c7
-
-
-# ╔═╡ b721ccab-d5d3-4fc0-b52d-c17ea36a18e3
-
-
-# ╔═╡ 3f30534a-7434-44bf-b3e2-839b05fef867
-
-
-# ╔═╡ 43f1bb0f-e2cf-4311-b37e-f1f4a59034d8
-
-
-# ╔═╡ 78df8961-c80c-45bf-9598-fc8616bcbd12
-
 
 # ╔═╡ cd8dccd3-5775-46c5-a814-555c25d56ba2
 TableOfContents()
@@ -3611,13 +3592,7 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╠═b4ce6d38-ac13-4da5-baf7-268c4463e4be
-# ╠═75010f83-0889-4e30-bda0-c5573c684218
-# ╠═a263dcee-a61e-43e6-a706-bd785370e7c7
-# ╠═b721ccab-d5d3-4fc0-b52d-c17ea36a18e3
-# ╠═3f30534a-7434-44bf-b3e2-839b05fef867
-# ╠═43f1bb0f-e2cf-4311-b37e-f1f4a59034d8
-# ╠═78df8961-c80c-45bf-9598-fc8616bcbd12
+# ╟─b4ce6d38-ac13-4da5-baf7-268c4463e4be
 # ╠═d6432280-943b-11ef-22c3-99d4db1fb21d
 # ╠═cd8dccd3-5775-46c5-a814-555c25d56ba2
 # ╠═5117071c-e560-4e1c-8414-ab87848abefa
