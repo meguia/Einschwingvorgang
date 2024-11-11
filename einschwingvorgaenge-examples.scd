@@ -495,33 +495,29 @@ s.scope.style_(2);
 
 */
 
-
 (
 Fb1_ODEdef(\homoclinic, { |t, y, mu = 0.1, delta = 0.5|
 	var x = y[0];
 	var v = y[1];
 	[
 		{ v },
-		{
-			var xsq = x.squared;
-			neg(v * delta*x ) + (xsq*(1.0 - x - v)) - mu }
+		{ x * (neg(v * delta) + (x * (1 - x - v))) - mu }
 	]
-}, t0: 0, y0: [0.32, 0]);
+}, t0: 0, y0: [-0.32, 0]);
 
 
 Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
-	Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0.3, 0], tMul: 800,leakDC: false)
+	Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 800) * 0.2
 }).play;
 )
 
 // display parameters and signals
 (
-ControlSpec.add(\mu, [0.1, 0.25, \lin]);
-ControlSpec.add(\delta, [0.5, 1.0, \lin]);
+ControlSpec.add(\mu, [0.01, 0.2, \lin]);
+ControlSpec.add(\delta, [0.2, 1.5, \lin]);
 Ndef(\homoclinic).gui;
 s.scope.style_(2);
 )
-
 
 // sonification of the homoclinic bifurcation as frequency modulation
 (
