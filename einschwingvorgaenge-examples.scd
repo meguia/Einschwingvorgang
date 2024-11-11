@@ -435,7 +435,7 @@ Ndef(\frictional, { |gamma = 1, k = 1, v0 = 0.0|
 
 // display parameters and signals
 (
-ControlSpec.add(\gamma, [0.1, 2, \lin]);
+ControlSpec.add(\gamma, [0.1, 5, \lin]);
 ControlSpec.add(\k, [1.0, 10, \exp]);
 ControlSpec.add(\v0, [-3, 3, \lin]);
 Ndef(\frictional).gui;
@@ -486,6 +486,8 @@ Ndef(\frictional2).gui;
 s.scope.style_(2);
 )
 
+// push send for different values of sigma to explore the decay / onset of oscillations
+
 
 /*
 
@@ -500,13 +502,9 @@ Fb1_ODEdef(\homoclinic, { |t, y, mu = 0.1, delta = 0.5|
 	var v = y[1];
 	[
 		{ v },
-<<<<<<< Updated upstream
-		{ x * (neg(v * delta) + (x * (1 - x - v))) - mu }
-=======
 		{
 			var xsq = x.squared;
 			neg(v * delta*x ) + (xsq*(1.0 - x - v)) - mu }
->>>>>>> Stashed changes
 	]
 }, t0: 0, y0: [0.32, 0]);
 
@@ -518,13 +516,8 @@ Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
 
 // display parameters and signals
 (
-<<<<<<< Updated upstream
-ControlSpec.add(\mu, [0.01, 0.2, \lin]);
-ControlSpec.add(\delta, [0.2, 1.5, \lin]);
-=======
 ControlSpec.add(\mu, [0.1, 0.25, \lin]);
 ControlSpec.add(\delta, [0.5, 1.0, \lin]);
->>>>>>> Stashed changes
 Ndef(\homoclinic).gui;
 s.scope.style_(2);
 )
