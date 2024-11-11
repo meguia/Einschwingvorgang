@@ -828,7 +828,7 @@ In particular we are interested in a system in which the oscillations are create
 The system is given by the equations with the following functional form for the friction:
 
 \begin{equation} \label{eq_fictional}
-    F_{fictional}(v;\sigma) = v - v^3 + \sigma v^5  
+    F_{\text{fictional}}(v;\sigma) = v - v^3 + \sigma v^5  
 \end{equation}
 
 The parameter $\sigma$ accompanying the fifth order term will be responsible for the bifurcation that will give rise to (or end) the oscillations.
@@ -901,7 +901,7 @@ So before showing the bifurcation let's see how the flow behaves in an neighborh
 \begin{figure}[h]
     \centering
     \resizebox*{17cm}{!}{\includegraphics{figure14.eps}}
-    \caption{Five classes of fixed points in the plane, from left to right: (SA) spiral attractor, (NA) node attractor, (S) saddle point, (NR) node repulsor, and (SR) spiral repulsor} 
+    \caption{Five classes of fixed points in the plane, from left to right: (SA) spiral attractor, (NA) node attractor, (S) saddle point, (SR) spiral repulsor, and (NR) node repulsor.} 
     \label{fig_homoclinic}
 \end{figure}
 
@@ -937,11 +937,12 @@ Let's see an example of a system that generates oscillations by this bifurcation
 \end{align}
 \end{subequations}
 
-For this case we fix $\delta=0.5$ and explore $\mu$ that will be our bifurcation parameter.
+For this case we fix $\delta=0.5$ and explore $\mu$ that will be our bifurcation parameter.\footnote{For the definition of the sound process in listing \ref{lst_homoclinic}, we factor the second equation \ref{eq_homoclinic}b for efficiency: $\dot{v} = x (- \delta v + x (1 - x - v)) - \mu$}
+
+In a sound generating process, a homoclinic bifurcation has a special  character -- when moving $\mu$ at different values for $\delta$, one can try to recognize it.
 
 
-
-\begin{lstlisting}[frame=single,caption=Exploring the sound of homoclinic bifurcation.]
+\begin{lstlisting}[frame=single,label=lst_homoclinic,caption=Exploring the sound of homoclinic bifurcation.]
 
 
 (
@@ -975,15 +976,15 @@ s.scope.style_(2);
 \begin{figure}[h!]
     \centering
     \resizebox*{15cm}{!}{\includegraphics{figure16.eps}}
-    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the system given by equations \ref{eq_homoclinic}.
-    unstable fixed point (white circle), saddle point (cross), stable fixed point or node (black circle). An homoclinic bifurcation occurs around $\mu=0.11$. Before the difurcation (left) all trajectories end at the sstable fixed point. After the bifurcation the system is bi-stable some trajectories end at the stable fixed point and others at the newly created limit cycle (cente). Finally after a Saddle-Node bifurcation all trajectories end up in the stable limit cycle.} 
+    \caption{Time evolution of the $v$ variable (top) and phase portraits (bottom) for the system given by equations~\ref{eq_homoclinic}:
+    unstable fixed point (white circle), saddle point (cross), stable fixed point or node (black circle). An homoclinic bifurcation occurs around $\mu=0.11$. Before the bifurcation (left), all trajectories end at the stable fixed point. After the bifurcation the system is bi-stable some trajectories end at the stable fixed point and others at the newly created limit cycle (center). Finally, after a Saddle-Node bifurcation, all trajectories end up in the stable limit cycle.} 
     \label{fig_homoclinic}
 \end{figure}
 
-In Figure 16 we display as before the time evolution of the $v$ variable on top and the phase portraits on the bottom for three $\mu$ values. 
+In Figure 16 we display as we did before the time evolution of the variable $v$ on top and the phase portraits on the bottom for three $\mu$ values. 
 On the first two phase portraits there are three fixed points indicated by symbols: an unstable spiral (white circle), a saddle point (cross) and a stable node (black square). 
-In the first column, all initial condition end in the stable node, so there. is no oscillation. 
-However there are trajectories, like the blue one, that approach the saddle almost touching it. 
+In the first column, all initial conditions end in the stable node, so there is no oscillation. 
+However there are trajectories, like the blue one, that approach the saddle, almost touching it. 
 One of these trajectories will form the homoclinic connection at the bifurcation. 
 
 

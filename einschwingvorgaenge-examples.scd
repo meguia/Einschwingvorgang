@@ -521,13 +521,39 @@ s.scope.style_(2);
 
 // sonification of the homoclinic bifurcation as frequency modulation
 (
-Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
-	var ps = Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 80, leakDC: false);
-	var freq = ps.linlin(-1, 1, 300, 1000);
+Ndef(\homoclinic, { |mu = 0.17, delta = 0.5, y0 = 0, y1 = 0|
+	var ps = Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [y0, y1], tMul: 80, leakDC: false);
+	var freq = ps.linlin(-1, 1, 100, 1000);
 	SinOsc.ar(freq) * 0.1
 }).play;
 Ndef(\homoclinic).gui;
 )
+
+
+Tdef(\x, { loop { 3.wait; Ndef(\homoclinic).send; } }).play; // reset every 3 seconds
+
+// step through different values of mu
+// for exploring different
+
+Ndef(\homoclinic).set(\mu, 0.02);
+Ndef(\homoclinic).set(\mu, 0.06);
+Ndef(\homoclinic).set(\mu, 0.1);
+Ndef(\homoclinic).set(\mu, 0.105);
+Ndef(\homoclinic).set(\mu, 0.108);
+Ndef(\homoclinic).set(\mu, 0.11);
+Ndef(\homoclinic).set(\mu, 0.13);
+Ndef(\homoclinic).set(\mu, 0.17);
+Ndef(\homoclinic).set(\mu, 0.2);
+Ndef(\homoclinic).set(\mu, 0.3);
+Ndef(\homoclinic).set(\mu, 0.4);
+Ndef(\homoclinic).set(\mu, 0.5);
+Ndef(\homoclinic).set(\mu, 0.7);
+Ndef(\homoclinic).set(\mu, 0.9);
+Ndef(\homoclinic).set(\mu, 1.3);
+
+
+// vary the initial values at each reset
+Tdef(\x, { loop { 1.wait; Ndef(\homoclinic).send([\y0, 2.0.rand2, \y1, 2.0.rand2]); } }).play; // reset every 3 seconds
 
 
 
