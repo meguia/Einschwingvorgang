@@ -229,7 +229,7 @@ Fb1_ODEdef(\harmonic, { |t, y, gamma = 1.0, k = 1|
 	[
 		{ v },
 		{
-			var elastic = neg(gamma) * x;
+			var elastic = neg(gamma) * v;
 			var friction = neg(k * x);
 			elastic + friction
 		}
@@ -244,11 +244,11 @@ Fb1_ODEdef(\harmonic, { |t, y, gamma = 1.0, k = 1|
 	var v = y[1];
 	[
 		{ v },
-		{ neg(gamma) * x - (k * x) }
+		{ neg(gamma) * v - (k * x) }
 	]
 }, t0: 0, y0: [0, 1]);
 
-Ndef(\harmonic, { |gamma = 1, k = 1|
+Ndef(\harmonic, { |gamma = 0.01, k = 1|
 	Fb1_ODE.ar(\harmonic, [gamma, k], tMul: 400) * 0.2
 }).play;
 )
@@ -256,12 +256,13 @@ Ndef(\harmonic, { |gamma = 1, k = 1|
 // display parameters and signals
 
 (
-ControlSpec.add(\gamma, [-0.2, 4, \lin]);
-ControlSpec.add(\k, [0.001, 10, \exp]);
+ControlSpec.add(\gamma, [0.001, 0.1, \exp]);
+ControlSpec.add(\k, [1.0, 100, \exp]);
 Ndef(\harmonic).gui;
 s.scope.style_(2);
 )
 
+// push send!
 
 /*
 2.3 Turning on the oscillation (negative friction)
@@ -424,10 +425,10 @@ Ndef(\frictional, { |gamma = 1, k = 1, v0 = 1, epsilon = 0.05|
 
 // display parameters and signals
 (
-ControlSpec.add(\gamma, [-2, 2, \lin]);
-ControlSpec.add(\k, [0, 2, \lin]);
-ControlSpec.add(\v0, [-5, 5, \lin]);
-ControlSpec.add(\epsilon, [1e-8, 0.1, \lin]);
+ControlSpec.add(\gamma, [0.1, 2, \lin]);
+ControlSpec.add(\k, [0.1, 2, \lin]);
+ControlSpec.add(\v0, [-3, 3, \lin]);
+ControlSpec.add(\epsilon, [1e-4, 0.1, \lin]);
 Ndef(\frictional).gui;
 s.scope.style_(2);
 )
