@@ -239,8 +239,8 @@ Fb1_ODEdef(\harmonic, { |t, y, gamma = 1.0, k = 1|
 	[
 		{ v },
 		{
-			var elastic = neg(gamma) * v;
-			var friction = neg(k * x);
+			var elastic = neg(gamma) * x;
+			var friction = neg(k * v);
 			elastic + friction
 		}
 	]
@@ -412,33 +412,32 @@ s.scope.style_(0);
 
 
 // a dynamical system with stick slip friction
-// atan(dv / epsilon) * exp(-2 * dv.abs)
+// atan(dv / 0.05) * exp(-2 * dv.abs)
 
 (
-Fb1_ODEdef(\frictional, { |t, y, gamma = 1.0, k = 1, v0 = 1, epsilon = 0.05|
+Fb1_ODEdef(\frictional, { |t, y, gamma = 1.0, k = 1, v0 = 0.0|
 	var x = y[0];
 	var v = y[1];
 	[
 		{ v },
 		{
 			var dv = v - v0;
-			var fbow = atan(dv / epsilon) * exp(-2 * dv.abs);
+			var fbow = atan(dv / 0.05) * exp(-2 * dv.abs);
 			neg(gamma * fbow) - (k * x)
 		}
 	]
 }, t0: 0, y0: [0, 1]);
 
-Ndef(\frictional, { |gamma = 1, k = 1, v0 = 1, epsilon = 0.05|
-	Fb1_ODE.ar(\frictional, [gamma, k, v0, epsilon], tMul: 400) * 0.2
+Ndef(\frictional, { |gamma = 1, k = 1, v0 = 0.0|
+	Fb1_ODE.ar(\frictional, [gamma, k, v0], tMul: 400, leakDC: false) * 0.2
 }).play;
 )
 
 // display parameters and signals
 (
 ControlSpec.add(\gamma, [0.1, 2, \lin]);
-ControlSpec.add(\k, [0.1, 2, \lin]);
+ControlSpec.add(\k, [1.0, 10, \exp]);
 ControlSpec.add(\v0, [-3, 3, \lin]);
-ControlSpec.add(\epsilon, [1e-4, 0.1, \lin]);
 Ndef(\frictional).gui;
 s.scope.style_(2);
 )
@@ -463,25 +462,25 @@ Fb1_ODEdef(\frictional2, { |t, y, gamma = 1.0, k = 1, sigma = 0.2|
 		{ v },
 		{
 			var vsq = v.squared;
-			var ffic = v * (1 - vsq + (sigma * vsq.squared));
+			var ffic = v * (1 - vsq + (sigma*vsq.squared));
 			neg(gamma * ffic) - (k * x)
 		}
 	]
-}, t0: 0, y0: [0, 1]);
+}, t0: 0, y0: [5.0, 0.0]);
 
 
-Ndef(\frictional2, { |gamma = 1, k = 1, sigma = 0.2|
-	Fb1_ODE.ar(\frictional2, [gamma, k, sigma], tMul: 400) * 0.2
+Ndef(\frictional2, { |gamma = 1, k = 1, sigma = 0.1|
+	Fb1_ODE.ar(\frictional2, [gamma, k, sigma], y0: [5.0, 0], tMul: 400) * 0.2
 }).play;
 )
 
 
 // display parameters and signals
 (
-ControlSpec.add(\gamma, [-2, 2, \lin]);
-ControlSpec.add(\k, [0, 2, \lin]);
-ControlSpec.add(\v0, [-5, 5, \lin]);
-ControlSpec.add(\sigma, [0.01, 0.5, \lin]);
+ControlSpec.add(\gamma, [0.1, 2, \lin]);
+ControlSpec.add(\k, [0.1, 2, \lin]);
+ControlSpec.add(\v0, [-2, 2, \lin]);
+ControlSpec.add(\sigma, [0.05, 0.3, \lin]);
 
 Ndef(\frictional2).gui;
 s.scope.style_(2);
@@ -501,20 +500,31 @@ Fb1_ODEdef(\homoclinic, { |t, y, mu = 0.1, delta = 0.5|
 	var v = y[1];
 	[
 		{ v },
+<<<<<<< Updated upstream
 		{ x * (neg(v * delta) + (x * (1 - x - v))) - mu }
+=======
+		{
+			var xsq = x.squared;
+			neg(v * delta*x ) + (xsq*(1.0 - x - v)) - mu }
+>>>>>>> Stashed changes
 	]
-}, t0: 0, y0: [-0.32, 0]);
+}, t0: 0, y0: [0.32, 0]);
 
 
 Ndef(\homoclinic, { |mu = 0.17, delta = 0.5|
-	Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0, 0], tMul: 400) * 0.2
+	Fb1_ODE.ar(\homoclinic, [mu, delta], y0: [0.3, 0], tMul: 800,leakDC: false)
 }).play;
 )
 
 // display parameters and signals
 (
+<<<<<<< Updated upstream
 ControlSpec.add(\mu, [0.01, 0.2, \lin]);
 ControlSpec.add(\delta, [0.2, 1.5, \lin]);
+=======
+ControlSpec.add(\mu, [0.1, 0.25, \lin]);
+ControlSpec.add(\delta, [0.5, 1.0, \lin]);
+>>>>>>> Stashed changes
 Ndef(\homoclinic).gui;
 s.scope.style_(2);
 )

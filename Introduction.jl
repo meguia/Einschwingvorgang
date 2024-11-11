@@ -655,7 +655,7 @@ begin
 	scatter!([-0.3],[0],ms=3,c=:white)
 	scatter!([0.45],[0],ms=3,shape=:cross,c=:black)
 	scatter!([0.84],[0],ms=3,c=:black)
-	p143 = plot(sol_143,idxs=(0,2),ylabel="v(t)",title="μ=0.16",legend=false)
+	p143 = plot(sol_143,idxs=(0,2),ylabel="v(t)",title="μ=0.2",legend=false)
 	plot!(sol_143b,idxs=(0,2))
 	p143b = plot(sol143,idxs=(1,2),xlabel="x",ylabel="v",arrow=true,legend=false)
 	plot!(sol143b,idxs=(1,2),arrow=true)
@@ -666,6 +666,9 @@ begin
 	end	
 	p_14
 end
+
+# ╔═╡ 11fbd7c2-c588-453a-8b9d-c2697cc4b109
+
 
 # ╔═╡ dd6ea2e9-7ac5-453a-aea7-e4f5c6e85fee
 
@@ -3634,6 +3637,7 @@ version = "1.4.1+1"
 # ╠═3036b73c-7238-461b-a863-eb7db5914f7f
 # ╟─e7440b71-9eee-4f18-ba84-c057210a86fc
 # ╠═e1bee821-87ff-41e9-9049-c109a77cabcb
+# ╠═11fbd7c2-c588-453a-8b9d-c2697cc4b109
 # ╠═dd6ea2e9-7ac5-453a-aea7-e4f5c6e85fee
 # ╠═41fda3e5-b7ef-4af0-80ce-91a716cd759a
 # ╟─b46bcbbb-54ce-468d-9af0-dae9361de20d
