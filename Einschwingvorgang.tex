@@ -74,11 +74,12 @@ Since we are assuming continuous evolution, defining the concept of `immediate f
     \label{fig_pure}
 \end{figure}
 
-Let's see an example, perhaps the simplest possible for an oscillator, to understand how this rule must be given. 
-Let us consider a system with a state specified by a single angular variable $\theta$ (theta). 
+Let's see an example, perhaps the simplest possible for an oscillator, to understand how this rule must be given. The representation of a system where each state is given by a single point in the space is known as its {\em phase space}. This space can have different dimensions, for example a line (one-dimensional), a plane (two-dimensional), etc. The state space can also have different topologies that behave differently. For example, a one-dimensional state space can be a straight line, or it can close upon itself in a circle.
+
+
+Let us consider such a system with a state specified by a single angular variable $\theta$ (theta). 
 We can represent this state as a point on a circle, where its magnitude is the angle on the circle as shown in Figure 1.a.
 
-The representation of a system where each state is given by a single point in the space is known as the {\em phase space} of the system. In this case the phase space is one-dimensional but there can be phase spaces of various dimensions and with different topologies (for example a one-dimensional space corresponding to the straight line is topologically different from the circle).
 This state of the system $\theta$ is going to vary in time following some deterministic rule. The magnitude that we will convert into sound will be the horizontal position $\cos(\theta)$.
 
 It should not be surprising that at this point the simplest thing that could be proposed as an oscillation is to postulate that the variable of the system grows linearly with time $\theta(t)=\omega t$ as shown in figure 1.c.  The output is a pure tone, where the variable $\theta$ represents the phase and $\omega/(2\pi)$ the frequency. Since the output signal $\cos(\theta)$ has a range of $[-1…1]$, which is full amplitude of speakers, we scale it by $0.1$. Here is the corresponding program in the SuperCollider language:
@@ -1035,6 +1036,9 @@ To conclude this part we can summarize in a table the behavior of the four bifur
 \item And in the above model for a fixed $k$, how does the parameter $v_0$ influence the sound frequency?
 \item Explore the same dependence in the fictional frequency model given by the equations \ref{eq_bow} and \ref{eq_fictional}. When the stable and unstable limit cycles arise, do they do so with a given frequency?
 \item What happens if we add a perturbation in the $x$ variable near the homoclinic bifurcation in the model given by equations \ref{eq_homoclinic}?
+\item For each of the systems, write small compositions. Each modulates one parameter varied freely and more quickly, and the other parameters slowly over the period of the piece. Try different combinations. 
+\item For each piece, explore the region around the bifurcation.
+\item For each system, write a sonification that maps its output to a frequency of an oscillator, for example a sine oscillator. Then play it with different initial conditions.
 \end{enumerate}
 
 \end{document}
