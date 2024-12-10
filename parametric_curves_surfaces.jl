@@ -26,6 +26,9 @@ f = [
 	cos(t)
 ]	
 
+# ╔═╡ c7131a8b-8c36-4afc-baa0-7d4bc1fad7d8
+
+
 # ╔═╡ fa212423-eed7-49fd-a627-abb955eed195
 md"""
 # Parametric Surfaces
@@ -63,7 +66,7 @@ function sym_evaluate(f,ulist,vlist)
 end
 
 # ╔═╡ bc85882f-375c-4632-95d8-e6dbcbb80678
-function arrow3d!(x, y, z,  u, v, w; as=0.1, lc=:black, lw=0.4, scale=1.0)
+function arrow3d!(x, y, z,  u, v, w; as=0.1, lc=:black, lw=3.0, scale=1.0)
 	arrows = [scatter3d(x=x,y=y,z=z,mode="markers",color=lc,showlegend = false, marker_size=3)]
     (as < 0) && (nv0 = -maximum(norm.(eachrow([u v w]))))
     for (x,y,z, u1,v1,w1) in zip(x,y,z, u,v,w)
@@ -74,9 +77,9 @@ function arrow3d!(x, y, z,  u, v, w; as=0.1, lc=:black, lw=0.4, scale=1.0)
         v5 = v4 - 2*(v4'*v2)*v2
         (as < 0) && (nv = nv0) 
         v4, v5 = -as*nv*v4, -as*nv*v5
-        l1 = scatter3d(x=[x,x+u], y=[y,y+v], z=[z,z+w], mode="lines", line_color=lc, showlegend = false)
-        l2 = scatter3d(x=[x+u,x+u-v5[1]], y=[y+v,y+v-v5[2]], z=[z+w,z+w-v5[3]],  mode="lines", line_color=lc,showlegend = false)
-        l3 = scatter3d(x=[x+u,x+u-v4[1]], y=[y+v,y+v-v4[2]], z=[z+w,z+w-v4[3]],  mode="lines", line_color=lc,showlegend = false)
+        l1 = scatter3d(x=[x,x+u], y=[y,y+v], z=[z,z+w], mode="lines",line_width=lw, line_color=lc, showlegend = false)
+        l2 = scatter3d(x=[x+u,x+u-v5[1]], y=[y+v,y+v-v5[2]], z=[z+w,z+w-v5[3]],  mode="lines", line_width=lw, line_color=lc,showlegend = false)
+        l3 = scatter3d(x=[x+u,x+u-v4[1]], y=[y+v,y+v-v4[2]], z=[z+w,z+w-v4[3]],  mode="lines", line_width=lw, line_color=lc,showlegend = false)
 		append!(arrows,[l1,l2,l3])
     end
 	return arrows
@@ -103,24 +106,28 @@ begin
 end	
 
 # ╔═╡ 06768653-5505-4a1a-bb4c-13d0cd47bbd0
-function parametric_surface(f,umin,umax,vmin,vmax,Nu,Nv,uvlist; lc=:black, scale=3.0, lcu=:blue, lcv=:red, lw=0.4)
+function parametric_surface(f,umin,umax,vmin,vmax,Nu,Nv,uvlist; lc=:black, scale=3.0, lcu=:blue, lcv=:red, lcn=:green, lw=4.0)
 	# returns a plot of a parametric surface given by f(u,v) in the range [umin,umax]X[vmin,vmax] with NuxNv points and # the tangent vectors evaluated at values (u,v) of the parameter uvlist
 	x, y, z = sym_evaluate(f,umin:(umax-umin)/Nu:umax,vmin:(vmax-vmin)/Nv:vmax)
 	x1, y1, z1 = sym_evaluate(f,uvlist)
 	dfdu = [simplify(expand_derivatives(du(fn))) for fn in f]
 	dfdv = [simplify(expand_derivatives(dv(fn))) for fn in f]
+	dfn = cross(dfdv,dfdu)/norm(cross(dfdv,dfdu))
+	dfdu /= norm(dfdu)
+	dfdv /= norm(dfdv)
 	dxu, dyu, dzu = sym_evaluate(dfdu,uvlist)
 	dxv, dyv, dzv = sym_evaluate(dfdv,uvlist)
-	#s1 = scatter3d(x=x,y=y,z=z,mode="lines",line_color=lc,showlegend=false)
-	s1 = surface(x=x,y=y,z=z,surfacecolor=@. x^2+y^2+z^2)
-	v1 = arrow3d!(x1,y1,z1,dxu,dyu,dzu;lc=lcu,scale=scale)
-	v2 = arrow3d!(x1,y1,z1,dxv,dyv,dzv;lc=lcv,scale=scale)
-	return(append!(v1,v2,[s1]))
+	dxn, dyn, dzn = sym_evaluate(dfn,uvlist)
+	s1 = surface(x=x,y=y,z=z,opacity=0.7,surfacecolor=@. x^2+y^2+z^2)
+	v1 = arrow3d!(x1,y1,z1,dxu,dyu,dzu;lc=lcu,lw=lw,scale=scale)
+	v2 = arrow3d!(x1,y1,z1,dxv,dyv,dzv;lc=lcv,lw=lw,scale=scale)
+	v3 = arrow3d!(x1,y1,z1,dxn,dyn,dzn;lc=lcn,lw=lw,scale=scale)
+	return(append!(v1,v2,v3,[s1]))
 end
 
 # ╔═╡ 2911049c-c9a1-49f3-ac39-dd97dd10151d
 begin
-	go2 = parametric_surface(s,0,2*pi,0,2*pi,60,30,[[pi/3,0],[0,pi/3]]; scale=3.0)
+	go2 = parametric_surface(s,0,2*pi,0,2*pi,30,30,[[pi/3,pi/3],[0,pi/3]]; scale=2.0,lw=8.0)
 	p2 = Plot(go2,Layout(width = 800,height= 800))
 	PlutoPlot(p2)
 end	
@@ -1230,7 +1237,8 @@ version = "17.4.0+2"
 # ╠═7c62454e-efb7-4116-b37f-b74b4576bfa6
 # ╠═eaae8960-8d27-452f-b9f5-c123fd0993ec
 # ╠═aea9c17c-7747-496e-a5d5-f513b1294f05
-# ╠═f7c9f82c-e26a-43d7-968c-528d9d1af68f
+# ╟─f7c9f82c-e26a-43d7-968c-528d9d1af68f
+# ╠═c7131a8b-8c36-4afc-baa0-7d4bc1fad7d8
 # ╟─fa212423-eed7-49fd-a627-abb955eed195
 # ╠═af741731-1d0e-414d-a803-39823d5f7006
 # ╠═2911049c-c9a1-49f3-ac39-dd97dd10151d
