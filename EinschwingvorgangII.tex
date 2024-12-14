@@ -1,0 +1,328 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ 
+ \usepackage{amsmath}
+ \usepackage{titling}
+ \usepackage[scr=esstix]{mathalpha}
+ \usepackage[inkscapelatex=false]{svg}
+
+
+\title{{\em Einschwingvorgänge} or How to turn on an oscillation (part II). \\ Coupled Oscillations}
+\author{Manuel Eguia}
+\date{December 2024}
+
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot[R]{\thedate}
+    \fancyfoot[L]{\thepage}
+    \fancyhead[L]{Coupled Oscillations}
+    \fancyhead[R]{\theauthor}
+}
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    %{\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em}
+\makeatother
+
+\usepackage{lipsum}  
+\usepackage{cmbright}
+
+\usepackage[dvipsnames]{xcolor}
+
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\usepackage{listings}
+\lstset{
+basicstyle=\footnotesize,
+backgroundcolor=\color{backcolour},   
+}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Modulated oscillations on the circle}
+
+\subsection{The symmetric oscillator and the oscillation on the circle}
+So far we have considered the equation of a harmonic oscillator based on the physical system (a unit mass with a spring) and interpreting the variable $x$ as the position of the oscillator and $v$ as the velocity in that case the equations were:
+
+\begin{subequations} \label{eq_harmosc}
+\begin{align}
+    \dot{x} & = v \\
+    \dot{v} & = -\omega^2x 
+\end{align}
+\end{subequations}
+with angular frequency $\omega=\sqrt{k}$, which gives rise in general to orbits that form concentric ellipses in phase space. The higher the angular velocity $\omega$, the more elongated the ellipse will be in the vertical direction. 
+However, we can symmetrize these equations by making a change of coordinates ($\mathscr{x} = \omega x , \mathscr{y} = v$) and then the equations become:
+
+\begin{subequations} \label{eq_symosc}
+\begin{align}
+    \dot{\mathscr{x}} & = \omega\mathscr{y} \\
+    \dot{\mathscr{y}} & = -\omega \mathscr{x} 
+\end{align}
+\end{subequations}
+and we can interpret this new $\mathscr{x}$ variable as position scaled by the frequency of the oscillator (with the same physical units of a velocity) and of course $\mathscr{y}$ is just the velocity of the oscillator. 
+Now the trajectories describe perfect circles with angular velocity $\omega$ and the radius determined by the initial condition $r=\sqrt{\mathscr{x_0}^2+\mathscr{y_0}^2}$.
+This can be quickly verified by making an additional change of coordinates now to polar coordinates.
+The chain rule gives us the possibility to transform the time derivatives in $\mathscr{x}$ and $\mathscr{y}$ to the derivatives in the polar coordinates for the radius $r$ and for the angle $\theta$ in the following way:
+\begin{subequations} \label{eq_cart2polar}
+\begin{align}
+    \dot{r} & = \frac{1}{r} (\mathscr{x}\dot{\mathscr{x}}+\mathscr{y}\dot{\mathscr{y}})\\
+    \dot{\omega} & = - \frac{1}{1+\mathscr{y}^2/\mathscr{x}^2}\left(\frac{\mathscr{y}\dot{\mathscr{x}}}{\mathscr{x}^2} -  \frac{\dot{\mathscr{y}}}{\mathscr{x}} \right) 
+\end{align}
+\end{subequations}
+although the last equation may be a bit intimidating, it will simplify things and will also be very useful later on.
+Therefore, after careful substitution of Equations \ref{eq_symosc} into \ref{eq_cart2polar}, our symmetric oscillator is further simplified in polar coordinates to:
+\begin{subequations} \label{eq_symoscpolar}
+\begin{align}
+    \dot{r} & = 0 \\
+    \dot{\theta} & = -\omega 
+\end{align}
+\end{subequations}
+
+The interpretation of these equations is straightforward: the radius stays fixed (no temporal rate of variation) and the angle decrease at a constant rate of $\omega$, i.e. moving clockwise with constant velocity. 
+This is exactly the same as what we started with in the previous part: presenting the simplest possible oscillator on the circle, with the state moving at constant angular velocity.  
+However now we derived it from a physical system with two variables (the harmonic oscillator) after a change of coordinates. 
+
+As an additional observation, note that if we now introduce dissipation, which should be added only to the second equation, the symmetry is broken, and the trajectory is no longer on a circle but instead decays into a spiral toward the center as we have seen before.
+
+However, if we move away from the strict physical interpretation, we can introduce dissipation symmetrically in both equations, resulting in the system given by equations (\ref{eq_symosc}) transforming into the following:
+
+\begin{subequations} \label{eq_symosc_diss}
+\begin{align}
+    \dot{\mathscr{x}} & = \omega\mathscr{y} - \gamma\mathscr{x} \\
+    \dot{\mathscr{y}} & = -\omega\mathscr{x} - \gamma\mathscr{y}
+\end{align}
+\end{subequations}
+
+where $\gamma > 0$ is the dissipation coefficient.
+
+In this case, by introducing dissipation symmetrically, the system retains a relatively simple structure, allowing us to analyze how the trajectories change. Applying the transformation to polar coordinates again, we can write:
+
+\begin{subequations} \label{eq_symosc_diss_polar}
+\begin{align}
+    \dot{r} & = -\gamma r \\
+    \dot{\theta} & = -\omega 
+\end{align}
+\end{subequations}
+
+The interpretation of these equations is also straightforward: the radius $r$ decreases exponentially at a rate controlled by $\gamma$, while the angle $\theta$ continues to decrease at a constant velocity $\omega$. This describes a spiral motion toward the center instead of a perfect circular motion.
+
+\subsection{Revisiting the self-oscillator. Hopf Normal Form}
+
+At this point, we can also consider a way to introduce negative dissipation symmetrically, no longer as a term affecting only the velocity but as one influencing both equations. 
+The simplest way to do this is as follows:
+
+\begin{subequations} \label{eq_symosc_neg_diss}
+\begin{align}
+    \dot{\mathscr{x}} & = \omega\mathscr{y} + \gamma\mathscr{x} - \mathscr{x}(\mathscr{x}^2 + \mathscr{y}^2) \\
+    \dot{\mathscr{y}} & = -\omega\mathscr{x} + \gamma\mathscr{y} - \mathscr{y}(\mathscr{x}^2 + \mathscr{y}^2)
+\end{align}
+\end{subequations}
+
+Here, the last term may seem complex until we realize that $(\mathscr{x}^2 + \mathscr{y}^2)$ is simply the square of the radius. In fact, when we switch to polar coordinates, the system becomes:
+
+\begin{subequations} \label{eq_symosc_neg_diss_polar}
+\begin{align}
+    \dot{r} & = \gamma r - r^3 \\
+    \dot{\theta} & = -\omega
+\end{align}
+\end{subequations}
+
+In these equations, the effect of the negative dissipation on the radius becomes evident. When $\gamma = 0$, we observe a Hopf bifurcation. To understand this, note that the angular dynamics are trivial (a constant rotation), so we focus on the radial dynamics as a one-dimensional system. Trajectories rotate clockwise around the origin, governed by the dynamics of $r$.
+
+In Figure \ref{fig_cubic} we illustrate the behavior of $\dot{r}$ for three values of $\gamma$, before, on and after the Hopf bifurcation.
+For negative values of $\gamma$ (left panel), the functional form of $\gamma r - r^3$ ensures that $\dot{r}$ is negative for all $r$, causing all trajectories to decay to the origin ($r = 0$). 
+This makes the origin the only fixed point, which is stable (represented as a black dot in the figure). 
+For $\gamma > 0$ (right panel), the functional form $\gamma r - r^3$ is positive for small $r$ (since the $\gamma r$ term dominates over $r^3$), leading to negative dissipation and trajectories that tend toward a fixed radius, the solution of $\dot{r} = 0$. 
+This stable fixed point is shown as a black dot in the figure, while the origin becomes an unstable fixed point (depicted as a white dot).
+
+The stable solution corresponds to a fixed radius $r = \sqrt{\gamma}$, which is the solution to $\dot{r} = 0$. This implies that all trajectories approach a stable limit cycle with radius $r = \sqrt{\gamma}$, rotating clockwise with angular frequency $\omega$. The intermediate situation ($\gamma = 0$) shown in the central panel of Figure \ref{fig_cubic} corresponds to the moment of the Hopf bifurcation, where the slope of the function $\gamma r - r^3$ becomes horizontal at the origin, signaling the bifurcation.
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_0.svg}}
+    \caption{The cubic function $f(r)=\gamma r - r^3$ that corresponds to the rate of variation of the radius $r>0$ (Equation \ref{eq_symosc_neg_diss_polar}.a), for three values of $\gamma$. Fixed point appear when $f(r)=0$ and they are stable (black dots) when the slope of the function in negative and unstable (white dot) when the slope is positive. Crossing $\gamma=0$ leads to a loss of stability of the fixed point at the origin and the appearance of a stable fixed point at $r=\sqrt{\gamma}$ (Hopf bifurcation). } 
+    \label{fig_cubic}
+\end{figure}
+
+
+
+
+
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_1.svg}}
+    \caption{Time evolution of the $\mathscr{y}$ variable (top) and phase portraits (middle) for the self-oscillator given by Equations \ref{eq_symosc_neg_diss} and time evolution of the $r$ variable (bottom) for the same system in the polar form given by Equations \ref{eq_symosc_neg_diss_polar}. 
+    Three sets of parameters are given: before the Hopf bifurcation with $\gamma = -0.05$ (left), after the Hopf bifurcation with a small $\gamma = 0.1$ value (center) and with a high $\gamma = 1.5$ value.
+    The blue and orange trajectories result from two different initial values.}
+    \label{fig_symself}
+\end{figure}
+
+The full picture of the dynamics of the system governed by equations (\ref{eq_symosc_neg_diss}) is displayed on Figure \ref{fig_symself} for varying dissipation coefficients $\gamma$. 
+For $\gamma < 0$, the system exhibits decaying oscillations with the radius $r(t)$ diminishing and the trajectory spiraling inward. For small positive $\gamma$, the radius stabilizes at a finite value, leading to a limit cycle, while for larger $\gamma$, the radius stabilizes quickly after a short transient, forming larger limit cycles. This demonstrates the transition from stable equilibrium to stable limit cycle, characteristic of a Hopf bifurcation. 
+Note that the time evolution of the $r$ variable displayed in the bottom row can be interpreted as the envelope of the oscillation of $\mathscr{y}$ displayed on the top row. 
+
+This system, whether in its cartesian (Equations {\ref{eq_symosc_neg_diss}}) or polar (Equations \ref{eq_symosc_neg_diss_polar}) form, is known as the Normal Form of the Hopf equation. 
+In dynamical systems, the normal form is a simplified version of a system of differential equations near a critical point, obtained through coordinate transformations, that retains the essential features of the dynamics while discarding higher-order terms. 
+It is a powerful tool to study bifurcations and classify qualitative behavior in nonlinear systems.
+
+
+
+\subsection{The self modulated oscillator and the first derivation of the Adler's equation}
+
+We now explore one possible way to couple oscillators. 
+First, we write the symmetric form of the oscillator without dissipation but incorporate coupling as a modulation on the angular frequency. 
+Specifically, we transform each $\omega_i$ of the $i$-th oscillator into $\omega_i + \lambda_i$, where $\lambda_i$ is a weighted sum over the $x$ variables of the other oscillators. 
+This means that, in general, the system for the $i$-th oscillator can be written as:
+
+\begin{subequations} \label{eq_coupled_oscillators}
+\begin{align}
+    \dot{x}_i & = (\omega_i + \lambda_i) y_i \\
+    \dot{y}_i & = -(\omega_i + \lambda_i) x_i \\
+    \lambda_i & = \alpha_{i1} x_1 + \alpha_{i2} x_2 + \dots + \alpha_{ij} x_j + \dots
+\end{align}
+\end{subequations}
+
+Here, $\alpha_{ij}$ are coupling coefficients that determine the influence of oscillator $j$ on oscillator $i$.
+
+To begin with the simplest case, let us consider an oscillator coupled "with itself," meaning that only $\alpha_{11}$ is nonzero. In this case, the previous equations simplify to:
+
+\begin{subequations} \label{eq_self_coupled_oscillator}
+\begin{align}
+    \dot{x} & = \omega y + \alpha xy \\
+    \dot{y} & = -\omega x - \alpha x^2
+\end{align}
+\end{subequations}
+
+For simplicity, we have removed the subscripts since we are dealing with a single oscillator.
+The dynamical behavior of the self-modulated oscillator system is shown in Figure \ref{fig_selfmod} for different values of the parameter $\alpha$ with $\omega = 0.5$. 
+
+In the left panel, for $\alpha = 0$, the system behaves as the symmetric oscillator, with $x(t)$ oscillating sinusoidally with constant amplitude and the trajectory in the $(x, y)$ phase space being a perfect circle centered at the origin. 
+There are two initial conditions with amplitudes $0.5$ (blue) and $1$ (orange) that lead to identical dynamics, differing only in scale.
+
+In the middle panel, for $\alpha = 0.49$, the system exhibits a more interesting behavior. 
+While the trajectories in phase space still describe circles with fixed radii corresponding to the initial amplitudes, the oscillations are no longer uniform. For negative $x$ values, the flux slows down, which is particularly evident for the orange trajectory with an amplitude of $1$. 
+The signal becomes nearly a sequence of pulses, with long periods of slow motion between bursts, resembling the non-uniform oscillations on a circle that we have seen in the first chapter. 
+
+In the right panel, for $\alpha = 0.6$, the change in the dynamics become even more evident. 
+The blue trajectory with an initial amplitude of $0.5$ now also shows a noticeable slowing down for negative $x$ values. 
+However, the orange trajectory with an amplitude of $1$ no longer oscillates but instead ends at a fixed point on the circle. 
+Additionally, a third trajectory, shown in green, starts near the orange trajectory and also ends at the fixed point but approaches it from the opposite direction. 
+This change of behavior indicates that for the dynamics taking place on the circle of radius $1$ a Saddle-Node bifurcation occurred.
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_2.svg}}
+    \caption{}
+    \label{fig_selfmod}
+\end{figure}
+
+In all cases, the dynamics take place on a circle, so while written as a two-variable system, the temporal dynamics effectively occur in the phase dimension alone. This can be demonstrated by carefully transforming to polar coordinates using the chain rule in Equation \ref{eq_cart2polar}. The result is:
+
+\begin{subequations} \label{eq_self_coupled_oscillator_polar}
+\begin{align} 
+    \dot{r} & = 0 \\
+    \dot{\theta} & = -\omega - \alpha' \cos{\theta}
+\end{align}
+\end{subequations}
+
+Here, as anticipated, there is no radial dynamics, and the entire system can be described by the second equation, showing that the dynamics is now effectively one-dimensional.
+In this last equation, $\alpha'$ is the value of $\alpha$ scaled by the fixed radius of the oscillation, which depends on the initial condition. 
+The equation for $\theta$ describes the phase dynamics and can be represented graphically as $f(\theta)$ versus $\theta$, as done when we were studying oscillation on the circle. 
+Then, a Saddle-Node bifurcation occurs when this function touches the horizontal axis, i.e., when $\alpha' = \omega$. For the blue trajectory in Figure \ref{fig_selfmod}, with radius $r = 1$, the bifurcation occurs at $\alpha = 0.5$, as observed in the transition from the central to the right panel. For the orange trajectory with a smaller radius, the bifurcation requires $\alpha = 1$ due to the scaling by the radius.
+
+Therefore the dynamics that describe the self-modulated oscillator is effectively one-dimensional and its phase dynamics is governed by the Adler's equation \ref{eq_self_coupled_oscillator_polar}.b, undergoing a Saddle-Node bifurcation that ends with the oscillations that happen when $|\alpha'|<\omega$.
+
+
+\subsection{Two mutually modulated oscillators}
+
+Now, we return to the general form introduced for coupling oscillators via modulation of their angular frequency, given in equations (\ref{eq_coupled_oscillators}). 
+We consider the case of two oscillators mutually modulating each other. The system can be written as:
+
+
+\begin{subequations} \label{eq_twomodulated}
+\begin{align}
+    \dot{x_1} & = \omega_1 y_1+ \alpha_{21} x_2 y_1 \\
+    \dot{y_1} & = -\omega_1 x_1 - \alpha_{21} x_2 x_1 \\
+    \dot{x_2} & = \omega_2 y_2+ \alpha_{12} x_1 y_2 \\
+    \dot{y_2} & = -\omega_2 x_2 - \alpha_{12} x_1 x_2 \\
+\end{align}
+\end{subequations}
+
+Here, $x_1, y_1$ correspond to the variables of the first oscillator with natural frequency $\omega_1$, and $x_2, y_2$ correspond to the second oscillator with natural frequency $\omega_2$. The parameters $\alpha_{12}$ and $\alpha_{21}$ represent the coupling strengths, which are not necessarily equal.
+
+Surprisingly, in this case as well, all the dynamics occur on a circle with a radius equal to the initial amplitude. 
+What is more interesting is that the phase dynamics in this case are even richer than in the previous example. 
+In Figure \ref{fig_twomodulated}, we display the behavior of the variable $x$ for both oscillators: $x_1$ is shown in blue, and $x_2$ in orange. 
+The dynamics in the phase space are not shown because they are trivial, occurring entirely on a circle with 
+radius equal to the initial amplitude of the signal. 
+It is important to note that, unlike the previous figures, here we have a single initial condition, and the colors correspond to the two oscillators. 
+In all cases, the initial condition was $x = 1$ and $y = 0$ for both oscillators.
+
+In the Figure \ref{fig_twomodulated}, the top row shows a unidirectional coupling where oscillator 2 influences oscillator 1, except for the top-left corner where the oscillators are uncoupled. 
+The bottom row displays the dynamics for bidirectional coupling. 
+As expected, in the absence of coupling, each oscillator evolves independently according to its own $\omega$, resulting in two separate signals. 
+In the unidirectional case, it is clear how the second oscillator's variable (orange) modulates the first oscillator, altering the waveform in a manner similar to frequency modulation (FM). 
+This demonstrates how FM behavior emerges naturally from these dynamical systems. 
+For bidirectional coupling, the dynamics become more complex, resulting in a richer timbral texture.
+
+Now, let us transform again into polar coordinates. 
+Fortunately, in this case as well, the dynamics simplify: the equations for $\dot{r}_1$ and $\dot{r}_2$ are null, and the dynamics are governed entirely by the following differential equations for the phases of the oscillators:
+
+\begin{align} \label{eq_twomodulated_polar}
+    \dot{\theta}_1 & = -\omega_1  - \alpha_{12}' \cos{\theta}_2 \\
+    \dot{\theta}_2 & = -\omega_2  - \alpha_{21}' \cos{\theta}_1
+\end{align}
+
+Here, the prime ($'$) again is a reminder that $\alpha$ is scaled by the radius or amplitude of the oscillator, which depends on the initial condition for system given by Equation \ref{eq_twomodulated}. 
+But we can easily absorb that amplitude of the oscillator in the definition of the coupling coefficient so that the Equations \ref{eq_twomodulated_polar} do not depend on the initial condition.
+
+
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_3.svg}}
+    \caption{}
+    \label{fig_twomodulated}
+\end{figure}
+
+This coupling via frequency modulation can now be extended to more oscillators by rewriting the dynamics on the circle. That is, the equation for the phase evolution of the $i$-th oscillator becomes:
+
+\begin{equation}
+    \dot{\theta}_i = \omega_i + \sum_j \alpha_{ij} \cos({\theta_j})
+\end{equation}
+
+where the negative signs are incorporated into the parameters. This form is much more efficient for studying oscillators coupled via modulation.
+
+
+\subsection{Questionnaire}
+\begin{enumerate}
+\item Draw a qualitative phase portrait for the harmonic oscillator with no damping $\gamma=0$ for different initial conditions.
+\end{enumerate}
+
+
+\section{Coupled Oscillators on the circle}
+
+\subsection{Two simple coupled oscillators and the second derivation of the Adler's equation}
+
+
+
+\end{document}
+
+
+
