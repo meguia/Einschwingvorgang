@@ -156,11 +156,10 @@ tmax2 $(@bind tmax2 Slider(1.0:1.0:100.0,default=1.0;show_value=true)) \
 
 # ╔═╡ 3e4fac73-5084-4629-8549-c2448f0fa95e
 begin
-	sol3 = solve(ODEProblem(twomodulated!, [1.0,0.0,0.6,0.0], (0.0,tmax2), [a12,a21,ω1,ω2]));
+	sol3 = solve(ODEProblem(twomodulated!, [1.0,0.0,1.0,0.0], (0.0,tmax2), [a12,a21,ω1,ω2]));
 	p3a = plot(sol3,idxs=(0,1))
 	plot!(sol3,idxs=(0,3))
-	p3b = plot(sol3,idxs=(1,2))
-	plot!(sol3,idxs=(3,4))
+	p3b = plot(sol3,idxs=(1,3))
 	plot(p3a,p3b,layout=(1,2),size=(800,400))
 end	
 
@@ -191,6 +190,53 @@ begin
 	p3
 end	
 
+# ╔═╡ a8944dfb-dc04-4102-9643-32938274afa7
+md"""
+# Five Phase Oscillators Modulated
+"""
+
+# ╔═╡ 9b93f98e-9e81-4788-8f85-08597ad1e669
+function manymodulated!(du,u,p,t)
+	α,ω = p
+    for i in 1:length(u)
+        du[i]=  ω[i] + sum(@.α[i].*cos(u))
+    end
+end	
+
+# ╔═╡ f40dd2f1-b4cd-41eb-af22-39de39716104
+md"""
+α51 $(@bind α51 Slider(-1.0:0.01:1.0,default=0.1;show_value=true)) 
+α12 $(@bind α12 Slider(-1.0:0.01:1.0,default=0.1;show_value=true)) \
+α23 $(@bind α23 Slider(-1.0:0.01:1.0,default=0.1;show_value=true)) 
+α34 $(@bind α34 Slider(-1.0:0.01:1.0,default=0.1;show_value=true)) \
+α45 $(@bind α45 Slider(-1.0:0.01:1.0,default=0.1;show_value=true)) \
+ω1 $(@bind Ω1 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) 
+ω2 $(@bind Ω2 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) \
+ω3 $(@bind Ω3 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) 
+ω4 $(@bind Ω4 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) \
+ω5 $(@bind Ω5 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) 
+tmax4 $(@bind tmax4 Slider(10.0:10.0:1000.0,default=1.0;show_value=true)) \
+"""
+
+# ╔═╡ 0948c63a-63c0-4f1e-b78d-da1df84253ec
+begin
+	α = [[0,α12,0,0,α51],[α12,0,α23,0,0],[0,α23,0,α34,0],[0,0,α34,0,α45],[α51,0,0,α45,0]]
+	ω = [Ω1,Ω2,Ω3,Ω4,Ω5]
+	u0m = [0,0,0,0,0]
+	pm = [α,ω]
+end	
+
+# ╔═╡ 45478fd4-714d-4e0f-be25-ccf88d55daf3
+begin
+	tcos(t,x) = (t,cos(x))
+	sol4 = solve(ODEProblem(manymodulated!, u0m, (0.0,tmax4),pm))
+	p4aa = plot(size=(1200,400),legend=false)
+	for n = 1:length(u0m)
+		plot!(sol4,idxs=(tcos,0,n))
+	end
+	p4aa
+end	
+
 # ╔═╡ 54d74a71-e5ea-4db4-9ab6-6f1f6d30c0d4
 md"""
 # Coupled Oscillators
@@ -218,15 +264,36 @@ solp = solve(ODEProblem(coupled!,[0.0,0.0],(0,tmax),[K12,w1,w2]),RK4());
 # ╔═╡ 1851020c-5c4e-4f53-be3b-3f74ebd0d611
 begin
 	sol = solve(ODEProblem(coupled!,[0.0,0.0],(0,tmax),[K12,w1,w2]),RK4())
-	#f(t, x) = (t, sin(x))
-	#g(x, y) = (sin(x),sin(y))
+	f(t, x) = (t, sin(x))
+	g(x, y) = (sin(x),sin(y))
 	h(t,x,y) = (t,sin(x-y))
-	#p1 = plot(sol,idxs=(f,0,1))
-	#plot!(sol,idxs=(f,0,2))
-	#p2 = plot(sol,idxs=(g,1,2))
-	p5 = plot(sol,idxs=(h,0,1,2))
-	#plot(p1,p2,p3,layout=(1,3),size=(1200,400))
+	p51 = plot(sol,idxs=(f,0,1))
+	plot!(sol,idxs=(f,0,2))
+	p52 = plot(sol,idxs=(g,1,2))
+	p53 = plot(sol,idxs=(h,0,1,2))
+	plot(p51,p52,p53,layout=(1,3),size=(1200,400))
 end
+
+# ╔═╡ 933c5529-119b-4e70-af1d-642971f56a1e
+begin
+	sol51 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.1, 0.5,1.1]),RK4());
+	sol52 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.29, 0.5,1.1]),RK4());
+	sol53 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.6, 0.5,1.1]),RK4());
+	p51b = plot(sol51,idxs=(f,0,1),label=L"\theta_1",title="α12=0.1")
+	plot!(sol51,idxs=(f,0,2),label=L"\theta_2")
+	p52b = plot(sol52,idxs=(f,0,1),label=L"\theta_1",title="α12=0.29")
+	plot!(sol52,idxs=(f,0,2),label=L"\theta_2")
+	p53b = plot(sol53,idxs=(f,0,1),label=L"\theta_1",title="α12=0.6")
+	plot!(sol53,idxs=(f,0,2),label=L"\theta_2")
+	p51c = plot(sol51,idxs=(h,0,1,2),label=L"\theta_d")
+	p52c = plot(sol52,idxs=(h,0,1,2),label=L"\theta_d")
+	p53c = plot(sol53,idxs=(h,0,1,2),label=L"\theta_d")
+	p5 = plot(p51b,p52b,p53b,p51c,p52c,p53c,layout=grid(2,3,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	if savefigures
+		savefig(p5, "figureII_5.svg")
+	end
+	p5
+end	
 
 # ╔═╡ 99e1946e-a34a-4251-8a3b-ba56dad16c76
 md"""
@@ -2939,11 +3006,17 @@ version = "1.4.1+1"
 # ╠═3e4fac73-5084-4629-8549-c2448f0fa95e
 # ╟─848ab64e-0b73-4706-a4ac-eedd339612dd
 # ╠═8d31095b-6844-40d1-a3f1-83321ec1173a
+# ╟─a8944dfb-dc04-4102-9643-32938274afa7
+# ╠═9b93f98e-9e81-4788-8f85-08597ad1e669
+# ╠═0948c63a-63c0-4f1e-b78d-da1df84253ec
+# ╠═45478fd4-714d-4e0f-be25-ccf88d55daf3
+# ╟─f40dd2f1-b4cd-41eb-af22-39de39716104
 # ╟─54d74a71-e5ea-4db4-9ab6-6f1f6d30c0d4
 # ╠═2237d2d9-99f2-45a9-a423-20f578534689
 # ╠═0579192f-2542-4143-be57-1f1932adbce5
 # ╠═1851020c-5c4e-4f53-be3b-3f74ebd0d611
 # ╟─a933e5bb-4981-4f4b-a45b-1a0b97238892
+# ╠═933c5529-119b-4e70-af1d-642971f56a1e
 # ╠═99e1946e-a34a-4251-8a3b-ba56dad16c76
 # ╠═8adae7ce-de06-4be0-9e60-a21b9088c5ca
 # ╠═8f212593-b931-40a6-843a-dd709cd69da3

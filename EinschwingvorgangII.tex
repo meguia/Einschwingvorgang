@@ -310,17 +310,76 @@ This coupling via frequency modulation can now be extended to more oscillators b
 where the negative signs are incorporated into the parameters. This form is much more efficient for studying oscillators coupled via modulation.
 
 
-\subsection{Questionnaire}
-\begin{enumerate}
-\item Draw a qualitative phase portrait for the harmonic oscillator with no damping $\gamma=0$ for different initial conditions.
-\end{enumerate}
-
 
 \section{Coupled Oscillators on the circle}
 
+\subsection{General formula for coupled oscillators: the Kuramoto Model}
+
+The method of coupling oscillators through mutual modulation is not the only approach, nor is it the most commonly encountered. Perhaps the most general and widely studied framework is the {\bf Kuramoto model}, which couples oscillators via their phase differences. The model is described by the following equation:
+
+
+\begin{equation} \label{eq_kuramoto}
+    \dot{\theta}_i = \omega_i + \sum_j \alpha_{ij} \sin({\theta_j}-{\theta_i})
+\end{equation}
+
+Here, $\theta_i$ represents the phase of the $i$-th oscillator, $\omega_i$ is its natural frequency, and $\alpha_{ij}$ is the coupling strength between oscillators $i$ and $j$. The interaction term, $\sin(\theta_j - \theta_i)$, reflects the dependence of the coupling on the phase difference between the oscillators.
+
+The Kuramoto model was introduced to study synchronization phenomena in systems of coupled oscillators. 
+Unlike coupling methods that directly modulate frequency or amplitude, the Kuramoto model captures how oscillators adjust their phases in response to interactions with others in the network. 
+This makes it particularly suited to describing a wide range of a great variety of systems, among them the famous metronome assembly that being out of phase or with slightly different frequencies synchronize “spontaneously”. 
+Basically what is at work here is a force that is greater the greater the phase difference between the oscillators and becomes zero when the oscillators are in phase, thus forcing them to synchronize even when their natural frequencies are different. 
+This synchronization occurs for a threshold value of the alpha couplings (which is commonly scaled with a $K$ parameter) where a phase transition occurs.
+For lower values of the parameter before synchronization, a variety of other phenomena occur, among them a chaotic regime.
+
+
+
+
 \subsection{Two simple coupled oscillators and the second derivation of the Adler's equation}
 
+For the case of two coupled oscillators, the Kuramoto model (assuming symetric coupling and no self-coupling, i.e. $\alpha_{12}=\alpha_{21}$ and $\alpha_{11}=\alpha{22}=0$) simplifies to:
 
+\begin{align} \label{eq_twocoupled}
+    \dot{\theta}_1 &= \omega_1 + \alpha \sin(\theta_2 - \theta_1), \\
+    \dot{\theta}_2 &= \omega_2 + \alpha \sin(\theta_1 - \theta_2).
+\end{align}
+
+We can now write the equations in terms of the phase difference between the oscillators $\theta_d = \theta_2 - \theta_1$, we subtract the first equation from the second:
+
+\begin{align} \label{eq_twocoupledb}
+    \dot{\theta_d} &= \dot{\theta}_2 - \dot{\theta}_1 \\
+    &= (\omega_2 - \omega_1) - 2\alpha \sin(\theta_d)
+\end{align}
+
+where we use the fact that $\sin(\theta_1 - \theta_2) = - \sin(\theta_2 - \theta_1)$
+Defining also the frequency difference between the oscillators as $\omega_d = \omega_2 - \omega_1$, we arrive to the following equation:
+
+\begin{equation} \label{eq_phaselocking}
+    \dot{\theta_d} = \omega_d - 2\alpha \sin(\theta_d).
+\end{equation}
+
+which is completely analogous to the Adler's equation (the use of $sin$ instead of $cos$ only changes the position of the fixed points after the Saddle-Node bifurcation). The Saddle-Node bifurcation now will occurs when $2\alpha = \omega_d$, that means when the coupling parameter 
+
+It is now interesting to interpret this system considering that it is an equation for the evolution of the phase difference between two oscillators, or it could also be seen as the detuning. 
+If this system oscillates, it means that the oscillators are not in phase and each one operates with its own frequency. In this case, the phase difference simply grows with time. 
+Conversely, if this system does not oscillate and stays at a fixed point, it means that the oscillators defined by equations \ref{eq_twocoupled} are synchronized and remain phase locked. 
+This is why Adler's equation is also known as the {\em phase lock} equation.
+
+
+
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_5.svg}}
+    \caption{}
+    \label{fig_twocoupled}
+\end{figure}
+
+This can be seen in Figure \ref{fig_twocoupled}. 
+In the upper row, we show the sine of the phases of the two oscillators defined by equations \ref{eq_twocoupled}, and in the lower row, the evolution of the corresponding phase difference given by the transformed system of equations \ref{eq_phaselocking}.
+For $\alpha = 0.1$, the oscillators are weakly coupled, and the phase difference oscillates almost sinusoidally, reflecting their detuning. 
+In the central panels, as $\alpha$ approaches the critical value for the saddle-node bifurcation, $\alpha = 0.3$. 
+In the signal in the lower panel we can recognize the behavior of the Adler equation as we approach the saddle-node bifurcation: we have long periods with the signal almost horizontal and every now and then a pulse. 
+However, in the context that the variable we are describing is a phase difference this can be interpreted as long periods in which the phase difference remains constant (or latched) and every now and then a slip in which the oscillators decouple and as can be seen in the top center panel “lose a cycle” of the faster oscillator and re-latch. 
+Finally, for $\alpha = 0.6$, the oscillators become phase-locked, and the phase difference rapidly converges to a stable fixed point. In this case, the system reaches strong synchronization, and the phase difference approaches zero as the coupling strength increases further.
 
 \end{document}
 
