@@ -279,20 +279,91 @@ begin
 	sol51 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.1, 0.5,1.1]),RK4());
 	sol52 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.29, 0.5,1.1]),RK4());
 	sol53 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.6, 0.5,1.1]),RK4());
-	p51b = plot(sol51,idxs=(f,0,1),label=L"\theta_1",title="α12=0.1")
-	plot!(sol51,idxs=(f,0,2),label=L"\theta_2")
-	p52b = plot(sol52,idxs=(f,0,1),label=L"\theta_1",title="α12=0.29")
-	plot!(sol52,idxs=(f,0,2),label=L"\theta_2")
-	p53b = plot(sol53,idxs=(f,0,1),label=L"\theta_1",title="α12=0.6")
-	plot!(sol53,idxs=(f,0,2),label=L"\theta_2")
-	p51c = plot(sol51,idxs=(h,0,1,2),label=L"\theta_d")
-	p52c = plot(sol52,idxs=(h,0,1,2),label=L"\theta_d")
-	p53c = plot(sol53,idxs=(h,0,1,2),label=L"\theta_d")
+	p51b = plot(sol51,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α12=0.1")
+	plot!(sol51,idxs=(f,0,2),label=L"\sin(\theta_2)")
+	p52b = plot(sol52,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α12=0.29")
+	plot!(sol52,idxs=(f,0,2),label=L"\sin(\theta_2)")
+	p53b = plot(sol53,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α12=0.6")
+	plot!(sol53,idxs=(f,0,2),label=L"\sin(\theta_2)")
+	p51c = plot(sol51,idxs=(h,0,1,2),label=L"\sin(\theta_d)")
+	p52c = plot(sol52,idxs=(h,0,1,2),label=L"\sin(\theta_d)")
+	p53c = plot(sol53,idxs=(h,0,1,2),label=L"\sin(\theta_d)")
 	p5 = plot(p51b,p52b,p53b,p51c,p52c,p53c,layout=grid(2,3,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
 		savefig(p5, "figureII_5.svg")
 	end
 	p5
+end	
+
+# ╔═╡ 6449cf76-8856-43c6-90b1-503c83bc99e8
+md"""
+# Three Oscillators
+"""
+
+# ╔═╡ 8bc29921-c7b7-4c05-8ac9-8c9a86701811
+function three_coupled!(du,u,p,t)
+	K,w1,w2,w3 = p
+	D12 = K*sin(u[1]-u[2])
+	D13 = K*sin(u[1]-u[3])
+	D23 = K*sin(u[2]-u[3])
+	du[1] = w1 - D12 - D13
+	du[2] =	w2 + D12 - D23
+	du[3] =	w3 + D13 + D23
+end
+
+# ╔═╡ 4fcb903f-e1e4-4efd-98b1-0bf90954bb8b
+md"""
+K $(@bind K_ Slider(0.0:0.001:0.2,default=0.1;show_value=true)) 
+w1 $(@bind w_1 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) \
+w2 $(@bind w_2 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) 
+w3 $(@bind w_3 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) \
+tmax $(@bind tmax_3 Slider(10.0:10.0:500.0,default=1.0;show_value=true)) \
+"""
+
+# ╔═╡ 844df868-26a8-4fbf-9f62-d9c9bf1cfdea
+begin
+	fa(t,x) = (t,2 + sin(x))
+	fb(t,x) = (t,4 + sin(x))
+	ha(t,x,y) = (t, 2 + sin(x-y))
+	hb(t,x,y) = (t, 4 + sin(x-y))
+	sol_3 = solve(ODEProblem(three_coupled!,[0.0,0.0,0.0],(0,tmax_3),[K_,w_1,w_2,w_3]),RK4())
+	p61 = plot(sol_3,idxs=(f,0,1))
+	plot!(sol_3,idxs=(fa,0,2))
+	plot!(sol_3,idxs=(fb,0,3))
+	p62 = plot(sol_3,idxs=(h,0,1,2))
+	plot!(sol_3,idxs=(ha,0,1,3))
+	plot!(sol_3,idxs=(hb,0,2,3))
+	plot(p61,p62,layout=(1,2),size=(1200,400))
+end
+
+# ╔═╡ 0c08b34c-9eaa-40e6-aff7-d378353c8be5
+begin
+	sol61 = solve(ODEProblem(three_coupled!, [0,0,0], (0.0,300), [0.05, 0.14,0.37,0.65]),RK4());
+	sol62 = solve(ODEProblem(three_coupled!, [0,0,0], (0.0,300), [0.08, 0.14,0.37,0.65]),RK4());
+	sol63 = solve(ODEProblem(three_coupled!, [0,0,0], (0.0,300), [0.144, 0.14,0.37,0.65]),RK4());
+	p61b = plot(sol61,idxs=(f,0,1),legend=false,title="K=0.05")
+	plot!(sol61,idxs=(fa,0,2))
+	plot!(sol61,idxs=(fb,0,3))
+	p62b = plot(sol62,idxs=(f,0,1),legend=false,title="K=0.08")
+	plot!(sol62,idxs=(fa,0,2))
+	plot!(sol62,idxs=(fb,0,3))
+	p63b = plot(sol63,idxs=(f,0,1),legend=false,title="K=0.144")
+	plot!(sol63,idxs=(fa,0,2))
+	plot!(sol63,idxs=(fb,0,3))
+	p61c = plot(sol61,idxs=(h,0,1,2),legend=false)
+	plot!(sol61,idxs=(ha,0,1,3))
+	plot!(sol61,idxs=(hb,0,2,3))
+	p62c = plot(sol62,idxs=(h,0,1,2),legend=false)
+	plot!(sol62,idxs=(ha,0,1,3))
+	plot!(sol62,idxs=(hb,0,2,3))
+	p63c = plot(sol63,idxs=(h,0,1,2),legend=false)
+	plot!(sol63,idxs=(ha,0,1,3))
+	plot!(sol63,idxs=(hb,0,2,3))
+	p6 = plot(p61b,p62b,p63b,p61c,p62c,p63c,layout=grid(2,3,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	if savefigures
+		savefig(p6, "figureII_6.svg")
+	end
+	p6
 end	
 
 # ╔═╡ 99e1946e-a34a-4251-8a3b-ba56dad16c76
@@ -315,9 +386,9 @@ end
 
 # ╔═╡ 8f212593-b931-40a6-843a-dd709cd69da3
 begin
-	N = 300
+	N = 30
 	w=rand(Normal(0.0,1.0),N)
-	K = 2.2
+	K = 0.2
 	tspan = (0.0,100.0) 
 	u0 = zeros(Complex{Float64}, N+1) #initial conditions
 	p = (N=N, K=K, w=w) # just wrap everything up
@@ -3017,6 +3088,11 @@ version = "1.4.1+1"
 # ╠═1851020c-5c4e-4f53-be3b-3f74ebd0d611
 # ╟─a933e5bb-4981-4f4b-a45b-1a0b97238892
 # ╠═933c5529-119b-4e70-af1d-642971f56a1e
+# ╟─6449cf76-8856-43c6-90b1-503c83bc99e8
+# ╠═8bc29921-c7b7-4c05-8ac9-8c9a86701811
+# ╠═844df868-26a8-4fbf-9f62-d9c9bf1cfdea
+# ╠═4fcb903f-e1e4-4efd-98b1-0bf90954bb8b
+# ╠═0c08b34c-9eaa-40e6-aff7-d378353c8be5
 # ╠═99e1946e-a34a-4251-8a3b-ba56dad16c76
 # ╠═8adae7ce-de06-4be0-9e60-a21b9088c5ca
 # ╠═8f212593-b931-40a6-843a-dd709cd69da3

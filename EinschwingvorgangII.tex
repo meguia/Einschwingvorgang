@@ -229,7 +229,9 @@ This change of behavior indicates that for the dynamics taking place on the circ
 
 \begin{figure} [h]
     \centerline{\includesvg[width=0.95\columnwidth]{figureII_2.svg}}
-    \caption{}
+    \caption{Time evolution of the $x$ variable (top) and phase portraits (middle) for the self-modulated oscillator given by equations \ref{eq_self_coupled_oscillator} with frequency $\omega=0.5$ and three values of the parameter $\alpha$. 
+    The different colors correspond to different initial conditions. In the left column the oscillators are uncoupled. In the center column the oscillator that starts with radius one (orange line) is slowed down for negative $x$ values. In the right column two initial conditions that starts with radius one (orange and green lines) converge to an attractor node through different paths after the Saddle-Node bifurcation.
+    }
     \label{fig_selfmod}
 \end{figure}
 
@@ -261,7 +263,7 @@ We consider the case of two oscillators mutually modulating each other. The syst
     \dot{x_1} & = \omega_1 y_1+ \alpha_{21} x_2 y_1 \\
     \dot{y_1} & = -\omega_1 x_1 - \alpha_{21} x_2 x_1 \\
     \dot{x_2} & = \omega_2 y_2+ \alpha_{12} x_1 y_2 \\
-    \dot{y_2} & = -\omega_2 x_2 - \alpha_{12} x_1 x_2 \\
+    \dot{y_2} & = -\omega_2 x_2 - \alpha_{12} x_1 x_2 
 \end{align}
 \end{subequations}
 
@@ -285,10 +287,12 @@ For bidirectional coupling, the dynamics become more complex, resulting in a ric
 Now, let us transform again into polar coordinates. 
 Fortunately, in this case as well, the dynamics simplify: the equations for $\dot{r}_1$ and $\dot{r}_2$ are null, and the dynamics are governed entirely by the following differential equations for the phases of the oscillators:
 
+\begin{subequations}
 \begin{align} \label{eq_twomodulated_polar}
     \dot{\theta}_1 & = -\omega_1  - \alpha_{12}' \cos{\theta}_2 \\
     \dot{\theta}_2 & = -\omega_2  - \alpha_{21}' \cos{\theta}_1
 \end{align}
+\end{subequations}
 
 Here, the prime ($'$) again is a reminder that $\alpha$ is scaled by the radius or amplitude of the oscillator, which depends on the initial condition for system given by Equation \ref{eq_twomodulated}. 
 But we can easily absorb that amplitude of the oscillator in the definition of the coupling coefficient so that the Equations \ref{eq_twomodulated_polar} do not depend on the initial condition.
@@ -297,7 +301,8 @@ But we can easily absorb that amplitude of the oscillator in the definition of t
 
 \begin{figure} [h]
     \centerline{\includesvg[width=0.95\columnwidth]{figureII_3.svg}}
-    \caption{}
+    \caption{Time evolution of the $x_1$ (blue) and $x_2$  (orange) variables for the two mutually modulated oscillators described by equations \ref{eq_twomodulated} for differents values of the parameters. The duples $\alpha=(\alpha_1,\alpha_2)$ and $\omega=(\omega_1,\omega_2)$ are 
+    displayed on top. IN the top left panels the oscillators are uncoupled.}
     \label{fig_twomodulated}
 \end{figure}
 
@@ -338,17 +343,21 @@ For lower values of the parameter before synchronization, a variety of other phe
 
 For the case of two coupled oscillators, the Kuramoto model (assuming symetric coupling and no self-coupling, i.e. $\alpha_{12}=\alpha_{21}$ and $\alpha_{11}=\alpha{22}=0$) simplifies to:
 
+\begin{subequations}
 \begin{align} \label{eq_twocoupled}
     \dot{\theta}_1 &= \omega_1 + \alpha \sin(\theta_2 - \theta_1), \\
     \dot{\theta}_2 &= \omega_2 + \alpha \sin(\theta_1 - \theta_2).
 \end{align}
+\end{subequations}
 
 We can now write the equations in terms of the phase difference between the oscillators $\theta_d = \theta_2 - \theta_1$, we subtract the first equation from the second:
 
+\begin{subequations}
 \begin{align} \label{eq_twocoupledb}
     \dot{\theta_d} &= \dot{\theta}_2 - \dot{\theta}_1 \\
     &= (\omega_2 - \omega_1) - 2\alpha \sin(\theta_d)
 \end{align}
+\end{subequations}
 
 where we use the fact that $\sin(\theta_1 - \theta_2) = - \sin(\theta_2 - \theta_1)$
 Defining also the frequency difference between the oscillators as $\omega_d = \omega_2 - \omega_1$, we arrive to the following equation:
@@ -357,14 +366,8 @@ Defining also the frequency difference between the oscillators as $\omega_d = \o
     \dot{\theta_d} = \omega_d - 2\alpha \sin(\theta_d).
 \end{equation}
 
-which is completely analogous to the Adler's equation (the use of $sin$ instead of $cos$ only changes the position of the fixed points after the Saddle-Node bifurcation). The Saddle-Node bifurcation now will occurs when $2\alpha = \omega_d$, that means when the coupling parameter 
-
-It is now interesting to interpret this system considering that it is an equation for the evolution of the phase difference between two oscillators, or it could also be seen as the detuning. 
-If this system oscillates, it means that the oscillators are not in phase and each one operates with its own frequency. In this case, the phase difference simply grows with time. 
-Conversely, if this system does not oscillate and stays at a fixed point, it means that the oscillators defined by equations \ref{eq_twocoupled} are synchronized and remain phase locked. 
-This is why Adler's equation is also known as the {\em phase lock} equation.
-
-
+which is completely analogous to the Adler's equation (the use of $sin$ instead of $cos$ only shifts the position of the fixed points after the Saddle-Node bifurcation). The Saddle-Node bifurcation now will occurs when $2\alpha = \omega_d$, that means when the coupling strength equals half the frequency difference between the oscillators. 
+This result makes intuitive sense: the closer the natural frequencies of the oscillators are, the smaller the coupling required to achieve synchronization.
 
 
 \begin{figure} [h]
@@ -373,6 +376,11 @@ This is why Adler's equation is also known as the {\em phase lock} equation.
     \label{fig_twocoupled}
 \end{figure}
 
+It is now interesting to interpret this system considering that it is an equation for the evolution of the phase difference between two oscillators, or it could also be seen as the detuning. 
+If this system oscillates, it means that the oscillators are not in phase and each one operates with its own frequency. In this case, the phase difference simply grows with time. 
+Conversely, if this system does not oscillate and stays at a fixed point, it means that the oscillators defined by equations \ref{eq_twocoupled} are synchronized and remain phase locked. 
+This is why Adler's equation is also known as the {\em phase lock} equation.
+
 This can be seen in Figure \ref{fig_twocoupled}. 
 In the upper row, we show the sine of the phases of the two oscillators defined by equations \ref{eq_twocoupled}, and in the lower row, the evolution of the corresponding phase difference given by the transformed system of equations \ref{eq_phaselocking}.
 For $\alpha = 0.1$, the oscillators are weakly coupled, and the phase difference oscillates almost sinusoidally, reflecting their detuning. 
@@ -380,6 +388,34 @@ In the central panels, as $\alpha$ approaches the critical value for the saddle-
 In the signal in the lower panel we can recognize the behavior of the Adler equation as we approach the saddle-node bifurcation: we have long periods with the signal almost horizontal and every now and then a pulse. 
 However, in the context that the variable we are describing is a phase difference this can be interpreted as long periods in which the phase difference remains constant (or latched) and every now and then a slip in which the oscillators decouple and as can be seen in the top center panel “lose a cycle” of the faster oscillator and re-latch. 
 Finally, for $\alpha = 0.6$, the oscillators become phase-locked, and the phase difference rapidly converges to a stable fixed point. In this case, the system reaches strong synchronization, and the phase difference approaches zero as the coupling strength increases further.
+
+
+
+\subsection{Three uniformly coupled oscillators}
+
+We can go back to the original formula of the Kuramoto model and propose a simplification that will serve to better study the system. 
+The idea is that all $\alpha_{ij}$ couplings are either zero or a fixed value $K$ (that letter is a tribute to Kuramoto). 
+This $K$ is be the critical parameter that characterizes the transition from the behavior of unsynchronized oscillators to synchronized oscillators and this transition will happen for a specific value of K globally, i.e. all oscillators will be synchronized when we cross that value. 
+The $alpha_{ij}$ values will define the topology of the connection between the oscillators. 
+For example, if all the $alpha_{ij}$ are equal to one we have a topology where all are connected to all. 
+Or for example if the $alpha_{ij}$ is different from zero only for consecutive oscillator indices (including the last one with the first one) we have a ring topology.
+
+
+For the case of three oscillators we have:
+
+\begin{subequations}
+\begin{align} \label{eq_twocoupled}
+    \dot{\theta}_1 &= \omega_1 + K \left(\sin(\theta_2 - \theta_1)+\sin(\theta_3 - \theta_1)\right) \\
+    \dot{\theta}_2 &= \omega_2 + K \left(\sin(\theta_1 - \theta_2)+\sin(\theta_3 - \theta_2)\right) \\
+    \dot{\theta}_3 &= \omega_3 + K \left(\sin(\theta_1 - \theta_3)+\sin(\theta_2 - \theta_3)\right) 
+\end{align}
+\end{subequations}
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_6.svg}}
+    \caption{$\omega_1=0.4,\omega_2=0.47,\omega_3=0.65$}
+    \label{fig_threecoupled}
+\end{figure}
 
 \end{document}
 
