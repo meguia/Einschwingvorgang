@@ -553,7 +553,38 @@ begin
 end	
 
 # ╔═╡ a2211b67-db3e-469e-882a-0c47c0df9842
-
+begin
+	kchain = [1,2,3,5,6,7]
+	lab = ["θ₁","θ₂","θ₃","θₙ","θₙ","θₙ"]
+	ph = 2*pi*rand(6)
+	p1a = plot(legend=false,showaxis = false) 
+	for n = 1:6
+		c =3.5*kchain[n]
+		plot!(p1a,c .+ cos.(0:pi/30:2*pi),sin.(0:pi/30:2*pi),lw=3,c=:black)
+		plot!(p1a,[c,c+cos(ph[n])],[0,sin(ph[n])],ls=:dash,c=:red)
+		scatter!(p1a,[c+cos(ph[n])],[sin(ph[n])],ms=6,c=:red,legend=false,showaxis = false)
+		if n<4
+			plot!(p1a,[c+1.1,c+2.4],[0,0],lw=3,c=:red,arrow=true)
+			plot!(p1a,[c+2.4,c+1.1],[0,0],lw=3,c=:red,arrow=true)
+		else
+			plot!(p1a,[c-1.1,c-2.4],[0,0],lw=3,c=:red,arrow=true)
+			plot!(p1a,[c-2.4,c-1.1],[0,0],lw=3,c=:red,arrow=true)
+		end	
+		annotate!(p1a,c+0.4,0.1,lab[n],:red)
+		
+	end
+	annotate!(p1a,18+0.41,0.04,text("-2", :red, :right, 6))
+	annotate!(p1a,18+3.5+0.41,0.04,text("-1", :red, :right, 6))
+	plot!(p1a,[1.1,2.4],[0,0],lw=3,ls=:dash,c=:red,arrow=true)
+	plot!(p1a,[7*3.5+2.4,7*3.5+1.1],[0,0],lw=3,c=:red,arrow=true)
+	plot!(p1a,[1.1,1.1,7*3.5+2.4,7*3.5+2.4],[0,-1.5,-1.5,0],lw=3,ls=:dash,c=:red,)
+	scatter!([13.5,14,14.5],[0,0,0],ms=4,c=:black)
+	p7 = plot(p1a,size=(1500,200),thickness_scaling = 1.3)
+	if savefigures
+		savefig(p7, "figureII_7.svg")
+	end
+	p7
+end
 
 # ╔═╡ 99e1946e-a34a-4251-8a3b-ba56dad16c76
 md"""
