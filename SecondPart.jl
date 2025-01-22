@@ -64,29 +64,29 @@ end
 
 # ╔═╡ 7b5d921f-8e82-4440-b11c-308b43d0a4ab
 begin
-	sol81 = solve(ODEProblem(symself_oscillator!, [1.0,0.0], (0.0,120), [-0.05, 0.5]));
-	sol82 = solve(ODEProblem(symself_oscillator!, [1.0,0.0], (0.0,120), [0.1, 0.5]));
-	sol82b = solve(ODEProblem(symself_oscillator!, [0.01,0.0], (0.0,120), [0.1, 0.5]));
-	sol83 = solve(ODEProblem(symself_oscillator!, [-1.3,1.3], (0.0,120), [1.5, 0.5]));
-	sol83b = solve(ODEProblem(symself_oscillator!, [0.0,0.01], (0.0,120), [1.5, 0.5]));
-	p81 = plot(sol81,idxs=(0,2),ylabel="y(t)",title="γ=-0.05 ω=0.5",legend=false)
-	p81b = plot(sol81,idxs=(1,2),xlims=(-1.3,1.3),ylims=(-1.3,1.3),xlabel="x",ylabel="y",legend=false)
-	p81c = plot(sol81,idxs=(polr,0,1,2),ylabel="r(t)",legend=false)
-	p82 = plot(sol82b,idxs=(0,2),ylabel="y(t)",title="γ=0.1 ω=0.5",legend=false)
-	p82b = plot(sol82b,idxs=(1,2),arrow=true,xlabel="x",ylabel="y",legend=false)
-	plot!(sol82,idxs=(1,2),arrow=true,xlims=(-1.3,1.3),ylims=(-1.3,1.3))
-	p82c = plot(sol82b,idxs=(polr,0,1,2),ylabel="r(t)",legend=false)
-	plot!(sol82,idxs=(polr,0,1,2))
-	p83 = plot(sol83b,idxs=(0,2),ylabel="y(t)",title="γ=1.5 ω=0.5",legend=false)
-	p83b = plot(sol83b,idxs=(1,2),arrow=true,xlabel="x",ylabel="y",legend=false)
-	plot!(sol83,idxs=(1,2),arrow=true,xlims=(-1.3,1.3),ylims=(-1.3,1.3))
-	p83c = plot(sol83b,idxs=(polr,0,1,2),ylabel="r(t)",legend=false)
-	plot!(sol83,idxs=(polr,0,1,2))
-	p8 = plot(p81,p82,p83,p81b,p82b,p83b,p81c,p82c,p83c,layout=grid(3,3,heights=[0.2,0.5,0.3]),size=(1200,900),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	sol_1 = solve(ODEProblem(symself_oscillator!, [1.0,0.0], (0.0,120), [-0.05, 0.5]));
+	sol_2 = solve(ODEProblem(symself_oscillator!, [1.0,0.0], (0.0,120), [0.1, 0.5]));
+	sol_2b = solve(ODEProblem(symself_oscillator!, [0.01,0.0], (0.0,120), [0.1, 0.5]));
+	sol_3 = solve(ODEProblem(symself_oscillator!, [-1.3,1.3], (0.0,120), [1.5, 0.5]));
+	sol_3b = solve(ODEProblem(symself_oscillator!, [0.0,0.01], (0.0,120), [1.5, 0.5]));
+	p_1 = plot(sol_1,idxs=(0,2),ylabel="y(t)",title="γ=-0.05 ω=0.5",legend=false)
+	p_1b = plot(sol_1,idxs=(1,2),xlims=(-1.3,1.3),ylims=(-1.3,1.3),xlabel="x",ylabel="y",legend=false)
+	p_1c = plot(sol_1,idxs=(polr,0,1,2),ylabel="r(t)",legend=false)
+	p_2 = plot(sol_2b,idxs=(0,2),ylabel="y(t)",title="γ=0.1 ω=0.5",legend=false)
+	p_2b = plot(sol_2b,idxs=(1,2),arrow=true,xlabel="x",ylabel="y",legend=false)
+	plot!(sol_2,idxs=(1,2),arrow=true,xlims=(-1.3,1.3),ylims=(-1.3,1.3))
+	p_2c = plot(sol_2b,idxs=(polr,0,1,2),ylabel="r(t)",legend=false)
+	plot!(sol_2,idxs=(polr,0,1,2))
+	p_3 = plot(sol_3b,idxs=(0,2),ylabel="y(t)",title="γ=1.5 ω=0.5",legend=false)
+	p_3b = plot(sol_3b,idxs=(1,2),arrow=true,xlabel="x",ylabel="y",legend=false)
+	plot!(sol_3,idxs=(1,2),arrow=true,xlims=(-1.3,1.3),ylims=(-1.3,1.3))
+	p_3c = plot(sol_3b,idxs=(polr,0,1,2),ylabel="r(t)",legend=false)
+	plot!(sol_3,idxs=(polr,0,1,2))
+	p_ = plot(p_1,p_2,p_3,p_1b,p_2b,p_3b,p_1c,p_2c,p_3c,layout=grid(3,3,heights=[0.2,0.5,0.3]),size=(1200,900),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p8, "figureII_1.svg")
+		savefig(p_, "figureII_1.svg")
 	end
-	p8
+	p_
 end	
 
 # ╔═╡ ed34181d-a570-406a-aacc-1b0dcadf5f02
@@ -279,11 +279,11 @@ begin
 	sol51 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.1, 0.5,1.1]),RK4());
 	sol52 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.29, 0.5,1.1]),RK4());
 	sol53 = solve(ODEProblem(coupled!, [0,0], (0.0,60), [0.6, 0.5,1.1]),RK4());
-	p51b = plot(sol51,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α12=0.1")
+	p51b = plot(sol51,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α=0.1")
 	plot!(sol51,idxs=(f,0,2),label=L"\sin(\theta_2)")
-	p52b = plot(sol52,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α12=0.29")
+	p52b = plot(sol52,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α=0.29")
 	plot!(sol52,idxs=(f,0,2),label=L"\sin(\theta_2)")
-	p53b = plot(sol53,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α12=0.6")
+	p53b = plot(sol53,idxs=(f,0,1),label=L"\sin(\theta_1)",title="α=0.6")
 	plot!(sol53,idxs=(f,0,2),label=L"\sin(\theta_2)")
 	p51c = plot(sol51,idxs=(h,0,1,2),label=L"\sin(\theta_d)")
 	p52c = plot(sol52,idxs=(h,0,1,2),label=L"\sin(\theta_d)")
@@ -326,13 +326,13 @@ begin
 	fb(t,x) = (t,4 + sin(x))
 	ha(t,x,y) = (t, 2 + sin(x-y))
 	hb(t,x,y) = (t, 4 + sin(x-y))
-	sol_3 = solve(ODEProblem(three_coupled!,[0.0,0.0,0.0],(0,tmax_3),[K_,w_1,w_2,w_3]),RK4())
-	p61 = plot(sol_3,idxs=(f,0,1))
-	plot!(sol_3,idxs=(fa,0,2))
-	plot!(sol_3,idxs=(fb,0,3))
-	p62 = plot(sol_3,idxs=(h,0,1,2))
-	plot!(sol_3,idxs=(ha,0,1,3))
-	plot!(sol_3,idxs=(hb,0,2,3))
+	solo3 = solve(ODEProblem(three_coupled!,[0.0,0.0,0.0],(0,tmax_3),[K_,w_1,w_2,w_3]),RK4())
+	p61 = plot(solo3,idxs=(f,0,1))
+	plot!(solo3,idxs=(fa,0,2))
+	plot!(solo3,idxs=(fb,0,3))
+	p62 = plot(solo3,idxs=(h,0,1,2))
+	plot!(solo3,idxs=(ha,0,1,3))
+	plot!(solo3,idxs=(hb,0,2,3))
 	plot(p61,p62,layout=(1,2),size=(1200,400))
 end
 
@@ -366,6 +366,195 @@ begin
 	p6
 end	
 
+# ╔═╡ d4265eb1-e50d-4d2e-ada7-51ecb55a1c42
+md"""
+# Three Excitable systems
+"""
+
+# ╔═╡ 1c770d93-e3d5-4f79-a7ea-cb0b399a4a92
+function three_excoupled!(du,u,p,t)
+	K,w1,w2,w3 = p
+	du[1] = w1 + cos(u[1]) + K*(2+cos(u[2])+cos(u[3]))
+	du[2] =	w2 + cos(u[2]) + K*(2+cos(u[1])+cos(u[3]))
+	du[3] =	w3 + cos(u[3]) + K*(2+cos(u[1])+cos(u[2]))
+end
+
+# ╔═╡ cf7a813a-d654-4d86-9d34-2a1cc7353c9e
+md"""
+K $(@bind Ke Slider(0.0:0.001:0.2,default=0.1;show_value=true)) 
+w1 $(@bind we1 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) \
+w2 $(@bind we2 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) 
+w3 $(@bind we3 Slider(0.01:0.01:2.0,default=0.1;show_value=true)) \
+tmax $(@bind tmaxe Slider(10.0:10.0:500.0,default=1.0;show_value=true)) \
+"""
+
+# ╔═╡ 23ecfed1-52bc-4687-869d-393fbf0632a9
+begin
+	fc(t,x) = (t,cos(x))
+	fc2(t,x) = (t,2+cos(x))
+	fc4(t,x) = (t,4+cos(x))
+	sole = solve(ODEProblem(three_excoupled!,[pi,pi,pi*1.000001],(0,tmaxe),[Ke,we1,we2,we3]),RK4())
+	p71 = plot(sole,idxs=(fc,0,1))
+	plot!(sole,idxs=(fc,0,2))
+	plot!(sole,idxs=(fc,0,3))
+	p72 = plot(sole,idxs=(fc,0,1))
+	plot(p71,p72,layout=(1,2),size=(1200,400))
+end
+
+# ╔═╡ ea22929c-3851-4b56-81c1-d8ce53d574cc
+begin
+	sol90 = solve(ODEProblem(three_excoupled!, [pi,pi,pi*1.000001], (0.0,500), [0.1, 0.93,0.96,0.99]),RK4());
+	sol91 = solve(ODEProblem(three_excoupled!, [pi,pi,pi*1.000001], (0.0,500), [0.11, 0.93,0.96,0.99]),RK4());
+	sol92 = solve(ODEProblem(three_excoupled!, [pi,pi,pi*1.000001], (0.0,500), [0.12, 0.93,0.96,0.99]),RK4());
+	sol93 = solve(ODEProblem(three_excoupled!, [pi,pi,pi*1.000001], (0.0,500), [0.2, 0.93,0.96,0.99]),RK4());
+	p90b = plot(sol90,idxs=(fc,0,1),legend=false,title="K=0.1")
+	plot!(sol90,idxs=(fc2,0,2))
+	plot!(sol90,idxs=(fc4,0,3))
+	p91b = plot(sol91,idxs=(fc,0,1),legend=false,title="K=0.11")
+	plot!(sol91,idxs=(fc2,0,2))
+	plot!(sol91,idxs=(fc4,0,3))
+	p92b = plot(sol92,idxs=(fc,0,1),legend=false,title="K=0.12")
+	plot!(sol92,idxs=(fc2,0,2))
+	plot!(sol92,idxs=(fc4,0,3))
+	p93b = plot(sol93,idxs=(fc,0,1),legend=false,title="K=0.2")
+	plot!(sol93,idxs=(fc2,0,2))
+	plot!(sol93,idxs=(fc4,0,3))
+	p9 = plot(p90b,p91b,p92b,p93b,layout=grid(2,2,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	if savefigures
+		savefig(p9, "figureII_9.svg")
+	end
+	p9
+end	
+
+# ╔═╡ 40a2e39f-73f2-4378-8b48-a1bc3e6cc2cb
+md"""
+# N oscillators in a line coupled locally
+"""
+
+# ╔═╡ ffad54f6-5567-4a2d-821f-4d0a3350a038
+function noscoupled!(du,u,p,t)
+    N,K,w = p
+	du[1] = w[1] + K*(sin(u[2]-u[1])+sin(u[N]-u[1]))
+	for i in 2:N-1
+		du[i] = w[i] + K*(sin(u[i+1]-u[i])+sin(u[i-1]-u[i]))
+    end
+	du[N] = w[N] + K*(sin(u[1]-u[N])+sin(u[N-1]-u[N]))
+end
+
+# ╔═╡ 17d822ab-5954-446c-b87a-48573b4e5141
+begin
+	N0 = 1000
+	w0 = 0.1 .+ rand(N0)*0.9
+	K0 = 1
+	tspan0 = (0,400.0) 
+	u00 = 2*pi*rand(N0) #initial conditions
+	p0 = (N=N0, K=K0, w=w0) # just wrap everything up
+end;
+
+# ╔═╡ ebf643d1-aa7f-495d-8a83-f8b896decb23
+begin
+	probnos = ODEProblem(noscoupled!,u00,tspan0,p0)
+	solnos = solve(probnos,RK4(),saveat=1,progress=true)
+end;
+
+# ╔═╡ f2a7cbdb-a6ae-4bee-997b-b352034c1ee2
+heatmap(cos.(reduce(vcat,transpose.(solnos.u))),size=(1200,400),colorbar=false)
+
+# ╔═╡ 2e33d00f-a575-4677-bf95-61c05df13323
+begin
+	sol81 = solve( ODEProblem(noscoupled!,u00,tspan0,(N=N0, K=0, w=w0)),RK4(),saveat=1);
+	sol82 = solve( ODEProblem(noscoupled!,u00,tspan0,(N=N0, K=0.3, w=w0)),RK4(),saveat=1);
+	sol83 = solve( ODEProblem(noscoupled!,u00,tspan0,(N=N0, K=1.0, w=w0)),RK4(),saveat=1);
+	sol84 = solve( ODEProblem(noscoupled!,u00,tspan0,(N=N0, K=10.0, w=w0)),RK4(),saveat=1);
+	p81 = heatmap(cos.(reduce(vcat,transpose.(sol81.u))),title="K=0",colorbar=false,ylabel="t")
+	p82 = heatmap(cos.(reduce(vcat,transpose.(sol82.u))),title="K=0.3",colorbar=false,ylabel="t")
+	p83 = heatmap(cos.(reduce(vcat,transpose.(sol83.u))),title="K=1",colorbar=false,ylabel="t")
+	p84 = heatmap(cos.(reduce(vcat,transpose.(sol84.u))),title="K=10",colorbar=false,ylabel="t")
+	
+	p8 = plot(p81,p82,p83,p84,layout=grid(2,2,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	if savefigures
+		savefig(p8, "figureII_8.svg")
+	end
+	p8
+end	
+
+# ╔═╡ 6a8f92cb-2411-416d-9c06-a7b511454556
+md"""
+# N excitable systems in a line coupled locally
+"""
+
+# ╔═╡ 27da5b74-00cb-49d1-8678-7d77170fcd7f
+function nexcoupled!(du,u,p,t)
+    N,K,w = p
+	du[1] = w[1] + cos(u[1]) + K*(2+cos(u[N])+cos(u[2]))
+	for i in 2:N-1
+		du[i] = w[i] + cos(u[i]) + K*(2+cos(u[i-1])+cos(u[i+1]))
+    end
+	du[N] = w[N] + cos(u[N]) + K*(2+cos(u[N-1])+cos(u[1]))
+end
+
+# ╔═╡ cffd5a6b-0213-4c10-9187-5d8caa43ed07
+function nexcoupled2d!(du,u,p,t)
+    N,M,K,w = p
+	#first row
+	id = 1
+	du[id] = w[id] + cos(u[id]) + K*(4+cos(u[N])+cos(u[id+1])+cos(u[id-N+M*N])+cos(u[id+N]))
+	for i in 2:N-1
+		id = i
+		du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1])+cos(u[id+1])+cos(u[id-N+N*M])+cos(u[id+N]))
+	end
+	id = N
+	du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1])+cos(u[1])+cos(u[id-N+N*M])+cos(u[id+N]))
+	# central rows
+	for j in 2:M-1 
+		id = (j-1)*N+1
+		du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1+N])+cos(u[id+1])+cos(u[id-N])+cos(u[id+N]))
+		for i in 2:N-1
+			id = (j-1)*N+i
+			du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1])+cos(u[id+1])+cos(u[id-N])+cos(u[id+N]))
+	    end
+		id = j*N
+		du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1])+cos(u[id+1-N])+cos(u[id-N])+cos(u[id+N]))
+	end	
+	#last row
+	id = (M-1)*N+1
+	du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1+N])+cos(u[id+1])+cos(u[id-N])+cos(u[id+N-M*N]))
+	for i in 2:N-1
+		id = (M-1)*N+i
+		du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1])+cos(u[id+1])+cos(u[id-N])+cos(u[id+N-M*N]))
+	end
+	id = M*N
+	du[id] = w[id] + cos(u[id]) + K*(4+cos(u[id-1])+cos(u[id+1-N])+cos(u[id-N])+cos(u[id+N-N*M]))
+end
+
+# ╔═╡ 7b09ffff-934e-4c91-b0b3-a99b0710add4
+begin
+	N1 = 60
+	N2 = 80
+	W2 = 0.95 .+ rand(N1*N2)*0.04
+	K2 = 0.12
+	tspan2 = (0,100.0) 
+	u02 = pi/2*ones(N1*N2) #initial conditions
+	par2 = (N=N1, M=N2, K=K2, w=W2) # just wrap everything up
+end;
+
+# ╔═╡ c79f62f6-11a2-45da-ae5c-c895493481a2
+begin
+	probnex2 = ODEProblem(nexcoupled2d!,u02,tspan2,par2)
+	solnex2 = solve(probnex2,RK4(),saveat=0.2,progress=true)
+end;
+
+# ╔═╡ a6c37755-b0aa-4992-89b8-1ac29b332d0e
+begin
+	anim = @animate for i ∈ 1:size(solnex2.u)[1]
+    	heatmap(cos.(reshape(solnex2.u[i],(N1,N2))),clim=(-1,1),size=(1200,900))
+	end
+	gif(anim, "excitable.gif", fps =5)
+end	
+
+# ╔═╡ a2211b67-db3e-469e-882a-0c47c0df9842
+
+
 # ╔═╡ 99e1946e-a34a-4251-8a3b-ba56dad16c76
 md"""
 # Kuramoto Model
@@ -384,15 +573,32 @@ function kuramoto!(du,u,p,t)
     end
 end
 
-# ╔═╡ 8f212593-b931-40a6-843a-dd709cd69da3
+# ╔═╡ 09f29470-287f-4dd8-8c1e-f9b3088cc754
 begin
-	N = 30
-	w=rand(Normal(0.0,1.0),N)
-	K = 0.2
-	tspan = (0.0,100.0) 
-	u0 = zeros(Complex{Float64}, N+1) #initial conditions
-	p = (N=N, K=K, w=w) # just wrap everything up
+	probnex = ODEProblem(nexcoupled!,u0,tspan,p)
+	solnex = solve(probnex,RK4(),progress=true)
 end;
+
+# ╔═╡ 606fd212-ace6-4a86-8939-2f8f06e94664
+heatmap(cos.(reduce(vcat,transpose.(solnex.u))),size=(1200,400))
+
+# ╔═╡ df21c7bc-9820-4fcf-9273-b5244796be7c
+begin
+	sol101 = solve( ODEProblem(nexcoupled!,u0,tspan,(N=N, K=0.25, w=w)),RK4(),saveat=1);
+	sol102 = solve( ODEProblem(nexcoupled!,u0,tspan,(N=N, K=0.3, w=w)),RK4(),saveat=1);
+	#sol103 = solve( ODEProblem(nexcoupled!,u0,tspan,(N=N, K=0.35, w=w)),RK4(),saveat=1);
+	#sol104 = solve( ODEProblem(nexcoupled!,u0,tspan,(N=N, K=0.4, w=w)),RK4(),saveat=1);
+	p101 = heatmap(cos.(reduce(vcat,transpose.(sol101.u))),title="K=0.25",clim=(-1,1),colorbar=false,ylabel="t")
+	p102 = heatmap(cos.(reduce(vcat,transpose.(sol102.u))),title="K=0.3",clim=(-1,1),colorbar=false,ylabel="t")
+	#p103 = heatmap(cos.(reduce(vcat,transpose.(sol103.u))),title="K=1",clim=(-1,1),colorbar=false,ylabel="t")
+	#p104 = heatmap(cos.(reduce(vcat,transpose.(sol104.u))),title="K=10",clim=(-1,1),colorbar=false,ylabel="t")
+	
+	p10 = plot(p101,p102,layout=grid(2,1,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
+	if savefigures
+		savefig(p10, "figureII_10.svg")
+	end
+	p10
+end	
 
 # ╔═╡ f6b2fd58-4986-4a1b-a453-c4acc28dc0ea
 
@@ -423,6 +629,29 @@ input[type*="range"] {
 </style>
 """
 
+# ╔═╡ 11385167-0f07-4ae5-84d4-5b07096b6292
+begin
+	N = 1000
+	w = 0.85 .+ rand(N)*0.1
+	K = 0.3
+	tspan = (0,200.0) 
+	u0 = pi*ones(N) #initial conditions
+	p = (N=N, K=K, w=w) # just wrap everything up
+end;
+
+# ╔═╡ 8f212593-b931-40a6-843a-dd709cd69da3
+# ╠═╡ disabled = true
+#=╠═╡
+begin
+	N = 30
+	w=rand(Normal(0.0,1.0),N)
+	K = 0.2
+	tspan = (0.0,100.0) 
+	u0 = zeros(Complex{Float64}, N+1) #initial conditions
+	p = (N=N, K=K, w=w) # just wrap everything up
+end;
+  ╠═╡ =#
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -435,12 +664,12 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
-DifferentialEquations = "~7.14.0"
+DifferentialEquations = "~7.15.0"
 DimensionalPlotRecipes = "~1.2.0"
 Distributions = "~0.25.113"
 LaTeXStrings = "~1.4.0"
 Measures = "~0.3.2"
-Plots = "~1.40.8"
+Plots = "~1.40.9"
 PlutoUI = "~0.7.60"
 """
 
@@ -450,7 +679,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.7"
 manifest_format = "2.0"
-project_hash = "80615d25451a0b6f29e45271a7561b4f0b18c8b8"
+project_hash = "11281e7dc07f98f51f0bc4a162850e39f549d0b1"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "72af59f5b8f09faee36b4ec48e014a79210f2f4f"
@@ -853,11 +1082,10 @@ version = "6.160.0"
     Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [[deps.DiffEqCallbacks]]
-deps = ["DataStructures", "DiffEqBase", "ForwardDiff", "Functors", "LinearAlgebra", "Markdown", "NonlinearSolve", "Parameters", "RecipesBase", "RecursiveArrayTools", "SciMLBase", "StaticArraysCore"]
-git-tree-sha1 = "19dbd44d18bbfdfcf5e56c99cea9b0ed23df350a"
+deps = ["ConcreteStructs", "DataStructures", "DiffEqBase", "DifferentiationInterface", "Functors", "LinearAlgebra", "Markdown", "RecipesBase", "RecursiveArrayTools", "SciMLBase", "StaticArraysCore"]
+git-tree-sha1 = "f6bc598f21c7bf2f7885cff9b3c9078e606ab075"
 uuid = "459566f4-90b8-5000-8ac3-15dfb0a30def"
-version = "3.9.1"
-weakdeps = ["OrdinaryDiffEq", "OrdinaryDiffEqCore", "Sundials"]
+version = "4.2.2"
 
 [[deps.DiffEqNoiseProcess]]
 deps = ["DiffEqBase", "Distributions", "GPUArraysCore", "LinearAlgebra", "Markdown", "Optim", "PoissonRandom", "QuadGK", "Random", "Random123", "RandomNumbers", "RecipesBase", "RecursiveArrayTools", "ResettableStacks", "SciMLBase", "StaticArraysCore", "Statistics"]
@@ -885,9 +1113,9 @@ version = "1.15.1"
 
 [[deps.DifferentialEquations]]
 deps = ["BoundaryValueDiffEq", "DelayDiffEq", "DiffEqBase", "DiffEqCallbacks", "DiffEqNoiseProcess", "JumpProcesses", "LinearAlgebra", "LinearSolve", "NonlinearSolve", "OrdinaryDiffEq", "Random", "RecursiveArrayTools", "Reexport", "SciMLBase", "SteadyStateDiffEq", "StochasticDiffEq", "Sundials"]
-git-tree-sha1 = "d851f2ca05f3cec9988f081b047a778a58b48aaf"
+git-tree-sha1 = "d55af9d6b51c54f81ae30d1a463206d32cc4c24a"
 uuid = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
-version = "7.14.0"
+version = "7.15.0"
 
 [[deps.DifferentiationInterface]]
 deps = ["ADTypes", "LinearAlgebra"]
@@ -1180,10 +1408,10 @@ uuid = "77dc65aa-8811-40c2-897b-53d922fa7daf"
 version = "0.1.3"
 
 [[deps.Functors]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "64d8e93700c7a3f28f717d265382d52fac9fa1c1"
+deps = ["Compat", "ConstructionBase", "LinearAlgebra", "Random"]
+git-tree-sha1 = "60a0339f28a233601cb74468032b5c302d5067de"
 uuid = "d9f16b24-f501-4c13-a1f2-28368ffc5196"
-version = "0.4.12"
+version = "0.5.2"
 
 [[deps.Future]]
 deps = ["Random"]
@@ -3093,7 +3321,29 @@ version = "1.4.1+1"
 # ╠═844df868-26a8-4fbf-9f62-d9c9bf1cfdea
 # ╠═4fcb903f-e1e4-4efd-98b1-0bf90954bb8b
 # ╠═0c08b34c-9eaa-40e6-aff7-d378353c8be5
-# ╠═99e1946e-a34a-4251-8a3b-ba56dad16c76
+# ╟─d4265eb1-e50d-4d2e-ada7-51ecb55a1c42
+# ╠═1c770d93-e3d5-4f79-a7ea-cb0b399a4a92
+# ╠═23ecfed1-52bc-4687-869d-393fbf0632a9
+# ╠═cf7a813a-d654-4d86-9d34-2a1cc7353c9e
+# ╠═ea22929c-3851-4b56-81c1-d8ce53d574cc
+# ╟─40a2e39f-73f2-4378-8b48-a1bc3e6cc2cb
+# ╠═ffad54f6-5567-4a2d-821f-4d0a3350a038
+# ╠═17d822ab-5954-446c-b87a-48573b4e5141
+# ╠═ebf643d1-aa7f-495d-8a83-f8b896decb23
+# ╠═f2a7cbdb-a6ae-4bee-997b-b352034c1ee2
+# ╠═2e33d00f-a575-4677-bf95-61c05df13323
+# ╟─6a8f92cb-2411-416d-9c06-a7b511454556
+# ╠═27da5b74-00cb-49d1-8678-7d77170fcd7f
+# ╠═11385167-0f07-4ae5-84d4-5b07096b6292
+# ╠═09f29470-287f-4dd8-8c1e-f9b3088cc754
+# ╠═606fd212-ace6-4a86-8939-2f8f06e94664
+# ╠═df21c7bc-9820-4fcf-9273-b5244796be7c
+# ╠═cffd5a6b-0213-4c10-9187-5d8caa43ed07
+# ╠═7b09ffff-934e-4c91-b0b3-a99b0710add4
+# ╠═c79f62f6-11a2-45da-ae5c-c895493481a2
+# ╠═a6c37755-b0aa-4992-89b8-1ac29b332d0e
+# ╠═a2211b67-db3e-469e-882a-0c47c0df9842
+# ╟─99e1946e-a34a-4251-8a3b-ba56dad16c76
 # ╠═8adae7ce-de06-4be0-9e60-a21b9088c5ca
 # ╠═8f212593-b931-40a6-843a-dd709cd69da3
 # ╠═43e86480-555d-4d94-819d-d1241a7e72e7
