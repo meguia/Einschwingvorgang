@@ -308,7 +308,7 @@ But we can easily absorb that amplitude of the oscillator in the definition of t
 
 This coupling via frequency modulation can now be extended to more oscillators by rewriting the dynamics on the circle. That is, the equation for the phase evolution of the $i$-th oscillator becomes:
 
-\begin{equation}
+\begin{equation} \label{eq_nmodulated}
     \dot{\theta}_i = \omega_i + \sum_j \alpha_{ij} \cos({\theta_j})
 \end{equation}
 
@@ -377,6 +377,8 @@ This result makes intuitive sense: the closer the natural frequencies of the osc
     \label{fig_twocoupled}
 \end{figure}
 
+\newpage
+
 It is now interesting to interpret this system considering that it is an equation for the evolution of the phase difference between two oscillators, or it could also be seen as the detuning. 
 If this system oscillates, it means that the oscillators are not in phase and each one operates with its own frequency. In this case, the phase difference simply grows with time. 
 Conversely, if this system does not oscillate and stays at a fixed point, it means that the oscillators defined by equations \ref{eq_twocoupled} are synchronized and remain phase locked. 
@@ -417,7 +419,7 @@ For the case of three oscillators there is no difference between these topologie
 
 \begin{figure} [h]
     \centerline{\includesvg[width=0.95\columnwidth]{figureII_6.svg}}
-    \caption{$\omega_1=0.4,\omega_2=0.47,\omega_3=0.65$}
+    \caption{Three mutually coupled oscillators described by equations \ref{eq_threecoupled} with parameter values $\omega_2=0.47,\omega_3=0.65$ and three different values of the coupling parameter $K$ displayed on top. The first row displays the time evolution of the sine of the phases that were shifted for clarity (from bottom to top the oscillators from 1 to 3). The second row displays the phase differences between the oscillator pairs 1-2 (blue) 1-3 (red) and 2-3 (green).}
     \label{fig_threecoupled}
 \end{figure}
 
@@ -428,6 +430,8 @@ The lower row shows the behavior for the relative phase differences between pair
 
 As the coupling parameter increases, the time evolution of the phase differences becomes sharper with more spaced shots. 
 In the right column for example only a few peaks are seen that adjust the phase every now and then and for larger values complete tuning is achieved and the phase difference between the oscillators goes to a stationary value.
+
+\newpage
 
 \subsection{N-chain of oscillators coupled locally}
 
@@ -441,16 +445,18 @@ Eventually we can close the chain by coupling the Nth oscillator with the first 
 
 \begin{figure} [h]
     \centerline{\includesvg[width=1.0\columnwidth]{figureII_7.svg}}
-    \caption{}
+    \caption{A chain of N simple oscillators $\dot{theta}=\omega$ locally coupled between first neighbours. If the last and first oscillators are also mutually coupled we have a ring topology}
     \label{fig_threecoupled}
 \end{figure}
 
-\begin{subequations} \label{eq_Ncoupled}
-\begin{align} 
-    \dot{\theta}_i &= \omega_i + K \left(\sin(\theta_{i-1}
-    - \theta_i)+\sin(\theta_{i+1} - \theta_i)\right)  
-\end{align}
-\end{subequations}
+The dynamical equation for a generic oscillator in the middle (that is for $1<i<N$) is:
+
+\begin{equation} \label{eq_Ncoupled}
+    \dot{\theta}_i = \omega_i + K \left(\sin(\theta_{i-1} - \theta_i)+\sin(\theta_{i+1} - \theta_i)\right)  
+\end{equation}
+
+while for the oscillators at the ends of the chain if we couple
+them we have:
 
 \begin{subequations} \label{eq_Ncoupledb}
 \begin{align} 
@@ -464,13 +470,48 @@ Eventually we can close the chain by coupling the Nth oscillator with the first 
 \begin{figure} [h]
     \centerline{\includesvg[width=0.95\columnwidth]{figureII_8.svg}}
     \caption{}
-    \label{fig_threecoupled}
+    \label{fig_noscoupled}
 \end{figure}
 
+
+We will show the results for a ring of $N=1000$ oscillators with random values of $\omega$ uniformly distributed between $0.1$ and $1$. Of course it is not practical to display the traces of the time evolution 1000 phases. 
+Therefore we will adopt a phase plot diagram where the horizontal axis corresponds to the oscillator number, the vertical axis to time and the cosine of the phase is displayed as a color ranging from black (when the cosine is equal to -1) to bright yellow (when equals to 1). 
+These diagrams are also called spatiotemporal, because we can imagine the $N$ oscillators arranged in space, so the horizontal axis represents their position in space while the vertical axis shows their temporal evolution. 
+A relevant feature that can emerge in these diagrams is that of organized structures or spatiotemporal patterns that in many cases are an emergent phenomenon of the system and are very present in many biological systems.
+
+In Figure \ref{fig_noscoupled} we display a phase plot for the system given by equations \ref{eq_Ncoupled} and \ref{eq_Ncoupledb} for four different values of the coupling parameter $K$. 
+When there is no coupling (top left) the phases are random but as soon as there is some coupling ($K=0.3$, top right) some structure starts to appear but on the small scale. As the coupling increases a more clear spatiotemporal pattern of ripples like the ones made by the waves in sand appears. 
+
+
 %\subsection{Three excitable systems mutually coupled}
+
+\subsection{N-chain of oscillators mutually modulated locally}
+
+To show another interesting aspect of coupled systems is the emergence of patterns and structures from the interaction, something that can be seen in Figure 8 but that will be much more evident if instead of phase oscillators we come back to the coupling through modulation that was written in a general form in equation \ref{eq_nmodulated}.
+
+We will couple N excitable systems in a similar way as we did with the oscillators in a linear chain with the ends connected. In this case the equations are:
+
+\begin{subequations} \label{eq_Nexcoupled}
+\begin{align} 
+    \dot{\theta}_i &= \omega_i + \alpha \left(\cos(\theta_{i-1})+\cos(\theta_{i+1})\right)  \quad : \quad 1<i<N \\
+    \dot{\theta}_1 &= \omega_1 + \alpha \left(\cos(\theta_{N})+\cos(\theta_{2})\right) \\
+    \dot{\theta}_N &= \omega_N + \alpha \left(\cos(\theta_{N-1})+\cos(\theta_{1})\right) 
+\end{align}
+\end{subequations}
+
+where we are assuming that the $\alpha_{ij}$ are only different from zero for consecutive indices, and
+as before, we will connect the first and last oscillators.
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_11.svg}}
+    \caption{}
+    \label{fig_noscmodulated}
+\end{figure}
+
+\newpage
+
 \subsection{N-chain of excitable systems coupled locally}
 
-To show another interesting aspect of coupled systems is the emergence of patterns and structures from the interaction, something that can be seen in Figure 8 but that will be much more evident if instead of phase oscillators we couple excitable systems. 
 
 We will use a simplified version of the Adler equation where there is only one parameter $\omega$ and the saddle-node bifurcation occurs when $\omega$ crosses the value 1:
 
@@ -479,7 +520,7 @@ We will use a simplified version of the Adler equation where there is only one p
 \end{equation}
 
 Recall that when there are two fixed points shortly before the bifurcation the system behaves as excitable. That is, if it receives a perturbation above a certain threshold it responds with a complete phase turn before returning to the steady state. 
-We will couple N excitable systems in a similar way as we did with the oscillators in a linear chain with the ends connected. In this case the equations are:
+
 
 \begin{subequations} \label{eq_Nexcoupled}
 \begin{align} 
@@ -506,7 +547,7 @@ and, as before we will connect the first and last oscillators.
 \begin{figure} [h]
     \centerline{\includesvg[width=0.95\columnwidth]{figureII_10.svg}}
     \caption{}
-    \label{fig_threecoupled}
+    \label{fig_nexccoupled}
 \end{figure}
 
 \end{document}
