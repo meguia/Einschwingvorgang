@@ -287,8 +287,8 @@ For bidirectional coupling, the dynamics become more complex, resulting in a ric
 Now, let us transform again into polar coordinates. 
 Fortunately, in this case as well, the dynamics simplify: the equations for $\dot{r}_1$ and $\dot{r}_2$ are null, and the dynamics are governed entirely by the following differential equations for the phases of the oscillators:
 
-\begin{subequations}
-\begin{align} \label{eq_twomodulated_polar}
+\begin{subequations}  \label{eq_twomodulated_polar}
+\begin{align}
     \dot{\theta}_1 & = -\omega_1  - \alpha_{12}' \cos{\theta}_2 \\
     \dot{\theta}_2 & = -\omega_2  - \alpha_{21}' \cos{\theta}_1
 \end{align}
@@ -341,10 +341,10 @@ For lower values of the parameter before synchronization, a variety of other phe
 
 \subsection{Two simple coupled oscillators and the second derivation of the Adler's equation}
 
-For the case of two coupled oscillators, the Kuramoto model (assuming symetric coupling and no self-coupling, i.e. $\alpha_{12}=\alpha_{21}$ and $\alpha_{11}=\alpha{22}=0$) simplifies to:
+For the case of two coupled oscillators, the Kuramoto model (assuming symmetric coupling and no self-coupling, i.e. $\alpha_{12}=\alpha_{21}=\alpha$ and $\alpha_{11}=\alpha{22}=0$) simplifies to:
 
-\begin{subequations}
-\begin{align} \label{eq_twocoupled}
+\begin{subequations} \label{eq_twocoupled}
+\begin{align} 
     \dot{\theta}_1 &= \omega_1 + \alpha \sin(\theta_2 - \theta_1), \\
     \dot{\theta}_2 &= \omega_2 + \alpha \sin(\theta_1 - \theta_2).
 \end{align}
@@ -352,8 +352,8 @@ For the case of two coupled oscillators, the Kuramoto model (assuming symetric c
 
 We can now write the equations in terms of the phase difference between the oscillators $\theta_d = \theta_2 - \theta_1$, we subtract the first equation from the second:
 
-\begin{subequations}
-\begin{align} \label{eq_twocoupledb}
+\begin{subequations} \label{eq_twocoupledb}
+\begin{align} 
     \dot{\theta_d} &= \dot{\theta}_2 - \dot{\theta}_1 \\
     &= (\omega_2 - \omega_1) - 2\alpha \sin(\theta_d)
 \end{align}
@@ -372,7 +372,8 @@ This result makes intuitive sense: the closer the natural frequencies of the osc
 
 \begin{figure} [h]
     \centerline{\includesvg[width=0.95\columnwidth]{figureII_5.svg}}
-    \caption{}
+    \caption{Time evolution of the sine of the phases (top row) for the  two coupled oscillators of the Kuramoto model described by equations \ref{eq_twocoupled}, and the sine of the phase difference between them (bottom row) expressed by equation \ref{eq_phaselocking} for different values of the coupling parameter $\alpha$. The frequencies of the oscillators are $\omega_1=0.5$ and $\omega_2=1.1$. Therefore $\omega_d=0.6$ and the Saddle-Node bifurcation occurs when $\alpha=0.3$.
+    }
     \label{fig_twocoupled}
 \end{figure}
 
@@ -382,9 +383,9 @@ Conversely, if this system does not oscillate and stays at a fixed point, it mea
 This is why Adler's equation is also known as the {\em phase lock} equation.
 
 This can be seen in Figure \ref{fig_twocoupled}. 
-In the upper row, we show the sine of the phases of the two oscillators defined by equations \ref{eq_twocoupled}, and in the lower row, the evolution of the corresponding phase difference given by the transformed system of equations \ref{eq_phaselocking}.
+In the upper row, we show the sine of the phases of the two oscillators defined by equations \ref{eq_twocoupled}, and in the lower row, the evolution of the corresponding phase difference given by the transformed system of equations \ref{eq_phaselocking}. The frequencies of the oscillators are $\omega_1=0.5$ and $\omega_2=1.1$. 
 For $\alpha = 0.1$, the oscillators are weakly coupled, and the phase difference oscillates almost sinusoidally, reflecting their detuning. 
-In the central panels, as $\alpha$ approaches the critical value for the saddle-node bifurcation, $\alpha = 0.3$. 
+In the central panels, $\alpha$ approaches the critical value for the saddle-node bifurcation, $\alpha = \omega_d/2 = 0.3$. 
 In the signal in the lower panel we can recognize the behavior of the Adler equation as we approach the saddle-node bifurcation: we have long periods with the signal almost horizontal and every now and then a pulse. 
 However, in the context that the variable we are describing is a phase difference this can be interpreted as long periods in which the phase difference remains constant (or latched) and every now and then a slip in which the oscillators decouple and as can be seen in the top center panel “lose a cycle” of the faster oscillator and re-latch. 
 Finally, for $\alpha = 0.6$, the oscillators become phase-locked, and the phase difference rapidly converges to a stable fixed point. In this case, the system reaches strong synchronization, and the phase difference approaches zero as the coupling strength increases further.
@@ -396,24 +397,115 @@ Finally, for $\alpha = 0.6$, the oscillators become phase-locked, and the phase 
 We can go back to the original formula of the Kuramoto model and propose a simplification that will serve to better study the system. 
 The idea is that all $\alpha_{ij}$ couplings are either zero or a fixed value $K$ (that letter is a tribute to Kuramoto). 
 This $K$ is be the critical parameter that characterizes the transition from the behavior of unsynchronized oscillators to synchronized oscillators and this transition will happen for a specific value of K globally, i.e. all oscillators will be synchronized when we cross that value. 
-The $alpha_{ij}$ values will define the topology of the connection between the oscillators. 
-For example, if all the $alpha_{ij}$ are equal to one we have a topology where all are connected to all. 
-Or for example if the $alpha_{ij}$ is different from zero only for consecutive oscillator indices (including the last one with the first one) we have a ring topology.
+The $\alpha_{ij}$ values will define the topology of the connection between the oscillators. 
+For example, if all the $\alpha_{ij}$ are equal to one we have a topology where all are connected to all. 
+Or for example if the $\alpha_{ij}$ is different from zero only for consecutive oscillator indices (including the last one with the first one) we have a ring topology.
 
 
-For the case of three oscillators we have:
+For the case of three oscillators there is no difference between these topologies and having all $\alpha_{ij}=1$ we can write:
 
-\begin{subequations}
-\begin{align} \label{eq_twocoupled}
+\begin{subequations} \label{eq_threecoupled}
+\begin{align}
     \dot{\theta}_1 &= \omega_1 + K \left(\sin(\theta_2 - \theta_1)+\sin(\theta_3 - \theta_1)\right) \\
     \dot{\theta}_2 &= \omega_2 + K \left(\sin(\theta_1 - \theta_2)+\sin(\theta_3 - \theta_2)\right) \\
     \dot{\theta}_3 &= \omega_3 + K \left(\sin(\theta_1 - \theta_3)+\sin(\theta_2 - \theta_3)\right) 
 \end{align}
 \end{subequations}
 
+
+
+
 \begin{figure} [h]
     \centerline{\includesvg[width=0.95\columnwidth]{figureII_6.svg}}
     \caption{$\omega_1=0.4,\omega_2=0.47,\omega_3=0.65$}
+    \label{fig_threecoupled}
+\end{figure}
+
+The behavior of this system is no longer reducible to a single Adler equation. 
+Although it can be expressed as equations for the relative phase differences between the oscillators in this case also three variables are involved and coupled together. 
+In figure 6 we show in the upper row the behavior of theta variables 1 to 3 for the system described by the equations \ref{eq_threecoupled} of the three oscillators with frequencies $\omega_1=0.4,\omega_2=0.47,\omega_3=0.65$ and three coupling values. 
+The lower row shows the behavior for the relative phase differences between pairs of oscillators.
+
+As the coupling parameter increases, the time evolution of the phase differences becomes sharper with more spaced shots. 
+In the right column for example only a few peaks are seen that adjust the phase every now and then and for larger values complete tuning is achieved and the phase difference between the oscillators goes to a stationary value.
+
+\subsection{N-chain of oscillators coupled locally}
+
+We could now ask ourselves how this generalizes to the case of many oscillators (let's call N the number of oscillators). 
+Interestingly if the oscillators are all coupled together as in the previous case, i.e. all $\alpha$ equal to 1 then the system is greatly simplified. 
+The result is that the system can be described as a system of N oscillators coupled only through a mean field equal to the sum of the action of all oscillators and even an analytical solution can be found for the $N \rightarrow \infty$ case.
+
+However,  here we will be interested in another case of a set of N oscillators coupled only locally between their first neighbors. 
+The simplest example is that of a one-dimensional chain or ring where each oscillator is coupled with only one neighbor on the left and one on the right as shown in the Figure 7. 
+Eventually we can close the chain by coupling the Nth oscillator with the first one and then we have a ring. 
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=1.0\columnwidth]{figureII_7.svg}}
+    \caption{}
+    \label{fig_threecoupled}
+\end{figure}
+
+\begin{subequations} \label{eq_Ncoupled}
+\begin{align} 
+    \dot{\theta}_i &= \omega_i + K \left(\sin(\theta_{i-1}
+    - \theta_i)+\sin(\theta_{i+1} - \theta_i)\right)  
+\end{align}
+\end{subequations}
+
+\begin{subequations} \label{eq_Ncoupledb}
+\begin{align} 
+    \dot{\theta}_1 &= \omega_1 + K \left(\sin(\theta_{N}
+    - \theta_1)+\sin(\theta_{2} - \theta_1)\right) \\  
+     \dot{\theta}_N &= \omega_N + K \left(\sin(\theta_{N-1}
+    - \theta_N)+\sin(\theta_{1} - \theta_N)\right)  
+\end{align}
+\end{subequations}
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_8.svg}}
+    \caption{}
+    \label{fig_threecoupled}
+\end{figure}
+
+%\subsection{Three excitable systems mutually coupled}
+\subsection{N-chain of excitable systems coupled locally}
+
+To show another interesting aspect of coupled systems is the emergence of patterns and structures from the interaction, something that can be seen in Figure 8 but that will be much more evident if instead of phase oscillators we couple excitable systems. 
+
+We will use a simplified version of the Adler equation where there is only one parameter $\omega$ and the saddle-node bifurcation occurs when $\omega$ crosses the value 1:
+
+\begin{equation} \label{eq_adlers}
+    \dot{\theta} = \omega + \cos(\theta).
+\end{equation}
+
+Recall that when there are two fixed points shortly before the bifurcation the system behaves as excitable. That is, if it receives a perturbation above a certain threshold it responds with a complete phase turn before returning to the steady state. 
+We will couple N excitable systems in a similar way as we did with the oscillators in a linear chain with the ends connected. In this case the equations are:
+
+\begin{subequations} \label{eq_Nexcoupled}
+\begin{align} 
+    \dot{\theta}_i &= \omega_i + K \left(P(\theta_{i-1})+P(\theta_{i+1})\right)  
+\end{align}
+\end{subequations}
+
+where $P$ is some coupling function. We will use:
+\begin{equation} \label{eq_adlers}
+    P(\theta) = 1 + \cos(\theta).
+\end{equation}
+
+and, as before we will connect the first and last oscillators.
+
+%\begin{figure} [h]
+%    \centerline{\includesvg[width=0.95\columnwidth]{figureII_9.svg}}
+%    \caption{}
+%    \label{fig_threecoupled}
+%\end{figure}
+
+
+
+
+\begin{figure} [h]
+    \centerline{\includesvg[width=0.95\columnwidth]{figureII_10.svg}}
+    \caption{}
     \label{fig_threecoupled}
 \end{figure}
 

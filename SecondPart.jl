@@ -605,15 +605,20 @@ function kuramoto!(du,u,p,t)
 end
 
 # ╔═╡ 09f29470-287f-4dd8-8c1e-f9b3088cc754
+#=╠═╡
 begin
 	probnex = ODEProblem(nexcoupled!,u0,tspan,p)
 	solnex = solve(probnex,RK4(),progress=true)
 end;
+  ╠═╡ =#
 
 # ╔═╡ 606fd212-ace6-4a86-8939-2f8f06e94664
+#=╠═╡
 heatmap(cos.(reduce(vcat,transpose.(solnex.u))),size=(1200,400))
+  ╠═╡ =#
 
 # ╔═╡ df21c7bc-9820-4fcf-9273-b5244796be7c
+#=╠═╡
 begin
 	sol101 = solve( ODEProblem(nexcoupled!,u0,tspan,(N=N, K=0.25, w=w)),RK4(),saveat=1);
 	sol102 = solve( ODEProblem(nexcoupled!,u0,tspan,(N=N, K=0.3, w=w)),RK4(),saveat=1);
@@ -630,20 +635,25 @@ begin
 	end
 	p10
 end	
+  ╠═╡ =#
 
 # ╔═╡ f6b2fd58-4986-4a1b-a453-c4acc28dc0ea
 
 
 # ╔═╡ bc8e5eba-338b-4f52-be83-879e053128f9
+#=╠═╡
 begin
 	prob2 = ODEProblem(kuramoto!,u0,tspan,p)
 	sol2 = solve(prob2,RK4(),progress=true)
 end;
+  ╠═╡ =#
 
 # ╔═╡ 43e86480-555d-4d94-819d-d1241a7e72e7
+#=╠═╡
 begin
 	plot(sol2,idxs=(0,1),transformation=:modulus)
 end	
+  ╠═╡ =#
 
 # ╔═╡ 062b85c5-661c-40c1-9ba9-0f6e93a4acc1
 html"""
@@ -660,16 +670,6 @@ input[type*="range"] {
 </style>
 """
 
-# ╔═╡ 11385167-0f07-4ae5-84d4-5b07096b6292
-begin
-	N = 1000
-	w = 0.85 .+ rand(N)*0.1
-	K = 0.3
-	tspan = (0,200.0) 
-	u0 = pi*ones(N) #initial conditions
-	p = (N=N, K=K, w=w) # just wrap everything up
-end;
-
 # ╔═╡ 8f212593-b931-40a6-843a-dd709cd69da3
 # ╠═╡ disabled = true
 #=╠═╡
@@ -679,6 +679,18 @@ begin
 	K = 0.2
 	tspan = (0.0,100.0) 
 	u0 = zeros(Complex{Float64}, N+1) #initial conditions
+	p = (N=N, K=K, w=w) # just wrap everything up
+end;
+  ╠═╡ =#
+
+# ╔═╡ 11385167-0f07-4ae5-84d4-5b07096b6292
+#=╠═╡
+begin
+	N = 1000
+	w = 0.85 .+ rand(N)*0.1
+	K = 0.3
+	tspan = (0,200.0) 
+	u0 = pi*ones(N) #initial conditions
 	p = (N=N, K=K, w=w) # just wrap everything up
 end;
   ╠═╡ =#
