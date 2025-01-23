@@ -524,7 +524,7 @@ begin
 	p114 = heatmap(cos.(reduce(vcat,transpose.(sol114.u))),title="K=2",colorbar=false,ylabel="t")
 	
 	p_11 = plot(p111,p112,p113,p114,layout=grid(2,2,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
-	if true
+	if savefigures
 		savefig(p_11, "figureII_11.svg")
 	end
 	p_11
