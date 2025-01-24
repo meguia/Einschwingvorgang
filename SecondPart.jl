@@ -20,7 +20,7 @@ end
 using Plots, DifferentialEquations, Distributions,PlutoUI, LaTeXStrings, Measures, DimensionalPlotRecipes
 
 # ╔═╡ a87fce5a-4376-4af4-a60d-5641ec4ac484
-savefigures=false
+savefigures=true
 
 # ╔═╡ 54a25377-907d-4a71-98fb-ac9d64eb89b8
 md"""
@@ -49,7 +49,7 @@ begin
 	scatter!([0.315],[0],mc=:black)
 	p1 = plot(p11,p12,p13,layout=(1,3),size=(1200,300),left_margin=1mm,bottom_margin=5mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p1, "figureII_0.svg")
+		savefig(p1, "figureII_0.png")
 	end
 	p1
 end	
@@ -84,7 +84,7 @@ begin
 	plot!(sol_3,idxs=(polr,0,1,2))
 	p_ = plot(p_1,p_2,p_3,p_1b,p_2b,p_3b,p_1c,p_2c,p_3c,layout=grid(3,3,heights=[0.2,0.5,0.3]),size=(1200,900),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p_, "figureII_1.svg")
+		savefig(p_, "figureII_1.png")
 	end
 	p_
 end	
@@ -185,7 +185,7 @@ begin
 	plot!(sol36,idxs=(0,3))
 	p3 = plot(p31,p32,p33,p34,p35,p36,layout=(2,3),size=(1200,800),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p3, "figureII_3.svg")
+		savefig(p3, "figureII_3.png")
 	end
 	p3
 end	
@@ -290,7 +290,7 @@ begin
 	p53c = plot(sol53,idxs=(h,0,1,2),label=L"\sin(\theta_d)")
 	p5 = plot(p51b,p52b,p53b,p51c,p52c,p53c,layout=grid(2,3,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p5, "figureII_5.svg")
+		savefig(p5, "figureII_5.png")
 	end
 	p5
 end	
@@ -361,7 +361,7 @@ begin
 	plot!(sol63,idxs=(hb,0,2,3))
 	p6 = plot(p61b,p62b,p63b,p61c,p62c,p63c,layout=grid(2,3,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p6, "figureII_6.svg")
+		savefig(p6, "figureII_6.png")
 	end
 	p6
 end	
@@ -421,7 +421,7 @@ begin
 	plot!(sol93,idxs=(fc4,0,3))
 	p9 = plot(p90b,p91b,p92b,p93b,layout=grid(2,2,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p9, "figureII_9.svg")
+		savefig(p9, "figureII_9.png")
 	end
 	p9
 end	
@@ -473,7 +473,7 @@ begin
 	
 	p8 = plot(p81,p82,p83,p84,layout=grid(2,2,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p8, "figureII_8.svg")
+		savefig(p8, "figureII_8.png")
 	end
 	p8
 end	
@@ -525,7 +525,7 @@ begin
 	
 	p_11 = plot(p111,p112,p113,p114,layout=grid(2,2,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p_11, "figureII_11.svg")
+		savefig(p_11, "figureII_11.png")
 	end
 	p_11
 end	
@@ -577,7 +577,7 @@ begin
 	
 	p10 = plot(p101,p102,layout=grid(2,1,heights=[0.5,0.5]),size=(1200,600),left_margin=1mm,bottom_margin=2mm,thickness_scaling = 1.3)
 	if savefigures
-		savefig(p10, "figureII_10.svg")
+		savefig(p10, "figureII_10.png")
 	end
 	p10
 end	
@@ -670,7 +670,7 @@ begin
 	scatter!([13.5,14,14.5],[0,0,0],ms=4,c=:black)
 	p7 = plot(p1a,size=(1500,200),thickness_scaling = 1.3)
 	if savefigures
-		savefig(p7, "figureII_7.svg")
+		savefig(p7, "figureII_7.png")
 	end
 	p7
 end
