@@ -124,7 +124,7 @@ Ndef(\harmonic, {|omega=0.5|
 		y0:[1],
 		leakDC: false
 	);
-	state.cos * 0.2
+	state.sin * 0.2
 }).play;
 )
 
@@ -160,11 +160,11 @@ Ndef(\harmonic, {|omega=0.5|
 			[theta % 2pi]
 		}
 	);
-	state.cos * 0.2
+	state.sin * 0.2
 }).play;
 )
 
-{ a = Line.ar(0,40,0.01); b = a % 2pi; [a, b, cos(b)] }.plot(separately:true)
+{ a = Line.ar(0,40,0.01); b = a % 2pi; [a, b, sin(b)] }.plot(separately:true)
 
 
 // 5a, 5b
@@ -230,13 +230,89 @@ s.scope.style_(1);
 // 1.2 Revisiting the self-oscillator. Hopf Normal Form
 
 
+// dissipative harmonic system with two equations
+(
+Fb1_ODEdef(\harmonic, { |t, state, omega = 1.0, gamma = 0.01|
+	var x = state[0];
+	var y = state[1];
+	[
+		{ (omega * y) - (gamma * x) - (x * (x.squared + y.squared)) },
+		{ (omega.neg * x) - (gamma * y) - (y * (x.squared + y.squared)) }
+	]
+}, t0: 0, y0: [1, 0]);
+)
+
+(
+Ndef(\harmonic, {|omega=0.5, gamma = 0.01|
+	var state = Fb1_ODE.ar(\harmonic, [omega, gamma], 400,
+		y0:\initState.kr([1, 0]),
+		leakDC: false
+	);
+	state * 0.2
+}).play;
+)
 
 
+// display parameters and signals
+(
+ControlSpec.add(\omega, [0.01, 8, \exp]);
+ControlSpec.add(\gamma, [0.0002, 0.05, \exp]);
+Ndef(\harmonic).gui;
+s.scope.style_(2);
+)
+
+// again, (x.squared + y.squared) is the square of the radius, so we can
+// rewrite the system in a polar coordinate system
+(
+Fb1_ODEdef(\harmonic, { |t, state, omega = 1.0, gamma = 0.01|
+	var r = state[0];
+	var theta = state[1];
+	[
+		{ gamma * r - r.cubed },
+		{ omega.neg }
+	]
+}, t0: 0, y0: [1, 0]);
+)
+
+(
+Ndef(\harmonic, {|omega=0.5, gamma = 0.01|
+	var state = Fb1_ODE.ar(\harmonic, [omega, gamma], 400,
+		y0: \initState.kr([1, 0]),
+		leakDC: false,
+		compose: { |state| var omega = state[0], theta = state[1]; [omega, theta % 2pi] }
+	);
+	var theta = state[1];
+	theta.sin * 0.2
+}).play;
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\omega, [0.01, 8, \exp]);
+ControlSpec.add(\gamma, [0.0002, 0.5, \exp]);
+Ndef(\harmonic).gui;
+Ndef(\harmonic).scope.style_(0);
+)
+
+// restart the system every 2 seconds with different initial states
+// slowly moving across the Hopf bifurcation
+
+(
+Tdef(\x, {
+	20.do { |i|
+		2.wait;
+		Ndef(\harmonic).send([
+			\omega, 0.5,
+			\gamma, i.linlin(0, 20, -0.05, 0.5).postln,
+			\initState, [1.0, 1.0].rand,
+		]);
+	}
+}).play
+)
+
+// something to do: explore the different initial states by sonifying the initial path.
 
 
-
-
-// TODO
 
 // 1.3 The self modulated oscillator and the first derivation of the Adler’s equation
 
