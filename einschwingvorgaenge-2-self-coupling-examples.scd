@@ -330,10 +330,8 @@ Fb1_ODEdef(\selfmodulation, { |t, state, alpha = 0, omega = 0.5|
 		{ ((omega * x) + (alpha * x * x)).neg },
 	]
 }, y0: [1, 1]);
-)
 
 
-(
 Ndef(\selfmodulation, {
 	var l = \lag.kr(0.2);
 	var params = [\alpha.kr(0.02, l), \omega.kr(0.5, l)];
@@ -372,14 +370,63 @@ Ndef(\selfmodulation, {
 // display parameters and signals
 (
 ControlSpec.add(\omega, [0.01, 4, \exp]);
-ControlSpec.add(\selfMod, [0, 1, \lin]);
+ControlSpec.add(\selfMod, [0, 1.5, \lin]);
 Ndef(\selfmodulation).gui;
 s.scope.style_(2);
 )
 
 
 
+// the radius is constant, so we can reformulate the oscillator in a polar coordinate system
+// note that alpha is now rescale
+(
+Fb1_ODEdef(\selfmodulation, { |t, state, alpha = 0, omega = 0.5|
+	var theta = state[0];
+	[
+		{ omega.neg - (alpha * cos(theta)) }
+	]
+}, y0: [1, 1]);
 
+
+Ndef(\selfmodulation, {
+	var l = \lag.kr(0.2);
+	var params = [\alpha.kr(0.02, l), \omega.kr(0.5, l)];
+	var eq = Fb1_ODE.ar(\selfmodulation, params, 700, y0:  [0, 1], leakDC: false);
+	0.1 * eq[0].sin;
+}).play
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\omega, [0.01, 4, \lin]);
+ControlSpec.add(\alpha, [0.01, 4, \lin]);
+Ndef(\selfmodulation).gui;
+Ndef(\selfmodulation).scope.style_(0);
+)
+
+// again, we can remap alpha to a selfMod parameter to express the degree of self modulation independent of omega
+// at selfMod = 1, the oscillation ends
+
+(
+Ndef(\selfmodulation).clear;
+Ndef(\selfmodulation, {
+	var l = \lag.kr(0.2);
+	var factor = \selfMod.kr(0, l);
+	var omega = \omega.kr(0.5, l);
+	var alpha = omega * factor;
+	var params = [alpha, omega];
+	var eq = Fb1_ODE.ar(\selfmodulation, params, 700, y0:  [0, 1], leakDC: false);
+	0.1 * eq[0].sin;
+}).play
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\omega, [0.01, 4, \exp]);
+ControlSpec.add(\selfMod, [0, 1.5, \lin]);
+Ndef(\selfmodulation).gui;
+Ndef(\selfmodulation).scope.style_(0);
+)
 
 
 

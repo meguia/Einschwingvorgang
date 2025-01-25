@@ -378,6 +378,37 @@ To begin with the simplest case, let us consider an oscillator coupled "with its
 \end{subequations}
 
 For simplicity, we have removed the subscripts since we are dealing with a single oscillator.
+
+
+\begin{lstlisting}[caption=Sonification of a simple self coupled oscillator.]
+
+(
+Fb1_ODEdef(\selfmodulation, { |t, state, alpha = 0, omega = 0.5|
+	var x, y;
+	x = state[0];
+	y = state[1];
+
+	[
+		{  (omega * y) + (alpha * x * y) },
+		{ ((omega * x) + (alpha * x * x)).neg },
+	]
+}, y0: [1, 1]);
+
+
+Ndef(\selfmodulation, {
+	var l = \lag.kr(0.2);
+	var params = [\alpha.kr(0.02, l), \omega.kr(0.5, l)];
+	var eq = Fb1_ODE.ar(\selfmodulation, params, 700, y0:  [0, 1], leakDC: false);
+	0.1 * eq[0];
+}).play
+)
+
+
+\end{lstlisting}
+
+
+
+
 The dynamical behavior of the self-modulated oscillator system is shown in Figure \ref{fig_selfmod} for different values of the parameter $\alpha$ with $\omega = 0.5$. 
 
 In the left panel, for $\alpha = 0$, the system behaves as the symmetric oscillator, with $x(t)$ oscillating sinusoidally with constant amplitude and the trajectory in the $(x, y)$ phase space being a perfect circle centered at the origin. 
@@ -412,10 +443,58 @@ In all cases, the dynamics take place on a circle, so while written as a two-var
 
 Here, as anticipated, there is no radial dynamics, and the entire system can be described by the second equation, showing that the dynamics is now effectively one-dimensional.
 In this last equation, $\alpha'$ is the value of $\alpha$ scaled by the fixed radius of the oscillation, which depends on the initial condition. 
-The equation for $\theta$ describes the phase dynamics and can be represented graphically as $f(\theta)$ versus $\theta$, as done when we were studying oscillation on the circle. 
+The equation for $\theta$ describes the phase dynamics and can be represented graphically as $f(\theta)$ versus $\theta$, as done when we were studying oscillation on the circle.
+
 Then, a Saddle-Node bifurcation occurs when this function touches the horizontal axis, i.e., when $\alpha' = \omega$. For the blue trajectory in Figure \ref{fig_selfmod}, with radius $r = 1$, the bifurcation occurs at $\alpha = 0.5$, as observed in the transition from the central to the right panel. For the orange trajectory with a smaller radius, the bifurcation requires $\alpha = 1$ due to the scaling by the radius.
 
 Therefore the dynamics that describe the self-modulated oscillator is effectively one-dimensional and its phase dynamics is governed by the Adler's equation \ref{eq_self_coupled_oscillator_polar}.b, undergoing a Saddle-Node bifurcation that ends with the oscillations that happen when $|\alpha'|<\omega$.
+
+\begin{lstlisting}[caption=Reformulation of the simple self-coupled oscillator in polar coordinates.]
+
+(
+Fb1_ODEdef(\selfmodulation, { |t, state, alpha = 0, omega = 0.5|
+	var theta = state[0];
+	[
+		{ omega.neg - (alpha * cos(theta)) }
+	]
+}, y0: [1, 1]);
+
+
+Ndef(\selfmodulation, {
+	var l = \lag.kr(0.2);
+	var params = [\alpha.kr(0.02, l), \omega.kr(0.5, l)];
+	var eq = Fb1_ODE.ar(\selfmodulation, params, 700, y0:  [0, 1], leakDC: false);
+	0.1 * eq[0];
+}).play
+)
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=The simple self-coupled oscillator in polar coordinates with a remapped $\alpha$.]
+// remap alpha to a selfMod parameter to express the degree of self modulation independent of omega
+
+(
+Ndef(\selfmodulation).clear;
+Ndef(\selfmodulation, {
+	var l = \lag.kr(0.2);
+	var factor = \selfMod.kr(0, l);
+	var omega = \omega.kr(0.5, l);
+	var alpha = omega * factor;
+	var params = [alpha, omega];
+	var eq = Fb1_ODE.ar(\selfmodulation, params, 700, y0:  [0, 1], leakDC: false);
+	0.1 * eq[0].sin;
+}).play
+)
+
+// display parameters and signals
+(
+ControlSpec.add(\omega, [0.01, 4, \exp]);
+ControlSpec.add(\selfMod, [0, 1.5, \lin]);
+Ndef(\selfmodulation).gui;
+Ndef(\selfmodulation).scope.style_(0);
+)
+\end{lstlisting}
 
 
 \subsection{Two mutually modulated oscillators}
