@@ -8,10 +8,12 @@
  top=20mm,
  }
  
+ \usepackage{graphicx}
  \usepackage{amsmath}
  \usepackage{titling}
  \usepackage[scr=esstix]{mathalpha}
  \usepackage[inkscapelatex=false]{svg}
+
 
 
 \title{{\em Einschwingvorgänge} or How to turn on an oscillation (part II). \\ Coupled Oscillations}
@@ -44,13 +46,13 @@
 \usepackage{lipsum}  
 \usepackage{cmbright}
 
-\usepackage[dvipsnames]{xcolor}
+\usepackage{xcolor}
+\definecolor{codeBackground}{rgb}{0.95,0.95,0.92}
 
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\usepackage[framed]{sclang-prettifier}
 \usepackage{listings}
 \lstset{
-basicstyle=\footnotesize,
-backgroundcolor=\color{backcolour},   
+frame=single,style=SuperCollider-IDE,basicstyle=\scttfamily\footnotesize,backgroundcolor=\color{codeBackground},  
 }
 
 
@@ -69,7 +71,7 @@ So far we have considered the equation of a harmonic oscillator based on the phy
     \dot{v} & = -\omega^2x 
 \end{align}
 \end{subequations}
-with angular frequency $\omega=\sqrt{k}$, which gives rise in general to orbits that form concentric ellipses in phase space. The higher the angular velocity $\omega$, the more elongated the ellipse will be in the vertical direction. 
+with angular frequency $\omega=\sqrt{k}$, which gives rise in general to orbits that form concentric ellipses in phase space.\footnote{We choose $\omega=\sqrt{k}$ so that substituting in equation \ref{eq_harmosc}, we get the standard differential equations for the harmonic oscillator: $\dot{v} = -\sqrt{k}^2x = -kx$} The higher the angular velocity $\omega$, the more elongated the ellipse will be in the vertical direction. 
 However, we can symmetrize these equations by making a change of coordinates ($\mathscr{x} = \omega x , \mathscr{y} = v$) and then the equations become:
 
 \begin{subequations} \label{eq_symosc}
@@ -100,6 +102,43 @@ Therefore, after careful substitution of Equations \ref{eq_symosc} into \ref{eq_
 The interpretation of these equations is straightforward: the radius stays fixed (no temporal rate of variation) and the angle decrease at a constant rate of $\omega$, i.e. moving clockwise with constant velocity. 
 This is exactly the same as what we started with in the previous part: presenting the simplest possible oscillator on the circle, with the state moving at constant angular velocity.  
 However now we derived it from a physical system with two variables (the harmonic oscillator) after a change of coordinates. 
+
+
+\begin{lstlisting}[caption=The symmetric oscillator and the oscillation on the circle.]
+// harmonic oscillator
+// note, we name "y" to "state",
+// the initial conditions y0 are the initial conditions of state.
+(
+Fb1_ODEdef(\harmonic, { |t, state, omega = 1.0|
+	var x = state[0];
+	var v = state[1];
+	[
+		{ v },
+		{ omega.squared.neg * x }
+	]
+}, t0: 0, y0: [1, 0]);
+)
+
+
+(
+Ndef(\harmonic, {|omega=0.5|
+	var state = Fb1_ODE.ar(\harmonic, [omega], 400, y0:[1,0], leakDC: false);
+	state * 0.5
+}).play;
+)
+
+// ellipse is visible in scope
+// display parameters and signals
+(
+ControlSpec.add(\omega, [0.01, 2, \lin]);
+Ndef(\harmonic).gui;
+s.scope.style_(2);
+)
+
+\end{lstlisting}
+
+
+
 
 As an additional observation, note that if we now introduce dissipation, which should be added only to the second equation, the symmetry is broken, and the trajectory is no longer on a circle but instead decays into a spiral toward the center as we have seen before.
 

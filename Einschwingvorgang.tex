@@ -9,6 +9,7 @@
  }
  \usepackage{graphicx}
  \usepackage{amsmath}
+ \usepackage[scr=esstix]{mathalpha}
  \usepackage{titling}
 
 \title{{\em Einschwingvorgänge} or How to turn on an oscillation}
@@ -43,11 +44,13 @@
 
 \usepackage[dvipsnames]{xcolor}
 
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\usepackage{xcolor}
+\definecolor{codeBackground}{rgb}{0.95,0.95,0.92}
+
+\usepackage[framed]{sclang-prettifier}
 \usepackage{listings}
 \lstset{
-basicstyle=\footnotesize,
-backgroundcolor=\color{backcolour},   
+frame=single,style=SuperCollider-IDE,basicstyle=\scttfamily\footnotesize,backgroundcolor=\color{codeBackground}
 }
 
 
