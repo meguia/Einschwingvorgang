@@ -202,7 +202,39 @@ s.scope.style_(2);
 // restart the system every second
 Tdef(\x, { loop { 1.wait; Ndef(\harmonic).send } }).play;
 
+
+// harmonic oscillator with dissipation in polar form
+(
+Fb1_ODEdef(\harmonic, { |t, state, omega = 1.0, gamma = 0.01|
+	var r = state[0];
+	var theta = state[1];
+	[
+		{ gamma.neg * r },
+		{ omega.neg }
+	]
+}, t0: 0, y0: [1, 0]);
+)
+
+(
+Ndef(\harmonic, {|omega=0.5, gamma = 0.01|
+	var state = Fb1_ODE.ar(\harmonic, [omega, gamma], 400, y0:[1,0], leakDC: false);
+	state.sin * 0.2
+}).play;
+)
+
+// display signal theta.sin
+s.scope.style_(1);
+
+
+
 // 1.2 Revisiting the self-oscillator. Hopf Normal Form
+
+
+
+
+
+
+
 
 // TODO
 
