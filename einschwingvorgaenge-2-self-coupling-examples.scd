@@ -124,7 +124,7 @@ Ndef(\harmonic, {|omega=0.5|
 		y0:[1],
 		leakDC: false
 	);
-	state.sin * 0.2
+	cos(state) * 0.2
 }).play;
 )
 
@@ -160,11 +160,11 @@ Ndef(\harmonic, {|omega=0.5|
 			[theta % 2pi]
 		}
 	);
-	state.sin * 0.2
+	cos(state) * 0.2
 }).play;
 )
 
-{ a = Line.ar(0,40,0.01); b = a % 2pi; [a, b, sin(b)] }.plot(separately:true)
+{ a = Line.ar(0,40,0.01); b = a % 2pi; [a, b, cos(b)] }.plot(separately:true)
 
 
 // 5a, 5b
@@ -212,13 +212,13 @@ Fb1_ODEdef(\harmonic, { |t, state, omega = 1.0, gamma = 0.01|
 		{ gamma.neg * r },
 		{ omega.neg }
 	]
-}, t0: 0, y0: [1, 0]);
+}, t0: 0, y0: [1, 1]);
 )
 
 (
 Ndef(\harmonic, {|omega=0.5, gamma = 0.01|
 	var state = Fb1_ODE.ar(\harmonic, [omega, gamma], 400, y0:[1,0], leakDC: false);
-	state.sin * 0.2
+	cos(state) * 0.2
 }).play;
 )
 
@@ -276,13 +276,13 @@ Fb1_ODEdef(\harmonic, { |t, state, omega = 1.0, gamma = 0.01|
 
 (
 Ndef(\harmonic, {|omega=0.5, gamma = 0.01|
-	var state = Fb1_ODE.ar(\harmonic, [omega, gamma], 400,
+	var state = Fb1_ODE.ar(\harmonic, [omega, gamma].poll, 400,
 		y0: \initState.kr([1, 0]),
 		leakDC: false,
 		compose: { |state| var omega = state[0], theta = state[1]; [omega, theta % 2pi] }
 	);
 	var theta = state[1];
-	theta.sin * 0.2
+	cos(theta).poll * 0.2
 }).play;
 )
 
@@ -302,8 +302,8 @@ Tdef(\x, {
 	20.do { |i|
 		2.wait;
 		Ndef(\harmonic).send([
-			\omega, 0.5,
-			\gamma, i.linlin(0, 20, -0.05, 0.5).postln,
+			\omega, 1,
+			\gamma, i.linlin(0, 20, -0.01, 0.05).postln, // <---- problem: no crossing of bifurcation happens yet.
 			\initState, [1.0, 1.0].rand,
 		]);
 	}
@@ -591,7 +591,7 @@ NdefMixer(s);
 			intType: \rk4, // <-- not sure if necessary.
 		);
 
-		var val = sys.sin;
+		var val = cos(sys);
 		val
 	});
 	Ndef(\out, { Limiter.ar(Splay.ar(Limiter.ar(Ndef.ar(name)))) * 0.3}).play;
